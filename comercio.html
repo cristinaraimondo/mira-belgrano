@@ -36,7 +36,13 @@
 
         <p id="comercioDescripcion"></p>
 
-        <div id="comercioDatos"></div>
+       <div class="comercioContenidoInferior">
+
+  <div id="comercioDatos"></div>
+
+  <div id="comercioGaleria" class="comercioGaleria"></div>
+
+</div>
        
 
       </div>
@@ -49,6 +55,10 @@
 </section>
 
   </main>
+  <div id="visorGaleria" class="visorGaleria">
+  <button type="button" id="cerrarVisor" class="cerrarVisor">×</button>
+  <img id="imagenVisor" src="" alt="Imagen ampliada">
+</div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="comercio.js"></script>

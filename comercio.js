@@ -55,10 +55,11 @@ if (data.foto_url) {
 const datos = document.getElementById("comercioDatos");
 
 datos.innerHTML = `
- ${data.direccion ? `
+${data.direccion ? `
   <p>
-    📍 <a href="${data.maps_url || "#"}" target="_blank" rel="noopener noreferrer">
-      ${data.direccion}
+    📍
+    <a href="${data.maps_url || "#"}" target="_blank" rel="noopener noreferrer">
+      Ubicación
     </a>
   </p>
 ` : ""}
@@ -74,6 +75,27 @@ datos.innerHTML = `
   </p>
 ` : ""}
 `;
+const galeria = document.getElementById("comercioGaleria");
+
+const fotosGaleria = [
+  data.galeria_1,
+  data.galeria_2,
+  data.galeria_3
+].filter(Boolean);
+
+if (fotosGaleria.length > 0) {
+  galeria.innerHTML = fotosGaleria
+    .map(foto => `
+      <img
+        src="${foto}"
+        alt="Foto de ${data.nombre}"
+        loading="lazy"
+      >
+    `)
+    .join("");
+} else {
+  galeria.style.display = "none";
+}
 }
 
 cargarComercio();
@@ -144,3 +166,34 @@ async function cargarPromocionesComercio(comercioId) {
     `;
   });
 }
+const visorGaleria = document.getElementById("visorGaleria");
+const imagenVisor = document.getElementById("imagenVisor");
+const cerrarVisor = document.getElementById("cerrarVisor");
+
+// Abrir imagen
+document.addEventListener("click", (e) => {
+  if (e.target.matches("#comercioGaleria img")) {
+    imagenVisor.src = e.target.src;
+    imagenVisor.alt = e.target.alt;
+    visorGaleria.classList.add("activo");
+  }
+});
+
+// Cerrar con la X
+cerrarVisor.addEventListener("click", () => {
+  visorGaleria.classList.remove("activo");
+});
+
+// Cerrar haciendo clic en el fondo
+visorGaleria.addEventListener("click", (e) => {
+  if (e.target === visorGaleria) {
+    visorGaleria.classList.remove("activo");
+  }
+});
+
+// Cerrar con Escape
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    visorGaleria.classList.remove("activo");
+  }
+});
