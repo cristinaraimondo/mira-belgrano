@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel del comercio | Mirá Belgrano</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <header class="comercioHeader">
+    <a href="index.html">
+      <img src="logo.png" class="logo" alt="Mirá Belgrano">
+    </a>
+  </header>
+
+  <main>
+    <section class="loginComercio">
+
+      <h1 id="panelTitulo">Cargando...</h1>
+
+      <p id="panelPlan"></p>
+
+     <div id="panelContenido">
+
+  <div class="panelPromociones">
+    <h2>Mis promociones</h2>
+    <button id="nuevaPromocion" class="btnNuevaPromo">
+  + Nueva promoción
+</button>
+<div id="formPromocion" class="formPromocion" style="display: none;">
+
+  <h3>Nueva promoción</h3>
+  <label for="promoImagen">Imagen o video de la promoción</label>
+
+<input
+  type="file"
+  id="promoImagen"
+  accept="image/jpeg,image/png,image/webp,video/mp4"
+>
+
+<small class="archivoAyuda">
+  JPG, PNG, WEBP o MP4 · Máximo 10 MB
+</small>
+
+  <label for="promoTitulo">Título</label>
+  <input type="text" id="promoTitulo" placeholder="Ej: 20% de descuento">
+
+  <label for="promoDescripcion">Descripción</label>
+  <textarea id="promoDescripcion" placeholder="Contá brevemente la promoción"></textarea>
+
+  <label for="promoInicio">Fecha de inicio</label>
+  <input type="date" id="promoInicio">
+
+  <label for="promoFin">Fecha de finalización</label>
+  <input type="date" id="promoFin">
+
+  <button type="button" id="publicarPromocion">
+    Publicar promoción
+  </button>
+
+</div>
+
+
+
+    <div id="misPromociones">
+        
+      Cargando promociones...
+    </div>
+  </div>
+
+</div>
+
+      <button id="cerrarSesion">
+        Cerrar sesión
+      </button>
+
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="panel.js"></script>
+
+</body>
+
+</html>

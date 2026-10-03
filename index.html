@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Mirá Belgrano</title>
+
+  <link rel="stylesheet" href="style.css">
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+>
+</head>
+
+<body>
+
+  <header>
+  <img src="logo.png" alt="Mirá Belgrano" class="logo">
+  <p>Encontrá. Elegí. Disfrutá.</p>
+</header>
+
+  <main>
+
+    <section class="hero">
+
+      <h2>¿Qué buscás en General Belgrano?</h2>
+
+      <div class="buscador">
+        <input
+          type="text"
+          id="buscador"
+          placeholder="Buscar comercios, servicios..."
+          oninput="buscarComercios()"
+        >
+
+       <button onclick="buscarComercios()">Buscar</button>
+      </div>
+
+    </section>
+
+
+    <section class="categorias">
+
+      <h2>Explorá Belgrano</h2>
+
+      <div class="categoriasGrid">
+        <button onclick="mostrarTodos()">
+  <i class="fa-solid fa-border-all"></i>
+  Ver todos
+</button>
+
+ <button onclick="filtrarCategoria('Gastronomía')">
+  <i class="fa-solid fa-utensils"></i>
+  Gastronomía
+</button>
+<button onclick="filtrarCategoria('Comercios')">
+  <i class="fa-solid fa-bag-shopping"></i>
+  Comercios
+</button>
+
+<button onclick="filtrarCategoria('Servicios')" >
+  <i class="fa-solid fa-screwdriver-wrench"></i>
+  Servicios
+</button>
+
+<button onclick="filtrarCategoria('Salud y Belleza')">
+  <i class="fa-solid fa-heart-pulse"></i>
+  Salud y Belleza
+</button>
+
+<button onclick="filtrarCategoria('Hogar')">
+  <i class="fa-solid fa-house"></i>
+  Hogar
+</button>
+
+<button onclick="filtrarCategoria('Automotor')">
+  <i class="fa-solid fa-car"></i>
+  Automotor
+</button>
+
+<button onclick="filtrarCategoria('Alojamiento')">
+  <i class="fa-solid fa-bed"></i>
+  Alojamiento
+</button>
+
+<button onclick="filtrarCategoria('Turismo y Eventos')">
+  <i class="fa-solid fa-location-dot"></i>
+  Turismo y Eventos
+</button>
+
+      </div>
+
+    </section>
+
+
+    <section class="destacados">
+
+      <h2 id="tituloComercios">Comercios destacados</h2>
+
+
+      <div id="listaComercios">
+
+ 
+
+</div>
+
+    </section>
+    <section class="promociones">
+  <h2>🔥 Ofertas y promociones</h2>
+
+  <div id="listaPromociones">
+  </div>
+</section>
+
+  </main>
+
+
+  <footer>
+
+    <strong>Mirá Belgrano</strong>
+
+    <p>Todo lo que buscás en General Belgrano, en un solo lugar.</p>
+
+  </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="app.js"></script>
+ 
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Comercio | Mirá Belgrano</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <header class="comercioHeader">
+    <a href="index.html">
+     <img src="logo.png" class="logo" alt="Mirá Belgrano">
+    </a>
+  </header>
+
+  <main>
+
+    <section class="comercioDetalle">
+
+      <div
+        id="comercioFoto"
+        class="comercioDetalleFoto">
+      </div>
+
+      <div class="comercioDetalleInfo">
+
+
+        <small id="comercioCategoria"></small>
+
+        <h1 id="comercioNombre">Cargando...</h1>
+
+        <p id="comercioDescripcion"></p>
+
+        <div id="comercioDatos"></div>
+       
+
+      </div>
+
+    </section>
+    <section id="promocionesComercio" class="promocionesComercio">
+  <h2>🔥 Ofertas y promociones</h2>
+
+  <div id="listaPromocionesComercio"></div>
+</section>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="comercio.js"></script>
+
+</body>
+</html>

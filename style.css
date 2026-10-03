@@ -1,0 +1,760 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f8f7fb;
+  color: #261442;
+}
+
+/* HEADER */
+
+header {
+  background: #cabce0;
+  color: white;
+  text-align: center;
+  padding: 22px 20px;
+}
+
+header h1 {
+  font-size: 30px;
+  font-weight: 900;
+  letter-spacing: 3px;
+}
+
+header p {
+  margin-top: 6px;
+  font-size: 15px;
+  color: #ff765e;
+}
+
+
+/* HERO */
+
+.hero {
+  min-height: 380px;
+  padding: 90px 20px;
+  text-align: center;
+
+  background:
+    linear-gradient(
+      rgba(38, 20, 66, 0.68),
+      rgba(38, 20, 66, 0.68)
+    ),
+    url("portada.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.hero h2 {
+  color: white;
+  font-size: 42px;
+  margin-bottom: 30px;
+}
+
+
+/* BUSCADOR */
+
+.buscador {
+  display: flex;
+  max-width: 650px;
+  margin: auto;
+  background: white;
+  padding: 6px;
+  border-radius: 40px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.buscador input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 15px 20px;
+  font-size: 16px;
+  border-radius: 40px;
+}
+
+.buscador button {
+  border: none;
+  background: #ff5c5c;
+  color: white;
+  font-weight: bold;
+  padding: 0 25px;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.buscador button:hover {
+  background: #ef4646;
+}
+
+
+/* CATEGORÍAS */
+
+.categorias {
+  max-width: 1100px;
+  margin: auto;
+  padding: 55px 20px;
+  text-align: center;
+}
+
+.categorias h2 {
+  font-size: 28px;
+  margin-bottom: 30px;
+}
+
+.categoriasGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+}
+
+.categoriasGrid button {
+  border: none;
+  background: white;
+  color: #261442;
+  padding: 25px 10px;
+  border-radius: 18px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+
+  box-shadow: 0 5px 20px rgba(38, 20, 66, 0.08);
+
+  transition: 0.2s;
+}
+
+.categoriasGrid button:hover {
+  transform: translateY(-4px);
+  color: #ff5c5c;
+}
+
+
+/* DESTACADOS */
+
+.destacados {
+  max-width: 1100px;
+  margin: auto;
+  padding: 20px 20px 70px;
+}
+
+.destacados h2 {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 30px;
+}
+
+#listaComercios {
+  min-height: 150px;
+  background: white;
+  border-radius: 20px;
+}
+
+
+/* FOOTER */
+
+footer {
+  background: #261442;
+  color: white;
+  text-align: center;
+  padding: 35px 20px;
+}
+
+footer strong {
+  font-size: 20px;
+}
+
+footer p {
+  margin-top: 8px;
+  opacity: 0.8;
+}
+
+
+/* CELULAR */
+
+@media (max-width: 700px) {
+
+  header h1 {
+    font-size: 24px;
+  }
+
+  .hero {
+    min-height: 330px;
+    padding: 70px 18px;
+  }
+
+  .hero h2 {
+    font-size: 32px;
+  }
+
+  .buscador {
+    width: 100%;
+  }
+
+  .buscador button {
+    padding: 0 18px;
+  }
+
+  .categoriasGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .categoriasGrid button {
+    padding: 20px 8px;
+    font-size: 14px;
+  }
+}
+.logo {
+  width: 230px;
+  max-width: 80%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+.categoriasGrid button i {
+  display: block;
+  font-size: 28px;
+  color: #ff5c5c;
+  margin-bottom: 12px;
+}
+#listaComercios {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  background: transparent;
+}
+
+.comercioCard {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 6px 25px rgba(38, 20, 66, 0.10);
+}
+
+.comercioImagen {
+  height: 190px;
+  background: #ded8eb;
+  position: relative;
+  background-size: cover;
+background-position: center;
+}
+
+.comercioImagen span {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+
+  background: #ff5c5c;
+  color: white;
+
+  padding: 7px 12px;
+  border-radius: 20px;
+
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.comercioInfo {
+  padding: 20px;
+}
+
+.comercioInfo small {
+  color: #ff5c5c;
+  font-weight: bold;
+}
+
+.comercioInfo h3 {
+  margin: 7px 0 10px;
+  font-size: 21px;
+  color: #261442;
+}
+
+.comercioInfo p {
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 18px;
+}
+
+.comercioInfo button {
+  width: 100%;
+  border: none;
+  border-radius: 12px;
+
+  padding: 12px;
+
+  background: #261442;
+  color: white;
+
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.comercioInfo button:hover {
+  background: #ff5c5c;
+}
+
+@media (max-width: 700px) {
+  #listaComercios {
+    grid-template-columns: 1fr;
+  }
+}
+.logo {
+  width: 180px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+.comercioDetalleFoto {
+  width: 100%;
+  height: 420px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.comercioDetalle {
+  max-width: 1100px;
+  margin: 40px auto;
+  background: white;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+}
+
+.comercioDetalleInfo {
+  padding: 30px 36px 36px;
+}
+
+.comercioDetalleInfo small {
+  color: #ff5b5b;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.comercioDetalleInfo h1 {
+  color: #261047;
+  font-size: 36px;
+  margin: 6px 0 10px;
+}
+
+.comercioDetalleInfo p {
+  color: #555;
+  font-size: 18px;
+  line-height: 1.5;
+  margin: 0;
+}
+#comercioDatos {
+  margin-top: 24px;
+  padding: 20px 24px;
+  background: #f7f5fa;
+  border-radius: 16px;
+  max-width: 600px;
+}
+
+#comercioDatos p {
+  margin: 0;
+  padding: 11px 0;
+  font-size: 16px;
+  color: #333;
+  border-bottom: 1px solid #e5e0eb;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#comercioDatos p:last-child {
+  border-bottom: none;
+}
+
+#comercioDatos a {
+  color: #261047;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+#comercioDatos a:hover {
+  text-decoration: underline;
+}
+.comercioDetalleFoto.sin-foto {
+  display: none;
+}
+.promociones {
+  max-width: 1100px;
+  margin: 70px auto;
+  padding: 0 20px;
+}
+
+.promociones h2 {
+  color: #261047;
+  font-size: 30px;
+  margin-bottom: 25px;
+}
+
+#listaPromociones {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.promocionCard {
+  background: white;
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.promocionCard small {
+  display: inline-block;
+  background: #ff5b5b;
+  color: white;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 20px;
+  margin-bottom: 12px;
+}
+
+.promocionCard h3 {
+  color: #261047;
+  font-size: 24px;
+  margin: 0 0 10px;
+}
+
+.promocionCard p {
+  color: #555;
+  line-height: 1.5;
+  margin: 6px 0;
+}
+
+.promocionCard .promoFecha {
+  margin-top: 18px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ff5b5b;
+}
+.promoComercio {
+  color: #ff5b5b !important;
+  font-weight: 700;
+  font-size: 16px;
+  margin: 4px 0 8px !important;
+}
+.promoBoton {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 10px 18px;
+  background: #261047;
+  color: white;
+  text-decoration: none;
+  font-weight: 700;
+  border-radius: 10px;
+}
+
+.promoBoton:hover {
+  opacity: 0.9;
+}
+.loginComercio {
+  width: 90%;
+  max-width: 430px;
+  margin: 70px auto;
+  padding: 35px;
+  background: white;
+  border-radius: 22px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+}
+
+.loginComercio h1 {
+  color: #261047;
+  font-size: 30px;
+  margin: 0 0 10px;
+}
+
+.loginComercio > p {
+  color: #666;
+  margin-bottom: 25px;
+  line-height: 1.5;
+}
+
+#loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#loginForm label {
+  color: #261047;
+  font-weight: 700;
+  margin-top: 8px;
+}
+
+#loginForm input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 13px 15px;
+  border: 1px solid #ddd6e7;
+  border-radius: 10px;
+  font-size: 16px;
+  outline: none;
+}
+
+#loginForm input:focus {
+  border-color: #261047;
+}
+
+#loginForm button {
+  margin-top: 15px;
+  padding: 13px;
+  border: none;
+  border-radius: 10px;
+  background: #261047;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+#loginForm button:hover {
+  opacity: 0.9;
+}
+.panelPromociones {
+  margin-top: 28px;
+}
+
+.panelPromociones h2 {
+  color: #261047;
+  font-size: 24px;
+  margin-bottom: 18px;
+}
+
+.panelPromoCard {
+  background: #f7f5fa;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 15px;
+  border-left: 5px solid #ff5b5b;
+}
+
+.panelPromoCard h3 {
+  color: #261047;
+  font-size: 20px;
+  margin: 0 0 8px;
+}
+
+.panelPromoCard p {
+  color: #555;
+  line-height: 1.5;
+  margin: 5px 0;
+}
+
+.panelPromoCard strong {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 5px 10px;
+  background: #e8f7ec;
+  border-radius: 20px;
+  font-size: 14px;
+}
+
+#cerrarSesion {
+  margin-top: 25px;
+  padding: 10px 16px;
+  border: 1px solid #261047;
+  border-radius: 10px;
+  background: white;
+  color: #261047;
+  font-weight: 700;
+  cursor: pointer;
+}
+.btnNuevaPromo {
+  margin-bottom: 20px;
+  padding: 11px 18px;
+  border: none;
+  border-radius: 10px;
+  background: #ff5b5b;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btnNuevaPromo:hover {
+  opacity: 0.9;
+}
+.formPromocion {
+  background: #f7f5fa;
+  border-radius: 16px;
+  padding: 22px;
+  margin-bottom: 22px;
+}
+
+.formPromocion h3 {
+  color: #261047;
+  font-size: 21px;
+  margin: 0 0 18px;
+}
+
+.formPromocion label {
+  display: block;
+  color: #261047;
+  font-weight: 700;
+  font-size: 14px;
+  margin: 14px 0 6px;
+}
+
+.formPromocion input,
+.formPromocion textarea {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px 12px;
+  border: 1px solid #ddd6e7;
+  border-radius: 9px;
+  background: white;
+  font-size: 15px;
+  font-family: inherit;
+}
+
+.formPromocion textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+#publicarPromocion {
+  width: 100%;
+  margin-top: 20px;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: #261047;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+.panelPromoImagen {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  display: block;
+}
+.btnEliminarPromo {
+  display: block;
+  margin-top: 15px;
+  padding: 8px 14px;
+  border: 1px solid #ff5b5b;
+  border-radius: 8px;
+  background: white;
+  color: #ff5b5b;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btnEliminarPromo:hover {
+  background: #ff5b5b;
+  color: white;
+}
+.accionesPromo {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.btnEditarPromo {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  background: #261047;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.accionesPromo .btnEliminarPromo {
+  margin-top: 0;
+}
+.archivoAyuda {
+  display: block;
+  margin-top: 6px;
+  color: #777;
+  font-size: 12px;
+}
+video.panelPromoImagen {
+  object-fit: contain;
+  background: #000;
+}
+.promoImagen {
+  width: 100%;
+  height: 180px;
+  border-radius: 12px;
+  margin: 10px 0;
+  display: block;
+  object-fit: cover;
+}
+
+video.promoImagen {
+  width: auto;
+  height: 260px;
+  max-width: 100%;
+  object-fit: contain;
+  background: #000;
+  margin: 12px auto;
+  border-radius: 12px;
+}
+/* PROMOCIONES DENTRO DE LA FICHA DEL COMERCIO */
+
+.promocionesComercio {
+  max-width: 1000px;
+  margin: 35px auto;
+  padding: 0 20px;
+}
+
+.promocionesComercio h2 {
+  color: #261047;
+  margin-bottom: 20px;
+}
+
+#listaPromocionesComercio {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+#listaPromocionesComercio .promocionCard {
+  width: auto;
+  margin: 0;
+  padding: 16px;
+  border-radius: 16px;
+  background: white;
+  box-shadow: 0 6px 20px rgba(38, 16, 71, 0.08);
+}
+
+#listaPromocionesComercio .promoImagen {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin: 12px 0;
+}
+
+/* Los videos mantienen su proporción */
+#listaPromocionesComercio video.promoImagen {
+  width: 100%;
+  height: 220px;
+  object-fit: contain;
+  background: #000;
+}
+
+/* CELULAR */
+@media (max-width: 700px) {
+  #listaPromocionesComercio {
+    grid-template-columns: 1fr;
+  }
+
+  #listaPromocionesComercio .promoImagen {
+    height: 200px;
+  }
+
+  #listaPromocionesComercio video.promoImagen {
+    height: 300px;
+  }
+}
