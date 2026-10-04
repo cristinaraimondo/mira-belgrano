@@ -858,3 +858,25 @@ video.promoImagen {
   line-height: 1;
   cursor: pointer;
 }
+.acceso-panel {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+
+  color: #4b356d;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.acceso-panel:hover {
+  text-decoration: underline;
+}
+
+header {
+  position: relative;
+}
