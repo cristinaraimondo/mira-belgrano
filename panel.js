@@ -45,6 +45,26 @@ async function cargarPanel() {
 
   document.getElementById("panelPlan").textContent =
     `Plan: ${comercio.plan || "Sin plan"}`;
+    const estadoSuscripcion = document.getElementById("estadoSuscripcion");
+
+if (comercio.estado === "activo") {
+  estadoSuscripcion.innerHTML =
+    `Estado de la suscripción: <strong>Activa</strong>`;
+} else {
+  estadoSuscripcion.innerHTML =
+    `Estado de la suscripción: <strong>Inactiva</strong>`;
+}
+const panelContenido = document.getElementById("panelContenido");
+
+if (comercio.estado !== "activo") {
+  panelContenido.style.display = "none";
+} else {
+  panelContenido.style.display = "block";
+}
+
+if (comercio.plan) {
+  document.getElementById("seleccionarPlan").value = comercio.plan;
+}
     const { data: promociones, error: errorPromociones } = await db
   .from("promociones")
   .select("*")
@@ -407,3 +427,47 @@ document.addEventListener("click", (e) => {
     behavior: "smooth"
   });
 });
+document.getElementById("contratarPlan")
+  .addEventListener("click", async () => {
+
+    if (!comercioActual) {
+      alert("No se pudo identificar el comercio.");
+      return;
+    }
+
+    const {
+      data: { user }
+    } = await db.auth.getUser();
+
+    if (!user || !user.email) {
+      alert("No se pudo obtener el usuario.");
+      return;
+    }
+
+    const plan = document.getElementById("seleccionarPlan").value;
+
+    const { data, error } = await db.functions.invoke(
+      "crear-suscripcion",
+      {
+        body: {
+         email: "test_user_3490472990773282714@testuser.com",
+          plan: plan,
+          comercio_id: comercioActual.id
+        }
+      }
+    );
+
+    if (error) {
+      console.error("Error al crear suscripción:", error);
+      alert("No se pudo iniciar la suscripción.");
+      return;
+    }
+
+    if (!data?.init_point) {
+      console.error("Respuesta inesperada:", data);
+      alert("Mercado Pago no devolvió el enlace de pago.");
+      return;
+    }
+
+    window.location.href = data.init_point;
+  });

@@ -880,3 +880,73 @@ video.promoImagen {
 header {
   position: relative;
 }
+/* =========================
+   SUSCRIPCIÓN DEL COMERCIO
+========================= */
+
+.panelSuscripcion {
+  margin-top: 25px;
+  margin-bottom: 30px;
+  padding: 22px;
+  background: #f8f6fc;
+  border: 1px solid #e6e0ef;
+  border-radius: 14px;
+}
+
+.panelSuscripcion h2 {
+  margin: 0 0 12px;
+  color: #24103f;
+  font-size: 22px;
+}
+
+#estadoSuscripcion {
+  margin-bottom: 18px;
+  color: #555;
+}
+
+#estadoSuscripcion strong {
+  color: #4b356d;
+}
+
+.panelSuscripcion label {
+  display: block;
+  margin-bottom: 7px;
+  font-weight: 600;
+  color: #333;
+}
+
+#seleccionarPlan {
+  width: 100%;
+  padding: 11px 12px;
+  margin-bottom: 12px;
+
+  border: 1px solid #d8d1e3;
+  border-radius: 8px;
+
+  background: white;
+  color: #333;
+  font-size: 15px;
+
+  cursor: pointer;
+}
+
+#contratarPlan {
+  width: 100%;
+  padding: 12px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #4b356d;
+  color: white;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+#contratarPlan:hover {
+  opacity: 0.9;
+}
