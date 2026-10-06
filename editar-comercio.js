@@ -97,9 +97,17 @@ const galerias = [
   }
 ];
 
-galerias.forEach((imagen) => {
+galerias.forEach((imagen, index) => {
 
-  if (!imagen.url) return;
+  const numero = index + 1;
+
+  const botonEliminar =
+    document.getElementById(`eliminarGaleria${numero}`);
+
+  if (!imagen.url) {
+    botonEliminar.style.display = "none";
+    return;
+  }
 
   document.getElementById(imagen.contenedor).innerHTML = `
     <img
@@ -114,6 +122,8 @@ galerias.forEach((imagen) => {
       "
     >
   `;
+
+  botonEliminar.style.display = "block";
 
 });
 }
@@ -368,6 +378,9 @@ async function eliminarImagenGaleria(numero) {
     document.getElementById(
       `vistaGaleria${numero}`
     ).innerHTML = "";
+    document.getElementById(
+  `eliminarGaleria${numero}`
+    ).style.display = "none";
 
     alert("Imagen eliminada correctamente.");
 
