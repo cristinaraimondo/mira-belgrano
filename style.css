@@ -1052,19 +1052,23 @@ header {
   }
 }
 .editarGaleria input[type="file"] {
-  width: 100%;
+  width: 120px;
   max-width: 100%;
-  box-sizing: border-box;
+  padding: 0;
+  border: none;
   overflow: hidden;
   font-size: 0;
+  background: transparent;
 }
 
 .editarGaleria input[type="file"]::file-selector-button {
-  font-size: 13px;
-  padding: 8px 10px;
+  width: 120px;
+  height: 42px;
+  margin: 0;
+  padding: 8px;
   border: 1px solid #ccc;
-  border-radius: 6px;
+  border-radius: 7px;
   background: #fff;
+  font-size: 13px;
   cursor: pointer;
-  width: 100%;
 }
