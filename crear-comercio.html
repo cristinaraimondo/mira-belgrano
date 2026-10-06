@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Crear comercio | Mirá Belgrano</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <header class="comercioHeader">
+    <a href="index.html">
+      <img src="logo.png" class="logo" alt="Mirá Belgrano">
+    </a>
+  </header>
+
+  <main>
+
+    <section class="loginComercio">
+
+      <h1>Creá tu comercio</h1>
+
+      <p>
+        Completá los datos básicos. Después vas a poder elegir tu plan.
+      </p>
+
+      <form id="crearComercioForm">
+
+        <label for="nombre">Nombre del comercio</label>
+        <input
+          type="text"
+          id="nombre"
+          required
+        >
+
+        <label for="categoria">Categoría</label>
+        <input
+          type="text"
+          id="categoria"
+          placeholder="Ej: Gastronomía, Servicios, Comercios"
+          required
+        >
+
+        <label for="descripcion">Descripción</label>
+        <textarea
+          id="descripcion"
+          placeholder="Contá brevemente qué ofrece tu comercio"
+          required
+        ></textarea>
+
+        <label for="whatsapp">WhatsApp</label>
+        <input
+          type="tel"
+          id="whatsapp"
+          placeholder="Ej: 2241123456"
+        >
+
+        <label for="direccion">Dirección</label>
+        <input
+          type="text"
+          id="direccion"
+          placeholder="Ej: Av. San Martín 123"
+        >
+
+        <button type="submit">
+          Crear comercio
+        </button>
+
+      </form>
+
+      <p id="crearComercioMensaje"></p>
+
+    </section>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="crear-comercio.js"></script>
+
+</body>
+
+</html>
