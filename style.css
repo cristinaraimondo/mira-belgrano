@@ -950,3 +950,57 @@ header {
 #contratarPlan:hover {
   opacity: 0.9;
 }
+/* ========================================
+   CREAR COMERCIO
+======================================== */
+
+#crearComercioForm {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 25px;
+}
+
+#crearComercioForm label {
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+#crearComercioForm input,
+#crearComercioForm textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  border: 1px solid #d8d2e2;
+  border-radius: 10px;
+  font-size: 16px;
+  font-family: inherit;
+  background: #fff;
+}
+
+#crearComercioForm textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+#crearComercioForm input:focus,
+#crearComercioForm textarea:focus {
+  outline: none;
+  border-color: #51367a;
+}
+
+#crearComercioForm button {
+  margin-top: 15px;
+  padding: 13px 20px;
+  border: none;
+  border-radius: 10px;
+  background: #51367a;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#crearComercioForm button:hover {
+  opacity: 0.9;
+}
