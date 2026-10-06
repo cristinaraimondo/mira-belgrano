@@ -1051,3 +1051,20 @@ header {
     grid-template-columns: 1fr;
   }
 }
+.editarGaleria input[type="file"] {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  font-size: 0;
+}
+
+.editarGaleria input[type="file"]::file-selector-button {
+  font-size: 13px;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+  width: 100%;
+}
