@@ -296,6 +296,104 @@ galeria_3: galeria3Url,
   mensaje.textContent =
     "Cambios guardados correctamente.";
 });
+// ========================================
+// ELIMINAR IMÁGENES DE GALERÍA
+// ========================================
+
+async function eliminarImagenGaleria(numero) {
+
+  if (!comercioActual) {
+    return;
+  }
+
+  const columna = `galeria_${numero}`;
+  const urlActual = comercioActual[columna];
+
+  if (!urlActual) {
+    alert("No hay ninguna imagen para eliminar.");
+    return;
+  }
+
+  const confirmar = confirm(
+    "¿Querés eliminar esta imagen de la galería?"
+  );
+
+  if (!confirmar) {
+    return;
+  }
+
+  const {
+    data: { user }
+  } = await db.auth.getUser();
+
+  if (!user) {
+    alert("No se pudo identificar el usuario.");
+    return;
+  }
+
+  try {
+
+    // Obtener la ruta del archivo a partir de la URL pública
+    const marcador = "/storage/v1/object/public/comercios/";
+    const partes = urlActual.split(marcador);
+
+    if (partes.length === 2) {
+
+      const rutaArchivo = decodeURIComponent(partes[1]);
+
+      const { error: errorStorage } = await db.storage
+        .from("comercios")
+        .remove([rutaArchivo]);
+
+      if (errorStorage) {
+        throw errorStorage;
+      }
+    }
+
+    // Borrar la URL de la base de datos
+    const { error: errorBD } = await db
+      .from("comercios")
+      .update({
+        [columna]: null
+      })
+      .eq("id", comercioActual.id)
+      .eq("usuario_id", user.id);
+
+    if (errorBD) {
+      throw errorBD;
+    }
+
+    comercioActual[columna] = null;
+
+    document.getElementById(
+      `vistaGaleria${numero}`
+    ).innerHTML = "";
+
+    alert("Imagen eliminada correctamente.");
+
+  } catch (error) {
+
+    console.error(
+      "Error eliminando imagen:",
+      error
+    );
+
+    alert("No se pudo eliminar la imagen.");
+  }
+}
+
+
+document
+  .getElementById("eliminarGaleria1")
+  .addEventListener("click", () => eliminarImagenGaleria(1));
+
+document
+  .getElementById("eliminarGaleria2")
+  .addEventListener("click", () => eliminarImagenGaleria(2));
+
+document
+  .getElementById("eliminarGaleria3")
+  .addEventListener("click", () => eliminarImagenGaleria(3));
 
 
 cargarComercio();
