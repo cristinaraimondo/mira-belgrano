@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Editar comercio | Mirá Belgrano</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <header class="comercioHeader">
+    <a href="index.html">
+      <img src="logo.png" class="logo" alt="Mirá Belgrano">
+    </a>
+  </header>
+
+  <main>
+
+    <section class="loginComercio">
+
+      <h1>Editar mi comercio</h1>
+
+      <p>
+        Actualizá la información que aparecerá en tu publicación.
+      </p>
+
+      <form id="editarComercioForm">
+
+        <label for="nombre">Nombre del comercio</label>
+        <input type="text" id="nombre" required>
+
+        <label for="categoria">Categoría</label>
+        <input type="text" id="categoria" required>
+
+        <label for="descripcion">Descripción</label>
+        <textarea id="descripcion" required></textarea>
+
+        <label for="whatsapp">WhatsApp</label>
+        <input type="tel" id="whatsapp">
+
+        <label for="direccion">Dirección</label>
+        <input type="text" id="direccion">
+
+        <label for="web">Sitio web</label>
+        <input
+          type="url"
+          id="web"
+          placeholder="https://..."
+        >
+
+        <button type="submit">
+          Guardar cambios
+        </button>
+
+      </form>
+
+      <p id="editarComercioMensaje"></p>
+
+      <a href="panel.html" class="btnRegistro">
+        Volver al panel
+      </a>
+
+    </section>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="editar-comercio.js"></script>
+
+</body>
+
+</html>
