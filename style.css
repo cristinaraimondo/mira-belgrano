@@ -1013,3 +1013,41 @@ header {
 #editarComercioForm button:hover {
   opacity: 0.9;
 }
+/* ========================================
+   GALERÍA - EDITAR COMERCIO
+======================================== */
+
+.editarGaleria {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.editarGaleria > div {
+  min-width: 0;
+}
+
+.editarGaleria label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+.editarGaleria input[type="file"] {
+  font-size: 13px;
+  padding: 8px;
+}
+
+.editarGaleria img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+@media (max-width: 650px) {
+  .editarGaleria {
+    grid-template-columns: 1fr;
+  }
+}

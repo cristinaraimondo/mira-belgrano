@@ -82,6 +82,40 @@ if (comercio.foto_url) {
     >
   `;
 }
+const galerias = [
+  {
+    url: comercio.galeria_1,
+    contenedor: "vistaGaleria1"
+  },
+  {
+    url: comercio.galeria_2,
+    contenedor: "vistaGaleria2"
+  },
+  {
+    url: comercio.galeria_3,
+    contenedor: "vistaGaleria3"
+  }
+];
+
+galerias.forEach((imagen) => {
+
+  if (!imagen.url) return;
+
+  document.getElementById(imagen.contenedor).innerHTML = `
+    <img
+      src="${imagen.url}"
+      alt="Imagen de la galería"
+      style="
+        width: 100%;
+        height: 140px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-top: 10px;
+      "
+    >
+  `;
+
+});
 }
 
 
@@ -141,11 +175,91 @@ if (archivoFoto) {
 
   fotoUrl = urlData.publicUrl;
 }
+// ========================================
+// GALERÍA
+// ========================================
+
+let galeria1Url = comercioActual.galeria_1 || null;
+let galeria2Url = comercioActual.galeria_2 || null;
+let galeria3Url = comercioActual.galeria_3 || null;
+
+const {
+  data: { user: usuarioGaleria }
+} = await db.auth.getUser();
+
+if (!usuarioGaleria) {
+  mensaje.textContent = "No se pudo identificar el usuario.";
+  return;
+}
+
+async function subirImagenGaleria(inputId, numero, urlActual) {
+
+  const archivo =
+    document.getElementById(inputId).files[0];
+
+  if (!archivo) {
+    return urlActual;
+  }
+
+  const extension =
+    archivo.name.split(".").pop().toLowerCase();
+
+  const nombreArchivo =
+    `${usuarioGaleria.id}/galeria-${numero}-${Date.now()}.${extension}`;
+
+  const { error } = await db.storage
+    .from("comercios")
+    .upload(nombreArchivo, archivo);
+
+  if (error) {
+    throw error;
+  }
+
+  const { data } = db.storage
+    .from("comercios")
+    .getPublicUrl(nombreArchivo);
+
+  return data.publicUrl;
+}
+
+try {
+
+  galeria1Url = await subirImagenGaleria(
+    "galeria1",
+    1,
+    galeria1Url
+  );
+
+  galeria2Url = await subirImagenGaleria(
+    "galeria2",
+    2,
+    galeria2Url
+  );
+
+  galeria3Url = await subirImagenGaleria(
+    "galeria3",
+    3,
+    galeria3Url
+  );
+
+} catch (error) {
+
+  console.error("Error subiendo galería:", error);
+
+  mensaje.textContent =
+    "No se pudieron subir las imágenes de la galería.";
+
+  return;
+}
 
   const { error } = await db
     .from("comercios")
     .update({
         foto_url: fotoUrl,
+        foto_url: fotoUrl,
+galeria_1: galeria1Url,
+galeria_2: galeria2Url,
+galeria_3: galeria3Url,
 
       nombre:
         document.getElementById("nombre").value.trim(),
