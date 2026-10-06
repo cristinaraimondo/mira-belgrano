@@ -70,19 +70,32 @@ data.forEach(comercio => {
 
 cargarComercios();
 function filtrarCategoria(categoria) {
-document.getElementById("tituloComercios").textContent = categoria;
+
+  const normalizar = (texto) =>
+    (texto || "")
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .trim();
+
+  const categoriaBuscada = normalizar(categoria);
+
   const tarjetas = document.querySelectorAll(".comercioCard");
+
   let encontrados = 0;
 
   tarjetas.forEach(tarjeta => {
-    const categoriaTarjeta = tarjeta.querySelector("small").textContent.trim();
 
-    if (categoriaTarjeta === categoria) {
+    const categoriaTarjeta =
+      normalizar(tarjeta.dataset.categoria);
+
+    if (categoriaTarjeta === categoriaBuscada) {
       tarjeta.style.display = "";
       encontrados++;
     } else {
       tarjeta.style.display = "none";
     }
+
   });
 
   let mensaje = document.getElementById("sinResultados");
