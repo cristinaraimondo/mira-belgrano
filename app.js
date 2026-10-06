@@ -34,6 +34,7 @@ data.forEach(comercio => {
    <article
   class="comercioCard"
   data-destacado="${comercio.destacado}"
+   data-categoria="${comercio.categoria || ''}"
   style="${oculto}"
 >
 
