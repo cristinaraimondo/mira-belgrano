@@ -28,14 +28,28 @@ async function cargarPanel() {
     .eq("usuario_id", user.id)
     .single();
 
-  if (error || !comercio) {
-    console.error("Error al buscar comercio:", error);
+ if (error || !comercio) {
+  console.log("El usuario todavía no tiene comercio.");
 
-    document.getElementById("panelTitulo").textContent =
-      "No encontramos un comercio asociado.";
+  document.getElementById("panelTitulo").textContent =
+    "Creá tu comercio";
 
-    return;
-  }
+  document.getElementById("panelPlan").innerHTML =
+    `Completá los datos de tu comercio para comenzar a publicarlo en Mirá Belgrano.`;
+
+  document.getElementById("panelSuscripcion").style.display = "none";
+  document.getElementById("panelContenido").style.display = "none";
+
+  const botonCrear = document.createElement("a");
+
+  botonCrear.href = "crear-comercio.html";
+  botonCrear.className = "btnRegistro";
+  botonCrear.textContent = "Crear mi comercio";
+
+  document.getElementById("panelPlan").after(botonCrear);
+
+  return;
+}
   comercioActual = comercio;
 
   console.log("Comercio del usuario:", comercio);
