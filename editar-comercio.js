@@ -64,6 +64,24 @@ async function cargarComercio() {
 
   document.getElementById("web").value =
     comercio.web || "";
+    const vistaFoto =
+  document.getElementById("vistaFotoPrincipal");
+
+if (comercio.foto_url) {
+  vistaFoto.innerHTML = `
+    <img
+      src="${comercio.foto_url}"
+      alt="Imagen principal del comercio"
+      style="
+        width: 100%;
+        max-height: 220px;
+        object-fit: cover;
+        border-radius: 12px;
+        margin-top: 10px;
+      "
+    >
+  `;
+}
 }
 
 
@@ -82,10 +100,52 @@ form.addEventListener("submit", async (e) => {
   }
 
   mensaje.textContent = "Guardando cambios...";
+  let fotoUrl = comercioActual.foto_url || null;
+
+const archivoFoto =
+  document.getElementById("fotoPrincipal").files[0];
+
+if (archivoFoto) {
+
+  const {
+    data: { user }
+  } = await db.auth.getUser();
+
+  if (!user) {
+    mensaje.textContent = "No se pudo identificar el usuario.";
+    return;
+  }
+
+  const extension =
+    archivoFoto.name.split(".").pop().toLowerCase();
+
+  const nombreArchivo =
+    `${user.id}/principal-${Date.now()}.${extension}`;
+
+  const { error: errorSubida } = await db.storage
+    .from("comercios")
+    .upload(nombreArchivo, archivoFoto);
+
+  if (errorSubida) {
+    console.error("Error subiendo imagen:", errorSubida);
+
+    mensaje.textContent =
+      "No se pudo subir la imagen.";
+
+    return;
+  }
+
+  const { data: urlData } = db.storage
+    .from("comercios")
+    .getPublicUrl(nombreArchivo);
+
+  fotoUrl = urlData.publicUrl;
+}
 
   const { error } = await db
     .from("comercios")
     .update({
+        foto_url: fotoUrl,
 
       nombre:
         document.getElementById("nombre").value.trim(),
