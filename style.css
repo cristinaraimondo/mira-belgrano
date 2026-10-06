@@ -951,23 +951,27 @@ header {
   opacity: 0.9;
 }
 /* ========================================
-   CREAR COMERCIO
+   CREAR / EDITAR COMERCIO
 ======================================== */
 
-#crearComercioForm {
+#crearComercioForm,
+#editarComercioForm {
   display: flex;
   flex-direction: column;
   gap: 8px;
   margin-top: 25px;
 }
 
-#crearComercioForm label {
+#crearComercioForm label,
+#editarComercioForm label {
   font-weight: 600;
   margin-top: 8px;
 }
 
 #crearComercioForm input,
-#crearComercioForm textarea {
+#crearComercioForm textarea,
+#editarComercioForm input,
+#editarComercioForm textarea {
   width: 100%;
   box-sizing: border-box;
   padding: 12px 14px;
@@ -978,18 +982,22 @@ header {
   background: #fff;
 }
 
-#crearComercioForm textarea {
+#crearComercioForm textarea,
+#editarComercioForm textarea {
   min-height: 100px;
   resize: vertical;
 }
 
 #crearComercioForm input:focus,
-#crearComercioForm textarea:focus {
+#crearComercioForm textarea:focus,
+#editarComercioForm input:focus,
+#editarComercioForm textarea:focus {
   outline: none;
   border-color: #51367a;
 }
 
-#crearComercioForm button {
+#crearComercioForm button,
+#editarComercioForm button {
   margin-top: 15px;
   padding: 13px 20px;
   border: none;
@@ -1001,6 +1009,7 @@ header {
   cursor: pointer;
 }
 
-#crearComercioForm button:hover {
+#crearComercioForm button:hover,
+#editarComercioForm button:hover {
   opacity: 0.9;
 }
