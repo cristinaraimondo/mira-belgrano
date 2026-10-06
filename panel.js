@@ -51,6 +51,13 @@ async function cargarPanel() {
   return;
 }
   comercioActual = comercio;
+  const panelPromociones = document.getElementById("panelPromociones");
+
+if (comercio.plan === "auspiciante") {
+  panelPromociones.style.display = "block";
+} else {
+  panelPromociones.style.display = "none";
+}
 
   console.log("Comercio del usuario:", comercio);
 
