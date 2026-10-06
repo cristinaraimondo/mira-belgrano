@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Acceso comercios | Mirá Belgrano</title>
+  <title>Crear cuenta | Mirá Belgrano</title>
 
   <link rel="stylesheet" href="style.css">
 </head>
@@ -22,11 +22,11 @@
 
     <section class="loginComercio">
 
-      <h1>Panel del comercio</h1>
+      <h1>Crear cuenta</h1>
 
-      <p>Ingresá para administrar tu comercio y tus promociones.</p>
+      <p>Registrate para publicar tu comercio en Mirá Belgrano.</p>
 
-      <form id="loginForm">
+      <form id="registroForm">
 
         <label for="email">Correo electrónico</label>
         <input
@@ -39,30 +39,40 @@
         <input
           type="password"
           id="password"
+          minlength="6"
+          required
+        >
+
+        <label for="passwordConfirmar">Repetir contraseña</label>
+        <input
+          type="password"
+          id="passwordConfirmar"
+          minlength="6"
           required
         >
 
         <button type="submit">
-          Ingresar
+          Crear cuenta
         </button>
 
       </form>
 
-      <p id="loginMensaje"></p>
-      <div class="registroAcceso">
-  <p>¿Todavía no tenés una cuenta?</p>
+      <p id="registroMensaje"></p>
 
-  <a href="registro.html" class="btnRegistro">
-    Crear cuenta
-  </a>
-</div>
+      <div class="registroAcceso">
+        <p>¿Ya tenés una cuenta?</p>
+
+        <a href="login.html" class="btnRegistro">
+          Iniciar sesión
+        </a>
+      </div>
 
     </section>
 
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="login.js"></script>
+  <script src="registro.js"></script>
 
 </body>
 

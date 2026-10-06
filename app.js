@@ -24,6 +24,9 @@ const lista = document.getElementById("listaComercios");
 lista.innerHTML = "";
 
 data.forEach(comercio => {
+  if (comercio.estado === "inactivo") {
+  return;
+}
 
   const oculto = comercio.destacado ? "" : "display: none;";
 
@@ -164,15 +167,16 @@ const { data, error } = await db
   .from("promociones")
   .select(`
     *,
-    comercios (
-      nombre,
-      slug
-    )
-  `)
-  .eq("activo", true)
-  .lte("fecha_inicio", hoy)
-  .gte("fecha_fin", hoy);
-
+   comercios!inner (
+  nombre,
+  slug,
+  estado
+)
+`)
+.eq("activo", true)
+.eq("comercios.estado", "activo")
+.lte("fecha_inicio", hoy)
+.gte("fecha_fin", hoy);
   if (error) {
     console.error("Error al cargar promociones:", error);
     return;
