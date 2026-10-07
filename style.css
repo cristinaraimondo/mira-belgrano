@@ -1093,3 +1093,88 @@ header {
 .btnSubirGaleria input[type="file"] {
   display: none;
 }
+/* =========================================
+   REGISTRO DE COMERCIOS
+========================================= */
+
+#registroForm {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 25px;
+}
+
+#registroForm label {
+  font-weight: 600;
+  color: #1c0b3b;
+  margin-top: 8px;
+}
+
+#registroForm input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 13px 14px;
+  border: 1px solid #d9d1e6;
+  border-radius: 10px;
+  font-size: 15px;
+  background: #fff;
+  outline: none;
+  transition: 0.2s;
+}
+
+#registroForm input:focus {
+  border-color: #563a7c;
+  box-shadow: 0 0 0 3px rgba(86, 58, 124, 0.10);
+}
+
+#registroForm button {
+  width: 100%;
+  margin-top: 18px;
+  padding: 13px;
+  border: none;
+  border-radius: 9px;
+  background: #563a7c;
+  color: white;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+#registroForm button:hover {
+  transform: translateY(-1px);
+  opacity: 0.92;
+}
+
+#registroMensaje {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.registroAcceso {
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid #e8e2ef;
+  text-align: center;
+}
+
+.registroAcceso p {
+  margin: 0 0 12px;
+  color: #555;
+}
+
+.btnRegistro {
+  display: inline-block;
+  padding: 10px 22px;
+  border: 1px solid #563a7c;
+  border-radius: 8px;
+  color: #563a7c;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.btnRegistro:hover {
+  background: #563a7c;
+  color: white;
+}

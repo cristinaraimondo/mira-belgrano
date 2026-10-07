@@ -303,6 +303,7 @@ if (promocionEditando) {
       titulo: titulo,
       descripcion: descripcion,
       imagen_url: imagenUrl,
+      archivo_tipo: archivoTipo,
       fecha_inicio: fechaInicio,
       fecha_fin: fechaFin
     })
