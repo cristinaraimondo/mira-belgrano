@@ -265,10 +265,9 @@ if (!promocionEditando && comercioActual.plan === "auspiciante") {
 let imagenUrl = imagenActualEditando;
 let archivoTipo = "imagen";
 
-if (imagen && imagen.type === "video/mp4") {
+if (imagen && imagen.type.startsWith("video/")) {
   archivoTipo = "video";
 }
-
 // Si eligió una imagen nueva, la subimos
 if (imagen) {
 
