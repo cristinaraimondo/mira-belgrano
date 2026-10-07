@@ -287,6 +287,7 @@ galeria_3: galeria3Url,
 
       direccion:
         document.getElementById("direccion").value.trim() || null,
+        maps_url: document.getElementById("maps_url").value.trim() || null,
 
       web:
         document.getElementById("web").value.trim() || null
