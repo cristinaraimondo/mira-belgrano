@@ -61,6 +61,8 @@ async function cargarComercio() {
 
   document.getElementById("direccion").value =
     comercio.direccion || "";
+  document.getElementById("maps_url").value =
+  comercio.maps_url || "";
 
   document.getElementById("web").value =
     comercio.web || "";
