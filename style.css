@@ -1178,3 +1178,35 @@ header {
   background: #563a7c;
   color: white;
 }
+/* Alinear las 3 imágenes de la galería */
+.editarGaleria > div {
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+}
+
+.editarGaleria > div > div[id^="vistaGaleria"] {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.editarGaleria > div > div[id^="vistaGaleria"] img {
+  width: 100%;
+  max-width: 140px;
+  height: 140px;
+  object-fit: cover;
+  display: block;
+  margin: 10px auto;
+}
+
+.editarGaleria .btnEliminarImagen {
+  display: block;
+  margin: 10px auto 0;
+}
+/* Evitar que se recorten las imágenes de la galería pública */
+.comercioGaleria img {
+  object-fit: contain !important;
+  object-position: center;
+}

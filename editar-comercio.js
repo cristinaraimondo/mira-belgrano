@@ -307,6 +307,50 @@ galeria_3: galeria3Url,
     "Cambios guardados correctamente.";
 });
 // ========================================
+// VISTA PREVIA DE GALERÍA
+// ========================================
+function activarVistaPreviaGaleria(inputId, contenedorId, numero) {
+
+  const input = document.getElementById(inputId);
+  const contenedor = document.getElementById(contenedorId);
+  const botonEliminar =
+    document.getElementById(`eliminarGaleria${numero}`);
+
+  if (!input || !contenedor) return;
+
+  input.addEventListener("change", () => {
+
+    const archivo = input.files[0];
+
+    if (!archivo) return;
+
+    const urlTemporal = URL.createObjectURL(archivo);
+
+    contenedor.innerHTML = `
+      <img
+        src="${urlTemporal}"
+        alt="Vista previa"
+        style="
+          width: 100%;
+          height: 140px;
+          object-fit: cover;
+          border-radius: 10px;
+          display: block;
+          margin: 10px auto;
+        "
+      >
+    `;
+
+    if (botonEliminar) {
+      botonEliminar.style.display = "block";
+    }
+  });
+}
+
+activarVistaPreviaGaleria("galeria1", "vistaGaleria1", 1);
+activarVistaPreviaGaleria("galeria2", "vistaGaleria2", 2);
+activarVistaPreviaGaleria("galeria3", "vistaGaleria3", 3);
+// ========================================
 // ELIMINAR IMÁGENES DE GALERÍA
 // ========================================
 
