@@ -395,16 +395,67 @@ background-position: center;
   margin-bottom: 25px;
 }
 
+/* Galería compacta de promociones */
 #listaPromociones {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 320px));
-  gap: 24px;
-  justify-content: start;
+  grid-template-columns: repeat(auto-fill, 250px);
+  gap: 18px;
+  justify-content: center;
+}
+
+#listaPromociones .promocionCard {
+  width: 250px;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+/* Imágenes y videos sin recortes */
+#listaPromociones .promocionCard img,
+#listaPromociones .promocionCard video {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: 190px;
+  object-fit: contain;
+  margin: 10px auto;
+  border-radius: 10px;
+}
+
+#listaPromociones .promocionCard img {
+  width: 90%;
+}
+
+/* Textos más compactos */
+#listaPromociones .promocionCard h3 {
+  font-size: 19px;
+}
+
+#listaPromociones .promocionCard p {
+  font-size: 14px;
+}
+
+/* Adaptación a celulares */
+@media (max-width: 480px) {
+  #listaPromociones {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  #listaPromociones .promocionCard {
+    width: 100%;
+    padding: 12px;
+  }
+
+  #listaPromociones .promocionCard img,
+  #listaPromociones .promocionCard video {
+    height: 150px;
+  }
 }
 
 #listaPromociones .promocionCard {
   width: 100%;
   box-sizing: border-box;
+  text-align: center;
 }
 
 @media (max-width: 480px) {
@@ -730,14 +781,13 @@ video.promoImagen {
 
 #listaPromocionesComercio {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 320px));
-  gap: 20px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
   justify-content: start;
 }
 
 #listaPromocionesComercio .promocionCard {
   width: 100%;
-  max-width: 320px;
   margin: 0;
   padding: 16px;
   border-radius: 16px;
@@ -748,7 +798,7 @@ video.promoImagen {
 #listaPromocionesComercio .promoImagen {
   width: 100%;
   height: 180px;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 12px;
   margin: 12px 0;
 }
