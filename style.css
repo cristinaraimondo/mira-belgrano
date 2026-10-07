@@ -1210,3 +1210,16 @@ header {
   object-fit: contain !important;
   object-position: center;
 }
+/* Mantener tamaño uniforme de las promociones */
+#listaPromocionesComercio {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 320px));
+  gap: 20px;
+  justify-content: start;
+}
+
+#listaPromocionesComercio > * {
+  width: 100%;
+  max-width: 320px;
+  box-sizing: border-box;
+}
