@@ -95,9 +95,9 @@ header p {
 /* CATEGORÍAS */
 
 .categorias {
-  max-width: 1100px;
+  max-width: 1400px;
   margin: auto;
-  padding: 55px 20px;
+  padding: 30px 40px 25px;
   text-align: center;
 }
 
@@ -108,7 +108,7 @@ header p {
 
 .categoriasGrid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 15px;
 }
 
@@ -136,9 +136,10 @@ header p {
 /* DESTACADOS */
 
 .destacados {
-  max-width: 1100px;
-  margin: auto;
-  padding: 20px 20px 70px;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+ padding: 20px 20px 15px;
 }
 
 .destacados h2 {
