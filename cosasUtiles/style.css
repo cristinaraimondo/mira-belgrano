@@ -208,16 +208,11 @@ footer p {
   }
 }
 .logo {
-  width: 260px;
-  max-width: 85%;
+  width: 230px;
+  max-width: 80%;
   height: auto;
   display: block;
   margin: 0 auto;
-}
-
-header {
-  position: relative;
-  padding: 18px 20px;
 }
 .categoriasGrid button i {
   display: block;
@@ -305,6 +300,12 @@ background-position: center;
   #listaComercios {
     grid-template-columns: 1fr;
   }
+}
+.logo {
+  width: 180px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
 }
 .comercioDetalleFoto {
   width: 100%;
@@ -397,20 +398,8 @@ background-position: center;
 
 #listaPromociones {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 320px));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 24px;
-  justify-content: start;
-}
-
-#listaPromociones .promocionCard {
-  width: 100%;
-  box-sizing: border-box;
-}
-
-@media (max-width: 480px) {
-  #listaPromociones {
-    grid-template-columns: minmax(0, 1fr);
-  }
 }
 
 .promocionCard {
@@ -730,14 +719,12 @@ video.promoImagen {
 
 #listaPromocionesComercio {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 320px));
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
-  justify-content: start;
 }
 
 #listaPromocionesComercio .promocionCard {
-  width: 100%;
-  max-width: 320px;
+  width: auto;
   margin: 0;
   padding: 16px;
   border-radius: 16px;
@@ -807,8 +794,7 @@ video.promoImagen {
   width: 100%;
   height: 280px;
 
-  object-fit: contain;
-  object-position: center;
+  object-fit: cover;
   border-radius: 12px;
 
   cursor: pointer;
@@ -1044,7 +1030,6 @@ header {
 
 .editarGaleria > div {
   min-width: 0;
-  text-align: center;
 }
 
 .editarGaleria label {
@@ -1053,30 +1038,16 @@ header {
   font-size: 14px;
 }
 
+.editarGaleria input[type="file"] {
+  font-size: 13px;
+  padding: 8px;
+}
 
 .editarGaleria img {
   width: 100%;
   height: 140px;
   object-fit: cover;
   border-radius: 10px;
-  display: block;
-  margin: 10px auto;
-}
-
-.editarGaleria > div > div[id^="vistaGaleria"] {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.editarGaleria > div > div[id^="vistaGaleria"] img {
-  max-width: 140px;
-}
-
-.editarGaleria .btnEliminarImagen {
-  display: block;
-  margin: 10px auto 0;
 }
 
 @media (max-width: 650px) {
@@ -1207,10 +1178,71 @@ header {
   background: #563a7c;
   color: white;
 }
+/* Alinear las 3 imágenes de la galería */
+.editarGaleria > div {
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+}
 
-/* Ajustes responsive de las promociones */
+.editarGaleria > div > div[id^="vistaGaleria"] {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.editarGaleria > div > div[id^="vistaGaleria"] img {
+  width: 100%;
+  max-width: 140px;
+  height: 140px;
+  object-fit: cover;
+  display: block;
+  margin: 10px auto;
+}
+
+.editarGaleria .btnEliminarImagen {
+  display: block;
+  margin: 10px auto 0;
+}
+/* Evitar que se recorten las imágenes de la galería pública */
+.comercioGaleria img {
+  object-fit: contain !important;
+  object-position: center;
+}
+/* Mantener tamaño uniforme de las promociones */
+#listaPromocionesComercio {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 320px));
+  gap: 20px;
+  justify-content: start;
+}
+
+#listaPromocionesComercio > * {
+  width: 100%;
+  max-width: 320px;
+  box-sizing: border-box;
+}
+/* Promociones en la ficha del comercio */
+#listaPromocionesComercio {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, 320px) !important;
+  gap: 20px;
+  justify-content: start;
+}
+
+#listaPromocionesComercio > * {
+  width: 320px !important;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
 @media (max-width: 480px) {
   #listaPromocionesComercio {
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  #listaPromocionesComercio > * {
+    width: 100% !important;
   }
 }
