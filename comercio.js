@@ -138,7 +138,7 @@ async function cargarPromocionesComercio(comercioId) {
             ? `
               <video
                 src="${promocion.imagen_url}"
-                class="promoImagen"
+             class="promoImagen promoAmpliable"
                 controls
                 muted
                 playsinline
@@ -148,7 +148,7 @@ async function cargarPromocionesComercio(comercioId) {
             : `
               <img
                 src="${promocion.imagen_url}"
-                class="promoImagen"
+              class="promoImagen promoAmpliable"
                 alt="${promocion.titulo || "Promoción"}"
               >
             `
@@ -196,4 +196,44 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
     visorGaleria.classList.remove("activo");
   }
+});
+// VISOR AMPLIADO DE PROMOCIONES
+
+const visorPromo = document.getElementById("visorPromocion");
+const contenidoPromo = document.getElementById("contenidoVisorPromocion");
+const cerrarPromo = document.getElementById("cerrarVisorPromocion");
+
+document.addEventListener("click", (e) => {
+  const elemento = e.target.closest(".promoAmpliable");
+  if (!elemento) return;
+
+  contenidoPromo.innerHTML = "";
+
+  const ampliado = elemento.cloneNode(true);
+
+  ampliado.classList.remove("promoAmpliable");
+  ampliado.removeAttribute("id");
+
+  if (ampliado.tagName === "VIDEO") {
+    ampliado.controls = true;
+    ampliado.muted = false;
+  }
+
+  contenidoPromo.appendChild(ampliado);
+  visorPromo.classList.add("activo");
+});
+
+function cerrarVisorPromo() {
+  visorPromo.classList.remove("activo");
+  contenidoPromo.innerHTML = "";
+}
+
+cerrarPromo.addEventListener("click", cerrarVisorPromo);
+
+visorPromo.addEventListener("click", (e) => {
+  if (e.target === visorPromo) cerrarVisorPromo();
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") cerrarVisorPromo();
 });

@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 
+
 <body>
 
   <header class="comercioHeader">
@@ -61,7 +62,16 @@
 </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="comercio.js"></script>
+ 
 
+<!-- Visor ampliado de promociones -->
+<div id="visorPromocion" class="visorPromocion">
+  <button type="button" id="cerrarVisorPromocion" aria-label="Cerrar">
+    ×
+  </button>
+  <div id="contenidoVisorPromocion"></div>
+</div>
+ <script src="comercio.js"></script>
+  
 </body>
 </html>

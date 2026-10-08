@@ -210,7 +210,7 @@ data.forEach(promocion => {
     ? `
       <video
         src="${promocion.imagen_url}"
-        class="promoImagen"
+        class="promoImagen promoAmpliable"
         controls
         muted
         playsinline
@@ -220,7 +220,7 @@ data.forEach(promocion => {
     : `
       <img
         src="${promocion.imagen_url}"
-        class="promoImagen"
+       class="promoImagen promoAmpliable"
         alt="${promocion.titulo || "Promoción"}"
       >
     `
@@ -249,3 +249,56 @@ data.forEach(promocion => {
 }
 
 cargarPromociones();
+// ========================================
+// VISOR AMPLIADO DE PROMOCIONES
+// ========================================
+
+const visorPromocion = document.getElementById("visorPromocion");
+const contenidoVisor = document.getElementById("contenidoVisorPromocion");
+const cerrarVisorPromocion = document.getElementById("cerrarVisorPromocion");
+
+document.addEventListener("click", (e) => {
+  const elemento = e.target.closest(".promoAmpliable");
+
+  if (!elemento) return;
+
+  const url = elemento.currentSrc || elemento.src;
+  const esVideo = elemento.tagName === "VIDEO";
+
+  contenidoVisor.innerHTML = "";
+
+  if (esVideo) {
+    const video = document.createElement("video");
+    video.src = url;
+    video.controls = true;
+    video.autoplay = true;
+    video.playsInline = true;
+    contenidoVisor.appendChild(video);
+  } else {
+    const imagen = document.createElement("img");
+    imagen.src = url;
+    imagen.alt = "Promoción ampliada";
+    contenidoVisor.appendChild(imagen);
+  }
+
+  visorPromocion.classList.add("activo");
+});
+
+function cerrarPromocionAmpliada() {
+  visorPromocion.classList.remove("activo");
+  contenidoVisor.innerHTML = "";
+}
+
+cerrarVisorPromocion.addEventListener("click", cerrarPromocionAmpliada);
+
+visorPromocion.addEventListener("click", (e) => {
+  if (e.target === visorPromocion) {
+    cerrarPromocionAmpliada();
+  }
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    cerrarPromocionAmpliada();
+  }
+});
