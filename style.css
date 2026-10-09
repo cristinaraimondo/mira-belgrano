@@ -1418,3 +1418,39 @@ header {
     min-height: auto;
   }
 }
+
+/* BOTÓN INSTALAR MIRÁBELGRANO */
+
+#btnInstalar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
+  padding: 12px 22px;
+  background: #198754;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#btnInstalar[hidden] {
+  display: none;
+}
+
+#btnInstalar:hover {
+  background: #146c43;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+  #btnInstalar {
+    font-size: 14px;
+    padding: 11px 18px;
+  }
+}
+

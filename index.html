@@ -29,7 +29,8 @@
 
 <body>
 
- <header>
+
+<header>
 
   <a href="login.html" class="acceso-panel">
     <i class="fa-solid fa-user"></i>
@@ -37,9 +38,16 @@
   </a>
 
   <img src="logo.png" alt="Mirá Belgrano" class="logo">
+
   <p>Encontrá. Elegí. Disfrutá.</p>
 
+  <button id="btnInstalar" type="button" hidden>
+    <i class="fa-solid fa-download"></i>
+    Instalar MiráBelgrano
+  </button>
+
 </header>
+
   <main>
 
     <section class="hero">
@@ -202,6 +210,8 @@
     });
   }
 </script>
+
+<script src="/pwa/install.js" defer></script>
 
 </body>
 </html>
