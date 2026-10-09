@@ -1320,3 +1320,101 @@ header {
 .promoAmpliable {
   cursor: zoom-in;
 }
+/* DESCUBRÍ GENERAL BELGRANO */
+
+.descubri {
+  max-width: 1400px;
+  margin: 40px auto 60px;
+  padding: 30px 40px;
+  text-align: center;
+}
+
+.descubri h2 {
+  font-size: 30px;
+  color: #261442;
+  margin-bottom: 10px;
+}
+
+.descubriSubtitulo {
+  color: #666;
+  font-size: 16px;
+  margin-bottom: 30px;
+}
+
+.descubriGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.descubriCard {
+  background: white;
+  padding: 30px 20px;
+  border-radius: 18px;
+  box-shadow: 0 5px 20px rgba(38, 20, 66, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.descubriCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(38, 20, 66, 0.16);
+}
+
+.descubriCard > i {
+  font-size: 38px;
+  color: #6d3ca5;
+  margin-bottom: 18px;
+}
+
+.descubriCard h3 {
+  font-size: 21px;
+  color: #261442;
+  margin-bottom: 12px;
+}
+
+.descubriCard p {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.5;
+  min-height: 65px;
+}
+
+.descubriCard a {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 11px 22px;
+  background: #6d3ca5;
+  color: white;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+.descubriCard a:hover {
+  background: #261442;
+}
+
+/* TABLETS */
+@media (max-width: 900px) {
+  .descubriGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* CELULARES */
+@media (max-width: 480px) {
+  .descubri {
+    padding: 25px 15px;
+    margin: 20px auto 40px;
+  }
+
+  .descubriGrid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .descubriCard p {
+    min-height: auto;
+  }
+}

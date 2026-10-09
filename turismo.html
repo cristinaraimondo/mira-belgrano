@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Qué visitar | Mirá Belgrano</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="visitarBelgrano.css">
+
+
+</head>
+
+<body>
+
+  <header>
+    <a href="index.html">
+      <img src="logo.png" alt="Mirá Belgrano" class="logo">
+    </a>
+    <p>Encontrá. Elegí. Disfrutá.</p>
+  </header>
+
+  <main class="turismoPagina">
+
+    <a href="index.html" class="turismoVolver">
+      <i class="fa-solid fa-arrow-left"></i>
+      Volver al inicio
+    </a>
+
+    <div class="turismoEncabezado">
+      <h1>Descubrí General Belgrano</h1>
+      <p>Conocé los lugares y atractivos que hacen especial a nuestra ciudad.</p>
+    </div>
+
+    <div class="turismoGrid">
+
+      <article class="turismoCard">
+        <img src="img/turismo-costanera.png"alt="Costanera de General Belgrano">
+        <div class="turismoCardContenido">
+          <h2>Costanera del río Salado</h2>
+          <p>
+            Un espacio para disfrutar de la naturaleza, caminar,
+            descansar y contemplar el paisaje junto al río.
+          </p>
+          <a href="https://www.google.com/maps/search/?api=1&query=Costanera+General+Belgrano+Buenos+Aires"
+             target="_blank" rel="noopener noreferrer">
+            <i class="fa-solid fa-location-dot"></i> Cómo llegar
+          </a>
+        </div>
+      </article>
+
+      <article class="turismoCard">
+        <img src="img/turismo-termas.png"alt="Termas de General Belgrano">
+        <div class="turismoCardContenido">
+          <h2>Termas del Salado</h2>
+          <p>
+            Un complejo termal para disfrutar de piscinas,
+            momentos de relajación y actividades recreativas.
+          </p>
+          <a href="https://www.google.com/maps/search/?api=1&query=Termas+del+Salado+General+Belgrano"
+             target="_blank" rel="noopener noreferrer">
+            <i class="fa-solid fa-location-dot"></i> Cómo llegar
+          </a>
+        </div>
+      </article>
+
+      <article class="turismoCard">
+        <img src="img/turismo-plaza.jpg" alt="Plaza principal de General Belgrano">
+        <div class="turismoCardContenido">
+          <h2>Plaza 1.º de Agosto</h2>
+          <p>
+            Un espacio verde tradicional para pasear,
+            descansar y disfrutar del centro de la ciudad.
+          </p>
+          <a href="https://www.google.com/maps/search/?api=1&query=Plaza+1+de+Agosto+General+Belgrano"
+             target="_blank" rel="noopener noreferrer">
+            <i class="fa-solid fa-location-dot"></i> Cómo llegar
+          </a>
+        </div>
+      </article>
+      <article class="turismoCard">
+  <img src="img/turismo-bosque.jpg" alt="Bosque Encantado de General Belgrano">
+
+  <div class="turismoCardContenido">
+    <h2>Bosque Encantado</h2>
+
+    <p>
+      Un espacio natural ideal para disfrutar de caminatas,
+      descubrir la vegetación y conectarse con la tranquilidad
+      del entorno.
+    </p>
+
+    <a href="https://www.google.com/maps/search/?api=1&query=Bosque+Encantado+General+Belgrano+Buenos+Aires"
+       target="_blank" rel="noopener noreferrer">
+      <i class="fa-solid fa-location-dot"></i> Cómo llegar
+    </a>
+  </div>
+</article>
+
+    </div>
+
+  </main>
+
+  <footer>
+    <strong>Mirá Belgrano</strong>
+    <p>Todo lo que buscás en General Belgrano, en un solo lugar.</p>
+  </footer>
+  <!-- Visor de fotografías turísticas -->
+<div id="visorTurismo" class="visorPromocion">
+  <button type="button" id="cerrarVisorTurismo"
+          aria-label="Cerrar">×</button>
+  <div id="contenidoVisorTurismo"></div>
+</div>
+<script>
+  const visorTurismo = document.getElementById("visorTurismo");
+  const contenidoTurismo = document.getElementById("contenidoVisorTurismo");
+  const cerrarTurismo = document.getElementById("cerrarVisorTurismo");
+
+  // Abrir fotografía ampliada
+  document.querySelectorAll(".turismoCard img").forEach(imagen => {
+    imagen.style.cursor = "zoom-in";
+
+    imagen.addEventListener("click", () => {
+      contenidoTurismo.innerHTML = "";
+
+      const ampliada = document.createElement("img");
+      ampliada.src = imagen.src;
+      ampliada.alt = imagen.alt;
+
+      contenidoTurismo.appendChild(ampliada);
+      visorTurismo.classList.add("activo");
+    });
+  });
+
+  // Cerrar visor
+  function cerrarFotoTurismo() {
+    visorTurismo.classList.remove("activo");
+    contenidoTurismo.innerHTML = "";
+  }
+
+  cerrarTurismo.addEventListener("click", cerrarFotoTurismo);
+
+  visorTurismo.addEventListener("click", e => {
+    if (e.target === visorTurismo) cerrarFotoTurismo();
+  });
+
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape") cerrarFotoTurismo();
+  });
+</script>
+
+</body>
+</html>

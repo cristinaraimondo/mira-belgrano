@@ -1,0 +1,244 @@
+ .turismoPagina {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px 70px;
+    }
+
+    .turismoEncabezado {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .turismoEncabezado h1 {
+      color: #261442;
+      font-size: 34px;
+      margin-bottom: 12px;
+    }
+
+    .turismoEncabezado p {
+      color: #666;
+      font-size: 16px;
+    }
+
+    .turismoGrid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .turismoCard {
+      background: white;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 5px 20px rgba(38,20,66,0.1);
+    }
+
+    .turismoCard img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .turismoCardContenido {
+      padding: 22px;
+    }
+
+    .turismoCard h2 {
+      font-size: 21px;
+      color: #261442;
+      margin-bottom: 12px;
+    }
+
+    .turismoCard p {
+      color: #666;
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .turismoCard a,
+    .turismoVolver {
+      display: inline-block;
+      padding: 11px 18px;
+      background: #6d3ca5;
+      color: white;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .turismoVolver {
+      margin-bottom: 30px;
+    }
+
+    .turismoCard a:hover,
+    .turismoVolver:hover {
+      background: #261442;
+    }
+
+    @media (max-width: 900px) {
+      .turismoGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 600px) {
+      .turismoGrid {
+        grid-template-columns: 1fr;
+      }
+    }
+/* VISOR DE FOTOGRAFÍAS TURÍSTICAS */
+
+#visorTurismo {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100dvh;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 65px 20px 20px;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.88);
+  z-index: 9999;
+}
+
+#visorTurismo.activo {
+  display: flex;
+}
+
+#contenidoVisorTurismo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+#contenidoVisorTurismo img {
+  display: block;
+  max-width: 85vw;
+  max-height: 75vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 12px;
+}
+
+#cerrarVisorTurismo {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 45px;
+  height: 45px;
+  border: none;
+  border-radius: 50%;
+  background: #e63946;
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+  z-index: 10000;
+}
+/* ===================================
+   CÓMO LLEGAR A GENERAL BELGRANO
+=================================== */
+
+.comoLlegarContenido {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 30px;
+  align-items: stretch;
+}
+
+.comoLlegarMapa {
+  background: white;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 5px 20px rgba(38, 20, 66, 0.1);
+}
+
+.comoLlegarMapa iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  border: none;
+}
+
+.comoLlegarInfo {
+  background: white;
+  padding: 35px;
+  border-radius: 18px;
+  box-shadow: 0 5px 20px rgba(38, 20, 66, 0.1);
+}
+
+.comoLlegarInfo h2 {
+  color: #261442;
+  font-size: 26px;
+  margin-bottom: 20px;
+}
+
+.comoLlegarInfo p {
+  color: #666;
+  font-size: 16px;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.comoLlegarInfo .turismoVolver {
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
+/* Adaptación a celulares */
+@media (max-width: 768px) {
+  .comoLlegarContenido {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .comoLlegarMapa iframe {
+    height: 350px;
+    min-height: 350px;
+  }
+
+  .comoLlegarInfo {
+    padding: 25px 20px;
+  }
+}
+/* FARMACIAS DE TURNO */
+
+#listaFarmacias {
+  display: flex;
+  justify-content: center;
+}
+
+#listaFarmacias .turismoCard {
+  width: 100%;
+  max-width: 520px;
+}
+
+#listaFarmacias .turismoCardContenido {
+  padding: 30px;
+}
+
+#nombreFarmacia {
+  color: #6d3ca5;
+  font-size: 24px;
+  margin: 20px 0 8px;
+}
+
+#actualizacionFarmacia {
+  background: #f4effa;
+  padding: 15px;
+  border-radius: 10px;
+  line-height: 1.6;
+}
+/* Cruz verde de farmacia */
+.cruzFarmacia {
+  color: #16a34a;
+  font-size: 38px;
+  margin-right: 10px;
+  vertical-align: middle;
+}

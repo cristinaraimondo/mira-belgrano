@@ -1,0 +1,205 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Farmacias de turno | Mirá Belgrano</title>
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="visitarBelgrano.css">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+  <header>
+    <a href="index.html">
+      <img src="logo.png" alt="Mirá Belgrano" class="logo">
+    </a>
+    <p>Encontrá. Elegí. Disfrutá.</p>
+  </header>
+
+  <main class="turismoPagina">
+
+    <a href="index.html" class="turismoVolver">
+      <i class="fa-solid fa-arrow-left"></i>
+      Volver al inicio
+    </a>
+
+    <div class="turismoEncabezado">
+      <h1><i class="fa-solid fa-prescription-bottle-medical"></i>
+        Farmacias de turno
+      </h1>
+      <p>Consultá las farmacias de guardia de General Belgrano.</p>
+    </div>
+
+    <section class="turismoGrid" id="listaFarmacias">
+
+      <article class="turismoCard">
+        <div class="turismoCardContenido">
+
+          <h2>
+          <i class="fa-solid fa-square-plus cruzFarmacia"></i>
+            Farmacia de turno de hoy
+          </h2>
+
+          <p id="fechaTurno"></p>
+
+          <h3 id="nombreFarmacia">Turno pendiente de confirmar</h3>
+
+          <p id="direccionFarmacia">
+            Próximamente estará disponible el cronograma.
+          </p>
+
+          <p id="telefonoFarmacia"></p>
+
+          <p id="actualizacionFarmacia">
+            Consultá el turno con una fuente oficial antes de acudir.
+          </p>
+
+          <a id="mapaFarmacia"
+             href="#"
+             target="_blank"
+             rel="noopener noreferrer"
+             style="display:none;">
+            <i class="fa-solid fa-location-dot"></i>
+            Cómo llegar
+          </a>
+
+        </div>
+      </article>
+
+    </section>
+
+  </main>
+
+  <footer>
+    <strong>Mirá Belgrano</strong>
+    <p>Todo lo que buscás en General Belgrano, en un solo lugar.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+  const supabaseFarmacias = window.supabase.createClient(
+    "https://ezyqqnyhsqgpxclpkbzq.supabase.co",
+    "sb_publishable_vFfGaVSYjYXXzxvlrAds5A_qxu_Zvk9"
+  );
+
+  async function cargarFarmaciaDeTurno() {
+  // Obtener fecha y hora de Argentina
+const ahora = new Date();
+
+const partes = new Intl.DateTimeFormat("en-GB", {
+  timeZone: "America/Argentina/Buenos_Aires",
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+  hour: "2-digit",
+  minute: "2-digit",
+  hourCycle: "h23"
+}).formatToParts(ahora);
+
+const valor = tipo =>
+  partes.find(p => p.type === tipo).value;
+
+const hora = Number(valor("hour"));
+const minuto = Number(valor("minute"));
+
+const fechaHoy = new Date(Date.UTC(
+  Number(valor("year")),
+  Number(valor("month")) - 1,
+  Number(valor("day"))
+));
+
+// Antes de las 08:30 sigue vigente el turno anterior
+if (hora < 8 || (hora === 8 && minuto < 30)) {
+  fechaHoy.setUTCDate(fechaHoy.getUTCDate() - 1);
+}
+
+const fechaTurno = fechaHoy.toISOString().slice(0, 10);
+
+    document.getElementById("fechaTurno").textContent =
+      new Date().toLocaleDateString("es-AR", {
+        timeZone: "America/Argentina/Buenos_Aires",
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+      });
+
+const { data, error } = await supabaseFarmacias
+  .from("farmacias_turnos")
+  .select(`
+    *,
+    farmacias (
+      nombre,
+      direccion,
+      telefono,
+      maps_url
+    )
+  `)
+  .eq("fecha", fechaTurno)
+  .maybeSingle();
+
+    if (error) {
+      console.error("Error al consultar farmacias:", error);
+      return;
+    }
+
+   if (!data) {
+  console.log("No hay turno cargado para:", fechaTurno);
+  return;
+}
+
+console.log("Farmacia encontrada:", data);
+
+const farmacia = data.farmacias;
+
+document.getElementById("nombreFarmacia").textContent =
+  farmacia?.nombre || data.nombre;
+
+document.getElementById("direccionFarmacia").textContent =
+  farmacia?.direccion || data.direccion || "Dirección no disponible";
+
+document.getElementById("telefonoFarmacia").textContent =
+  farmacia?.telefono || data.telefono || "";
+
+   const inicioTurno = new Date(`${data.fecha}T08:30:00-03:00`);
+
+const finTurno = new Date(inicioTurno);
+finTurno.setDate(finTurno.getDate() + 1);
+
+const formatoFecha = fecha =>
+  fecha.toLocaleDateString("es-AR", {
+    timeZone: "America/Argentina/Buenos_Aires",
+    day: "numeric",
+    month: "long"
+  });
+
+document.getElementById("actualizacionFarmacia").textContent =
+  `Guardia desde el ${formatoFecha(inicioTurno)} a las 08:30 hs ` +
+  `hasta el ${formatoFecha(finTurno)} a las 08:30 hs.`;
+console.log(
+  "Horario mostrado:",
+  document.getElementById("actualizacionFarmacia").textContent
+);
+    const botonMapa = document.getElementById("mapaFarmacia");
+
+const ubicacion = farmacia?.maps_url || data.maps_url;
+
+if (ubicacion) {
+  botonMapa.href = ubicacion;
+  botonMapa.style.display = "inline-block";
+} else {
+  botonMapa.style.display = "none";
+}
+  }
+
+  cargarFarmaciaDeTurno();
+</script>
+</body>
+</html>
