@@ -53,11 +53,16 @@ async function cargarPanel() {
   comercioActual = comercio;
   const panelPromociones = document.getElementById("panelPromociones");
 
-if (comercio.plan === "auspiciante") {
+
+if (
+  comercio.bonificado === true ||
+  (comercio.plan === "auspiciante" && comercio.estado === "activo")
+) {
   panelPromociones.style.display = "block";
 } else {
   panelPromociones.style.display = "none";
 }
+
 
   console.log("Comercio del usuario:", comercio);
 
@@ -67,21 +72,31 @@ if (comercio.plan === "auspiciante") {
   document.getElementById("panelPlan").textContent =
     `Plan: ${comercio.plan || "Sin plan"}`;
     const estadoSuscripcion = document.getElementById("estadoSuscripcion");
+document.querySelector("#panelSuscripcion h2").textContent =
+  comercio.bonificado === true
+    ? "Mi plan"
+    : "Mi suscripción";
 
-if (comercio.estado === "activo") {
+if (comercio.bonificado === true) {
+  estadoSuscripcion.innerHTML =
+    `Estado del plan: <strong>Auspiciante bonificado</strong>`;
+} else if (comercio.estado === "activo") {
   estadoSuscripcion.innerHTML =
     `Estado de la suscripción: <strong>Activa</strong>`;
 } else {
   estadoSuscripcion.innerHTML =
     `Estado de la suscripción: <strong>Inactiva</strong>`;
 }
+
 const panelContenido = document.getElementById("panelContenido");
 
-if (comercio.estado !== "activo") {
-  panelContenido.style.display = "none";
-} else {
+
+if (comercio.estado === "activo" || comercio.bonificado === true) {
   panelContenido.style.display = "block";
+} else {
+  panelContenido.style.display = "none";
 }
+
 
 if (comercio.plan) {
   document.getElementById("seleccionarPlan").value = comercio.plan;
@@ -93,6 +108,13 @@ botonPlan.textContent =
   comercio.estado === "activo"
     ? "Cambiar plan"
     : "Contratar plan";
+    
+if (comercio.bonificado === true) {
+  botonPlan.style.display = "none";
+  document.getElementById("seleccionarPlan").style.display = "none";
+  document.querySelector('label[for="seleccionarPlan"]').style.display = "none";
+}
+
 
     const { data: promociones, error: errorPromociones } = await db
   .from("promociones")
@@ -463,6 +485,12 @@ document.getElementById("contratarPlan")
       alert("No se pudo identificar el comercio.");
       return;
     }
+    if (comercioActual.estado === "activo") {
+  alert(
+    "Tu suscripción ya está activa. Estamos preparando el cambio de plan."
+  );
+  return;
+}
 
     const {
       data: { user }
@@ -479,7 +507,7 @@ document.getElementById("contratarPlan")
       "crear-suscripcion",
       {
         body: {
-         email: "test_user_3490472990773282714@testuser.com",
+         email: user.email,
           plan: plan,
           comercio_id: comercioActual.id
         }
