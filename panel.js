@@ -86,6 +86,14 @@ if (comercio.estado !== "activo") {
 if (comercio.plan) {
   document.getElementById("seleccionarPlan").value = comercio.plan;
 }
+
+const botonPlan = document.getElementById("contratarPlan");
+
+botonPlan.textContent =
+  comercio.estado === "activo"
+    ? "Cambiar plan"
+    : "Contratar plan";
+
     const { data: promociones, error: errorPromociones } = await db
   .from("promociones")
   .select("*")
