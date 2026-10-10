@@ -228,9 +228,16 @@ header {
 }
 #listaComercios {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 22px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
   background: transparent;
+}
+
+/* Tablets */
+@media (min-width: 701px) and (max-width: 1100px) {
+  #listaComercios {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 .comercioCard {
@@ -241,11 +248,11 @@ header {
 }
 
 .comercioImagen {
-  height: 190px;
+  height: 145px;
   background: #ded8eb;
   position: relative;
   background-size: cover;
-background-position: center;
+  background-position: center;
 }
 
 .comercioImagen span {
@@ -1452,5 +1459,36 @@ header {
     font-size: 14px;
     padding: 11px 18px;
   }
+}
+/* Descripción compacta de comercios */
+
+.comercioInfo p {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+
+.comercioInfo p.expandido {
+  display: block;
+  overflow: visible;
+}
+
+.btnLeerMas {
+  display: inline-block;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0 0 15px;
+  color: #ff5c5c;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btnLeerMas:hover {
+  text-decoration: underline;
 }
 

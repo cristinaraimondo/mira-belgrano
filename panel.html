@@ -43,6 +43,30 @@
   <button type="button" id="contratarPlan">
     Contratar plan
   </button>
+  <div id="formularioPago" style="display: none; margin-top: 20px;">
+  <h3>Datos de pago</h3>
+  <p>Suscripción mensual mediante Mercado Pago.</p>
+
+  <form id="formTarjeta">
+    <div id="mpNumeroTarjeta" style="min-height: 45px;"></div>
+    <div id="mpVencimiento" style="min-height: 45px;"></div>
+    <div id="mpCodigoSeguridad" style="min-height: 45px;"></div>
+
+    <input type="text" id="mpTitular" placeholder="Nombre del titular" autocomplete="cc-name">
+    <select id="mpBanco"></select>
+    <select id="mpCuotas"></select>
+    <select id="mpDocumentoTipo"></select>
+    <input type="text" id="mpDocumentoNumero" placeholder="Número de documento">
+
+    <input type="email" id="mpEmail" placeholder="Correo electrónico" autocomplete="email">
+
+    <button type="submit" id="confirmarSuscripcion">
+      Confirmar suscripción
+    </button>
+  </form>
+
+  <p id="mensajePago"></p>
+</div>
 
   <!-- Formulario de pago: se habilitará al completar la integración segura -->
   <div id="formularioPago" style="display: none; margin-top: 20px;">

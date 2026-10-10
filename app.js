@@ -56,7 +56,21 @@ data.forEach(comercio => {
 
         <h3>${comercio.nombre}</h3>
 
-        <p>${comercio.descripcion || ""}</p>
+       <p class="descripcionComercio">${comercio.descripcion || ""}</p>
+
+${(comercio.descripcion || "").length > 100 ? `
+  <button
+    type="button"
+    class="btnLeerMas"
+    onclick="
+      const descripcion = this.previousElementSibling;
+      descripcion.classList.toggle('expandido');
+      this.textContent = descripcion.classList.contains('expandido')
+        ? 'Leer menos'
+        : 'Leer más';
+    "
+  >Leer más</button>
+` : ""}
 
        <a href="comercio.html?slug=${comercio.slug}" class="btnComercio">
   Ver comercio
