@@ -148,1347 +148,2256 @@ header p {
   margin-bottom: 30px;
 }
 
-#listaComercios {
-  min-height: 150px;
-  background: white;
-  border-radius: 20px;
-}
-
-
 /* FOOTER */
 
 footer {
+
   background: #261442;
+
   color: white;
+
   text-align: center;
+
   padding: 35px 20px;
+
 }
 
 footer strong {
+
   font-size: 20px;
+
 }
 
 footer p {
-  margin-top: 8px;
-  opacity: 0.8;
-}
 
+  margin-top: 8px;
+
+  opacity: 0.8;
+
+}
 
 /* CELULAR */
 
 @media (max-width: 700px) {
 
   header h1 {
+
     font-size: 24px;
+
   }
 
   .hero {
+
     min-height: 330px;
+
     padding: 70px 18px;
+
   }
 
   .hero h2 {
+
     font-size: 32px;
+
   }
 
   .buscador {
+
     width: 100%;
+
   }
 
   .buscador button {
+
     padding: 0 18px;
+
   }
 
   .categoriasGrid {
+
     grid-template-columns: repeat(2, 1fr);
+
   }
 
   .categoriasGrid button {
+
     padding: 20px 8px;
+
     font-size: 14px;
+
   }
+
 }
+
 .logo {
+
   width: 260px;
+
   max-width: 85%;
+
   height: auto;
+
   display: block;
+
   margin: 0 auto;
+
 }
 
 header {
+
   position: relative;
+
   padding: 18px 20px;
+
 }
+
 .categoriasGrid button i {
+
   display: block;
+
   font-size: 28px;
+
   color: #ff5c5c;
+
   margin-bottom: 12px;
+
 }
+
+/* Comercios destacados: 6 columnas en escritorio, 3 en tablet, 2 en móvil */
 #listaComercios {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 18px;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 14px;
   background: transparent;
 }
 
-/* Tablets */
-@media (min-width: 701px) and (max-width: 1100px) {
+@media (max-width: 1200px) {
+  #listaComercios {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
   #listaComercios {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 .comercioCard {
+
   background: white;
+
   border-radius: 20px;
+
   overflow: hidden;
+
   box-shadow: 0 6px 25px rgba(38, 20, 66, 0.10);
+
 }
 
 .comercioImagen {
-  height: 145px;
+
+  height: 110px;
+
   background: #ded8eb;
+
   position: relative;
+
   background-size: cover;
+
   background-position: center;
+
 }
 
 .comercioImagen span {
+
   position: absolute;
+
   top: 14px;
+
   left: 14px;
 
   background: #ff5c5c;
+
   color: white;
 
   padding: 7px 12px;
+
   border-radius: 20px;
 
   font-size: 11px;
+
   font-weight: bold;
+
 }
 
 .comercioInfo {
-  padding: 20px;
+
+  padding: 12px;
+
 }
 
 .comercioInfo small {
+
   color: #ff5c5c;
+
   font-weight: bold;
+
 }
 
 .comercioInfo h3 {
+  line-height: 1.25;
+
   margin: 7px 0 10px;
-  font-size: 21px;
+
+  font-size: 16px;
+
   color: #261442;
+
 }
 
 .comercioInfo p {
+  font-size: 13px;
+
   color: #666;
+
   line-height: 1.5;
-  margin-bottom: 18px;
+
+  margin-bottom: 6px;
+
 }
 
-.comercioInfo button {
+.comercioInfo .btnComercio {
+  display: block;
+  box-sizing: border-box;
+  text-align: center;
+  text-decoration: none;
+
   width: 100%;
+
   border: none;
+
   border-radius: 12px;
 
   padding: 12px;
 
   background: #261442;
+
   color: white;
 
   font-weight: bold;
+
   cursor: pointer;
+
 }
 
-.comercioInfo button:hover {
+.comercioInfo .btnComercio:hover {
+
   background: #ff5c5c;
+
 }
 
-@media (max-width: 700px) {
-  #listaComercios {
-    grid-template-columns: 1fr;
-  }
-}
 .comercioDetalleFoto {
+
   width: 100%;
+
   height: auto;
+
   aspect-ratio: 16 / 9;
 
   background-size: contain;
+
   background-position: center;
+
   background-repeat: no-repeat;
 
   background-color: #f7f5fa;
+
 }
+
 .comercioDetalle {
+
   max-width: 1100px;
+
   margin: 40px auto;
+
   background: white;
+
   border-radius: 24px;
+
   overflow: hidden;
+
   box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+
 }
 
 .comercioDetalleInfo {
+
   padding: 30px 36px 36px;
+
 }
 
 .comercioDetalleInfo small {
+
   color: #ff5b5b;
+
   font-weight: 700;
+
   font-size: 16px;
+
 }
 
 .comercioDetalleInfo h1 {
+
   color: #261047;
+
   font-size: 36px;
+
   margin: 6px 0 10px;
+
 }
 
 .comercioDetalleInfo p {
+
   color: #555;
+
   font-size: 18px;
+
   line-height: 1.5;
+
   margin: 0;
+
 }
+
 #comercioDatos {
+
   margin-top: 24px;
+
   padding: 20px 24px;
+
   background: #f7f5fa;
+
   border-radius: 16px;
+
   max-width: 600px;
+
 }
 
 #comercioDatos p {
+
   margin: 0;
+
   padding: 11px 0;
+
   font-size: 16px;
+
   color: #333;
+
   border-bottom: 1px solid #e5e0eb;
+
   display: flex;
+
   align-items: center;
+
   gap: 10px;
+
 }
 
 #comercioDatos p:last-child {
+
   border-bottom: none;
+
 }
 
 #comercioDatos a {
+
   color: #261047;
+
   font-weight: 600;
+
   text-decoration: none;
+
 }
 
 #comercioDatos a:hover {
+
   text-decoration: underline;
+
 }
+
 .comercioDetalleFoto.sin-foto {
+
   display: none;
+
 }
+
 .promociones {
+
   max-width: 1100px;
+
   margin: 70px auto;
+
   padding: 0 20px;
+
 }
 
 .promociones h2 {
+
   color: #261047;
+
   font-size: 30px;
+
   margin-bottom: 25px;
+
 }
 
 /* Galería compacta de promociones */
+
 #listaPromociones {
+
   display: grid;
+
   grid-template-columns: repeat(auto-fill, 250px);
+
   gap: 18px;
+
   justify-content: center;
+
 }
 
 #listaPromociones .promocionCard {
+
   width: 250px;
+
   padding: 16px;
+
   box-sizing: border-box;
+
 }
 
 /* Imágenes y videos sin recortes */
+
 #listaPromociones .promocionCard img,
+
 #listaPromociones .promocionCard video {
+
   display: block;
+
   width: 100%;
+
   max-width: 100%;
+
   height: 190px;
+
   object-fit: contain;
+
   margin: 10px auto;
+
   border-radius: 10px;
+
 }
 
 #listaPromociones .promocionCard img {
+
   width: 90%;
+
 }
 
 /* Textos más compactos */
+
 #listaPromociones .promocionCard h3 {
+
   font-size: 19px;
+
 }
 
 #listaPromociones .promocionCard p {
+
   font-size: 14px;
+
 }
 
 /* Adaptación a celulares */
+
 @media (max-width: 480px) {
+
   #listaPromociones {
+
     grid-template-columns: repeat(2, minmax(0, 1fr));
+
     gap: 10px;
+
   }
 
   #listaPromociones .promocionCard {
+
     width: 100%;
+
     padding: 12px;
+
   }
 
   #listaPromociones .promocionCard img,
+
   #listaPromociones .promocionCard video {
+
     height: 150px;
-  }
-}
 
-#listaPromociones .promocionCard {
-  width: 100%;
-  box-sizing: border-box;
-  text-align: center;
-}
-
-@media (max-width: 480px) {
-  #listaPromociones {
-    grid-template-columns: minmax(0, 1fr);
   }
+
 }
 
 .promocionCard {
+
   background: white;
+
   padding: 25px;
+
   border-radius: 20px;
+
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+
 }
 
 .promocionCard small {
+
   display: inline-block;
+
   background: #ff5b5b;
+
   color: white;
+
   font-weight: 700;
+
   padding: 6px 12px;
+
   border-radius: 20px;
+
   margin-bottom: 12px;
+
 }
 
 .promocionCard h3 {
+
   color: #261047;
+
   font-size: 24px;
+
   margin: 0 0 10px;
+
 }
 
 .promocionCard p {
+
   color: #555;
+
   line-height: 1.5;
+
   margin: 6px 0;
+
 }
 
 .promocionCard .promoFecha {
+
   margin-top: 18px;
+
   font-size: 14px;
+
   font-weight: 600;
+
   color: #ff5b5b;
+
 }
+
 .promoComercio {
+
   color: #ff5b5b !important;
+
   font-weight: 700;
+
   font-size: 16px;
+
   margin: 4px 0 8px !important;
+
 }
+
 .promoBoton {
+
   display: inline-block;
+
   margin-top: 12px;
+
   padding: 10px 18px;
+
   background: #261047;
+
   color: white;
+
   text-decoration: none;
+
   font-weight: 700;
+
   border-radius: 10px;
+
 }
 
 .promoBoton:hover {
+
   opacity: 0.9;
+
 }
+
 .loginComercio {
+
   width: 90%;
+
   max-width: 430px;
+
   margin: 70px auto;
+
   padding: 35px;
+
   background: white;
+
   border-radius: 22px;
+
   box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+
 }
 
 .loginComercio h1 {
+
   color: #261047;
+
   font-size: 30px;
+
   margin: 0 0 10px;
+
 }
 
 .loginComercio > p {
+
   color: #666;
+
   margin-bottom: 25px;
+
   line-height: 1.5;
+
 }
 
 #loginForm {
+
   display: flex;
+
   flex-direction: column;
+
   gap: 10px;
+
 }
 
 #loginForm label {
+
   color: #261047;
+
   font-weight: 700;
+
   margin-top: 8px;
+
 }
 
 #loginForm input {
+
   width: 100%;
+
   box-sizing: border-box;
+
   padding: 13px 15px;
+
   border: 1px solid #ddd6e7;
+
   border-radius: 10px;
+
   font-size: 16px;
+
   outline: none;
+
 }
 
 #loginForm input:focus {
+
   border-color: #261047;
+
 }
 
 #loginForm button {
+
   margin-top: 15px;
+
   padding: 13px;
+
   border: none;
+
   border-radius: 10px;
+
   background: #261047;
+
   color: white;
+
   font-size: 16px;
+
   font-weight: 700;
+
   cursor: pointer;
+
 }
 
 #loginForm button:hover {
+
   opacity: 0.9;
+
 }
+
 .panelPromociones {
+
   margin-top: 28px;
+
 }
 
 .panelPromociones h2 {
+
   color: #261047;
+
   font-size: 24px;
+
   margin-bottom: 18px;
+
 }
 
 .panelPromoCard {
+
   background: #f7f5fa;
+
   border-radius: 16px;
+
   padding: 20px;
+
   margin-bottom: 15px;
+
   border-left: 5px solid #ff5b5b;
+
 }
 
 .panelPromoCard h3 {
+
   color: #261047;
+
   font-size: 20px;
+
   margin: 0 0 8px;
+
 }
 
 .panelPromoCard p {
+
   color: #555;
+
   line-height: 1.5;
+
   margin: 5px 0;
+
 }
 
 .panelPromoCard strong {
+
   display: inline-block;
+
   margin-top: 10px;
+
   padding: 5px 10px;
+
   background: #e8f7ec;
+
   border-radius: 20px;
+
   font-size: 14px;
+
 }
 
 #cerrarSesion {
+
   margin-top: 25px;
+
   padding: 10px 16px;
+
   border: 1px solid #261047;
+
   border-radius: 10px;
+
   background: white;
+
   color: #261047;
+
   font-weight: 700;
+
   cursor: pointer;
+
 }
+
 .btnNuevaPromo {
+
   margin-bottom: 20px;
+
   padding: 11px 18px;
+
   border: none;
+
   border-radius: 10px;
+
   background: #ff5b5b;
+
   color: white;
+
   font-weight: 700;
+
   cursor: pointer;
+
 }
 
 .btnNuevaPromo:hover {
+
   opacity: 0.9;
+
 }
+
 .formPromocion {
+
   background: #f7f5fa;
+
   border-radius: 16px;
+
   padding: 22px;
+
   margin-bottom: 22px;
+
 }
 
 .formPromocion h3 {
+
   color: #261047;
+
   font-size: 21px;
+
   margin: 0 0 18px;
+
 }
 
 .formPromocion label {
+
   display: block;
+
   color: #261047;
+
   font-weight: 700;
+
   font-size: 14px;
+
   margin: 14px 0 6px;
+
 }
 
 .formPromocion input,
+
 .formPromocion textarea {
+
   display: block;
+
   width: 100%;
+
   box-sizing: border-box;
+
   padding: 11px 12px;
+
   border: 1px solid #ddd6e7;
+
   border-radius: 9px;
+
   background: white;
+
   font-size: 15px;
+
   font-family: inherit;
+
 }
 
 .formPromocion textarea {
+
   min-height: 90px;
+
   resize: vertical;
+
 }
 
 #publicarPromocion {
+
   width: 100%;
+
   margin-top: 20px;
+
   padding: 12px;
+
   border: none;
+
   border-radius: 10px;
+
   background: #261047;
+
   color: white;
+
   font-weight: 700;
+
   cursor: pointer;
+
 }
+
 .panelPromoImagen {
+
   width: 100%;
+
   height: 180px;
+
   object-fit: cover;
+
   border-radius: 12px;
+
   margin-bottom: 15px;
+
   display: block;
+
 }
+
 .btnEliminarPromo {
+
   display: block;
+
   margin-top: 15px;
+
   padding: 8px 14px;
+
   border: 1px solid #ff5b5b;
+
   border-radius: 8px;
+
   background: white;
+
   color: #ff5b5b;
+
   font-weight: 700;
+
   cursor: pointer;
+
 }
 
 .btnEliminarPromo:hover {
+
   background: #ff5b5b;
+
   color: white;
+
 }
+
 .accionesPromo {
+
   display: flex;
+
   gap: 10px;
+
   margin-top: 15px;
+
 }
 
 .btnEditarPromo {
+
   padding: 8px 14px;
+
   border: none;
+
   border-radius: 8px;
+
   background: #261047;
+
   color: white;
+
   font-weight: 700;
+
   cursor: pointer;
+
 }
 
 .accionesPromo .btnEliminarPromo {
+
   margin-top: 0;
+
 }
+
 .archivoAyuda {
+
   display: block;
+
   margin-top: 6px;
+
   color: #777;
+
   font-size: 12px;
+
 }
+
 video.panelPromoImagen {
+
   object-fit: contain;
+
   background: #000;
+
 }
+
 .promoImagen {
+
   width: 100%;
+
   height: 180px;
+
   border-radius: 12px;
+
   margin: 10px 0;
+
   display: block;
+
   object-fit: cover;
+
 }
 
 video.promoImagen {
+
   width: auto;
+
   height: 260px;
+
   max-width: 100%;
+
   object-fit: contain;
+
   background: #000;
+
   margin: 12px auto;
+
   border-radius: 12px;
+
 }
+
 /* PROMOCIONES DENTRO DE LA FICHA DEL COMERCIO */
 
 .promocionesComercio {
+
   max-width: 1000px;
+
   margin: 35px auto;
+
   padding: 0 20px;
+
 }
 
 .promocionesComercio h2 {
+
   color: #261047;
+
   margin-bottom: 20px;
+
 }
 
 #listaPromocionesComercio {
+
   display: grid;
+
   grid-template-columns: repeat(3, minmax(0, 1fr));
+
   gap: 16px;
+
   justify-content: start;
+
 }
 
 #listaPromocionesComercio .promocionCard {
+
   width: 100%;
+
   margin: 0;
+
   padding: 16px;
+
   border-radius: 16px;
+
   background: white;
+
   box-shadow: 0 6px 20px rgba(38, 16, 71, 0.08);
+
 }
 
 #listaPromocionesComercio .promoImagen {
+
   width: 100%;
+
   height: 180px;
+
   object-fit: contain;
+
   border-radius: 12px;
+
   margin: 12px 0;
+
 }
 
 /* Los videos mantienen su proporción */
+
 #listaPromocionesComercio video.promoImagen {
+
   width: 100%;
+
   height: 220px;
+
   object-fit: contain;
+
   background: #000;
+
 }
 
 /* CELULAR */
+
 @media (max-width: 700px) {
+
   #listaPromocionesComercio {
+
     grid-template-columns: 1fr;
+
   }
 
   #listaPromocionesComercio .promoImagen {
+
     height: 200px;
+
   }
 
   #listaPromocionesComercio video.promoImagen {
+
     height: 300px;
+
   }
+
 }
+
 .comercioContenidoInferior {
+
   display: grid;
+
   grid-template-columns: 0.7fr 1.3fr;
+
   gap: 24px;
+
   align-items: start;
+
   margin-top: 30px;
+
 }
 
 .comercioContenidoInferior #comercioDatos {
+
   margin: 0;
+
 }
 
 .comercioGaleria {
+
   width: 100%;
+
   height: 300px;
+
   padding: 10px;
+
   box-sizing: border-box;
 
   background: #f7f5fa;
+
   border-radius: 18px;
 
   display: grid;
+
   grid-template-columns: repeat(3, 1fr);
+
   gap: 10px;
 
   align-self: start;
+
 }
 
 .comercioGaleria img {
+
   width: 100%;
+
   height: 280px;
 
   object-fit: contain;
+
   object-position: center;
+
   border-radius: 12px;
 
   cursor: pointer;
+
   display: block;
+
 }
 
 .comercioGaleria img:first-child {
+
   grid-row: 1 / 3;
+
 }
 
 @media (max-width: 750px) {
+
   .comercioContenidoInferior {
+
      grid-template-columns: 1fr;
+
   }
 
   .comercioGaleria {
+
     min-height: 280px;
+
   }
+
 }
+
 /* VISOR DE GALERÍA */
 
 .visorGaleria {
+
   position: fixed;
+
   inset: 0;
+
   z-index: 9999;
 
   background: rgba(0, 0, 0, 0.88);
 
   display: none;
+
   align-items: center;
+
   justify-content: center;
 
   padding: 30px;
+
   box-sizing: border-box;
+
 }
 
 .visorGaleria.activo {
+
   display: flex;
+
 }
 
 .visorGaleria img {
+
   max-width: 90vw;
+
   max-height: 90vh;
+
   object-fit: contain;
 
   border-radius: 12px;
+
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+
 }
 
 .cerrarVisor {
+
   position: absolute;
+
   top: 20px;
+
   right: 25px;
 
   width: 45px;
+
   height: 45px;
 
   border: none;
+
   border-radius: 50%;
 
   background: white;
+
   color: #261047;
 
   font-size: 30px;
+
   line-height: 1;
+
   cursor: pointer;
+
 }
+
 .acceso-panel {
   position: absolute;
   top: 20px;
   right: 30px;
 
-  color: #4b356d;
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 600;
-
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 7px;
+  justify-content: center;
+  gap: 8px;
+
+  padding: 11px 18px;
+  background: #ffffff;
+  color: #261442;
+
+  border: 2px solid #261442;
+  border-radius: 25px;
+
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+
+  box-shadow: 0 4px 12px rgba(38, 20, 66, 0.15);
+  transition: 0.2s ease;
+  z-index: 10;
 }
 
 .acceso-panel:hover {
-  text-decoration: underline;
+  background: #261442;
+  color: white;
+  transform: translateY(-2px);
 }
 
-header {
-  position: relative;
+@media (max-width: 700px) {
+  .acceso-panel {
+    top: 12px;
+    right: 12px;
+    padding: 9px 12px;
+    font-size: 12px;
+  }
 }
+header {
+
+  position: relative;
+
+}
+
 /* =========================
+
    SUSCRIPCIÓN DEL COMERCIO
-========================= */
+
+\========================= */
 
 .panelSuscripcion {
+
   margin-top: 25px;
+
   margin-bottom: 30px;
+
   padding: 22px;
+
   background: #f8f6fc;
+
   border: 1px solid #e6e0ef;
+
   border-radius: 14px;
+
 }
 
 .panelSuscripcion h2 {
+
   margin: 0 0 12px;
+
   color: #24103f;
+
   font-size: 22px;
+
 }
 
 #estadoSuscripcion {
+
   margin-bottom: 18px;
+
   color: #555;
+
 }
 
 #estadoSuscripcion strong {
+
   color: #4b356d;
+
 }
 
 .panelSuscripcion label {
+
   display: block;
+
   margin-bottom: 7px;
+
   font-weight: 600;
+
   color: #333;
+
 }
 
 #seleccionarPlan {
+
   width: 100%;
+
   padding: 11px 12px;
+
   margin-bottom: 12px;
 
   border: 1px solid #d8d1e3;
+
   border-radius: 8px;
 
   background: white;
+
   color: #333;
+
   font-size: 15px;
 
   cursor: pointer;
+
 }
 
 #contratarPlan {
+
   width: 100%;
+
   padding: 12px;
 
   border: none;
+
   border-radius: 8px;
 
   background: #4b356d;
+
   color: white;
 
   font-size: 15px;
+
   font-weight: 600;
 
   cursor: pointer;
+
   transition: 0.2s;
+
 }
 
 #contratarPlan:hover {
+
   opacity: 0.9;
+
 }
+
 /* ========================================
+
    CREAR / EDITAR COMERCIO
-======================================== */
+
+\======================================== */
 
 #crearComercioForm,
+
 #editarComercioForm {
+
   display: flex;
+
   flex-direction: column;
+
   gap: 8px;
+
   margin-top: 25px;
+
 }
 
 #crearComercioForm label,
+
 #editarComercioForm label {
+
   font-weight: 600;
+
   margin-top: 8px;
+
 }
 
 #crearComercioForm input,
+
 #crearComercioForm textarea,
+
 #editarComercioForm input,
+
 #editarComercioForm textarea {
+
   width: 100%;
+
   box-sizing: border-box;
+
   padding: 12px 14px;
+
   border: 1px solid #d8d2e2;
+
   border-radius: 10px;
+
   font-size: 16px;
+
   font-family: inherit;
+
   background: #fff;
+
 }
 
 #crearComercioForm textarea,
+
 #editarComercioForm textarea {
+
   min-height: 100px;
+
   resize: vertical;
+
 }
 
 #crearComercioForm input:focus,
+
 #crearComercioForm textarea:focus,
+
 #editarComercioForm input:focus,
+
 #editarComercioForm textarea:focus {
+
   outline: none;
+
   border-color: #51367a;
+
 }
 
 #crearComercioForm button,
+
 #editarComercioForm button {
+
   margin-top: 15px;
+
   padding: 13px 20px;
+
   border: none;
+
   border-radius: 10px;
+
   background: #51367a;
+
   color: white;
+
   font-size: 16px;
+
   font-weight: 600;
+
   cursor: pointer;
+
 }
 
 #crearComercioForm button:hover,
+
 #editarComercioForm button:hover {
+
   opacity: 0.9;
+
 }
+
 /* ========================================
+
    GALERÍA - EDITAR COMERCIO
-======================================== */
+
+\======================================== */
 
 .editarGaleria {
+
   display: grid;
+
   grid-template-columns: repeat(3, 1fr);
+
   gap: 12px;
+
   margin-top: 8px;
+
 }
 
 .editarGaleria > div {
+
   min-width: 0;
+
   text-align: center;
+
 }
 
 .editarGaleria label {
+
   display: block;
+
   margin-bottom: 6px;
+
   font-size: 14px;
+
 }
 
-
 .editarGaleria img {
+
   width: 100%;
+
   height: 140px;
+
   object-fit: cover;
+
   border-radius: 10px;
+
   display: block;
+
   margin: 10px auto;
+
 }
 
 .editarGaleria > div > div[id^="vistaGaleria"] {
+
   width: 100%;
+
   display: flex;
+
   justify-content: center;
+
   align-items: center;
+
 }
 
 .editarGaleria > div > div[id^="vistaGaleria"] img {
+
   max-width: 140px;
+
 }
 
 .editarGaleria .btnEliminarImagen {
+
   display: block;
+
   margin: 10px auto 0;
+
 }
 
 @media (max-width: 650px) {
+
   .editarGaleria {
+
     grid-template-columns: 1fr;
+
   }
+
 }
 
 .editarGaleria input[type="file"] {
+
   width: 100%;
+
   height: 42px;
+
   padding: 0;
+
   border: none;
+
   background: transparent;
+
   font-size: 0;
+
   overflow: hidden;
+
 }
 
 /* Botón personalizado para subir imágenes de galería */
 
 .btnSubirGaleria {
+
   display: flex;
+
   align-items: center;
+
   justify-content: center;
 
   width: 100%;
+
   height: 42px;
+
   box-sizing: border-box;
 
   border: 1px solid #d8d2e2;
+
   border-radius: 10px;
+
   background: #fff;
 
   font-size: 14px;
+
   font-weight: 500;
+
   cursor: pointer;
+
 }
 
 .btnSubirGaleria:hover {
+
   background: #f7f5fa;
+
 }
 
 .btnSubirGaleria input[type="file"] {
+
   display: none;
+
 }
+
 /* =========================================
+
    REGISTRO DE COMERCIOS
-========================================= */
+
+\========================================= */
 
 #registroForm {
+
   display: flex;
+
   flex-direction: column;
+
   gap: 8px;
+
   margin-top: 25px;
+
 }
 
 #registroForm label {
+
   font-weight: 600;
+
   color: #1c0b3b;
+
   margin-top: 8px;
+
 }
 
 #registroForm input {
+
   width: 100%;
+
   box-sizing: border-box;
+
   padding: 13px 14px;
+
   border: 1px solid #d9d1e6;
+
   border-radius: 10px;
+
   font-size: 15px;
+
   background: #fff;
+
   outline: none;
+
   transition: 0.2s;
+
 }
 
 #registroForm input:focus {
+
   border-color: #563a7c;
+
   box-shadow: 0 0 0 3px rgba(86, 58, 124, 0.10);
+
 }
 
 #registroForm button {
+
   width: 100%;
+
   margin-top: 18px;
+
   padding: 13px;
+
   border: none;
+
   border-radius: 9px;
+
   background: #563a7c;
+
   color: white;
+
   font-size: 15px;
+
   font-weight: 700;
+
   cursor: pointer;
+
   transition: 0.2s;
+
 }
 
 #registroForm button:hover {
+
   transform: translateY(-1px);
+
   opacity: 0.92;
+
 }
 
 #registroMensaje {
+
   margin-top: 15px;
+
   font-size: 14px;
+
 }
 
 .registroAcceso {
+
   margin-top: 28px;
+
   padding-top: 20px;
+
   border-top: 1px solid #e8e2ef;
+
   text-align: center;
+
 }
 
 .registroAcceso p {
+
   margin: 0 0 12px;
+
   color: #555;
+
 }
 
 .btnRegistro {
+
   display: inline-block;
+
   padding: 10px 22px;
+
   border: 1px solid #563a7c;
+
   border-radius: 8px;
+
   color: #563a7c;
+
   text-decoration: none;
+
   font-weight: 600;
+
   transition: 0.2s;
+
 }
 
 .btnRegistro:hover {
+
   background: #563a7c;
+
   color: white;
+
 }
 
 /* Ajustes responsive de las promociones */
+
 @media (max-width: 480px) {
+
   #listaPromocionesComercio {
+
     grid-template-columns: minmax(0, 1fr);
+
   }
+
 }
+
 /* VISOR AMPLIADO DE PROMOCIONES */
 
 .visorPromocion {
+
   display: none;
+
   position: fixed;
+
   inset: 0;
+
   z-index: 9999;
+
   background: rgba(0, 0, 0, 0.88);
+
   align-items: center;
+
   justify-content: center;
+
   padding: 60px 20px 20px;
+
 }
 
 .visorPromocion.activo {
+
   display: flex;
+
 }
 
 #contenidoVisorPromocion {
+
   display: flex;
+
   align-items: center;
+
   justify-content: center;
+
   max-width: 100%;
+
   max-height: 100%;
+
 }
 
 #contenidoVisorPromocion img,
+
 #contenidoVisorPromocion video {
+
   display: block;
+
   max-width: 95vw;
+
   max-height: 85vh;
+
   width: auto;
+
   height: auto;
+
   object-fit: contain;
+
   border-radius: 12px;
+
 }
 
 #cerrarVisorPromocion {
+
   position: absolute;
+
   top: 20px;
+
   right: 25px;
+
   background: #ff575b;
+
   color: white;
+
   border: none;
+
   border-radius: 50%;
+
   width: 42px;
+
   height: 42px;
+
   font-size: 28px;
+
   cursor: pointer;
+
   z-index: 10000;
+
 }
 
 /* Indicar que las promociones se pueden ampliar */
+
 .promoAmpliable {
+
   cursor: zoom-in;
+
 }
+
 /* DESCUBRÍ GENERAL BELGRANO */
 
 .descubri {
+
   max-width: 1400px;
+
   margin: 40px auto 60px;
+
   padding: 30px 40px;
+
   text-align: center;
+
 }
 
 .descubri h2 {
+
   font-size: 30px;
+
   color: #261442;
+
   margin-bottom: 10px;
+
 }
 
 .descubriSubtitulo {
+
   color: #666;
+
   font-size: 16px;
+
   margin-bottom: 30px;
+
 }
 
 .descubriGrid {
+
   display: grid;
+
   grid-template-columns: repeat(4, minmax(0, 1fr));
+
   gap: 20px;
+
 }
 
 .descubriCard {
+
   background: white;
+
   padding: 30px 20px;
+
   border-radius: 18px;
+
   box-shadow: 0 5px 20px rgba(38, 20, 66, 0.1);
+
   transition: transform 0.2s, box-shadow 0.2s;
+
 }
 
 .descubriCard:hover {
+
   transform: translateY(-5px);
+
   box-shadow: 0 10px 25px rgba(38, 20, 66, 0.16);
+
 }
 
 .descubriCard > i {
+
   font-size: 38px;
+
   color: #6d3ca5;
+
   margin-bottom: 18px;
+
 }
 
 .descubriCard h3 {
+
   font-size: 21px;
+
   color: #261442;
+
   margin-bottom: 12px;
+
 }
 
 .descubriCard p {
+
   font-size: 14px;
+
   color: #666;
+
   line-height: 1.5;
+
   min-height: 65px;
+
 }
 
 .descubriCard a {
+
   display: inline-block;
+
   margin-top: 15px;
+
   padding: 11px 22px;
+
   background: #6d3ca5;
+
   color: white;
+
   border-radius: 10px;
+
   text-decoration: none;
+
   font-weight: bold;
+
   transition: background 0.2s;
+
 }
 
 .descubriCard a:hover {
+
   background: #261442;
+
 }
 
 /* TABLETS */
+
 @media (max-width: 900px) {
+
   .descubriGrid {
+
     grid-template-columns: repeat(2, minmax(0, 1fr));
+
   }
+
 }
 
 /* CELULARES */
+
 @media (max-width: 480px) {
+
   .descubri {
+
     padding: 25px 15px;
+
     margin: 20px auto 40px;
+
   }
 
   .descubriGrid {
+
     grid-template-columns: 1fr;
+
     gap: 15px;
+
   }
 
   .descubriCard p {
+
     min-height: auto;
+
   }
+
 }
 
 /* BOTÓN INSTALAR MIRÁBELGRANO */
 
 #btnInstalar {
+
   display: inline-flex;
+
   align-items: center;
+
   justify-content: center;
+
   gap: 10px;
+
   margin-top: 15px;
+
   padding: 12px 22px;
+
   background: #198754;
+
   color: white;
+
   border: none;
+
   border-radius: 25px;
+
   font-size: 15px;
+
   font-weight: 600;
+
   cursor: pointer;
+
   transition: 0.3s;
+
 }
 
 #btnInstalar[hidden] {
+
   display: none;
+
 }
 
 #btnInstalar:hover {
+
   background: #146c43;
+
   transform: translateY(-2px);
+
 }
 
 @media (max-width: 600px) {
+
   #btnInstalar {
+
     font-size: 14px;
+
     padding: 11px 18px;
+
   }
+
 }
+
 /* Descripción compacta de comercios */
 
 .comercioInfo p {
+
   display: -webkit-box;
+
   -webkit-box-orient: vertical;
+
   -webkit-line-clamp: 3;
+
   line-clamp: 3;
+
   overflow: hidden;
+
   margin-bottom: 6px;
+
 }
 
-.comercioInfo p.expandido {
+.comercioCard .comercioInfo p.descripcionComercio.expandido {
+
   display: block;
+
   overflow: visible;
+
 }
 
-.btnLeerMas {
+.comercioInfo .btnLeerMas {
+
   display: inline-block;
+
   background: none;
+
   border: none;
+
   padding: 0;
+
   margin: 0 0 15px;
+
   color: #ff5c5c;
+
   font-size: 13px;
+
   font-weight: 600;
+
   cursor: pointer;
+
 }
 
-.btnLeerMas:hover {
+.comercioInfo .btnLeerMas:hover {
+
   text-decoration: underline;
-}
 
+}
