@@ -2439,3 +2439,20 @@ header {
   background: transparent;
   text-decoration: underline;
 }
+/* Descripciones de ofertas: máximo 3 líneas */
+
+#listaPromociones .promocionCard p.descripcionPromo {
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden !important;
+  max-height: 4.5em;
+  line-height: 1.5;
+}
+
+#listaPromociones .promocionCard p.descripcionPromo.expandido {
+  display: block !important;
+  max-height: none;
+  overflow: visible !important;
+}
