@@ -13,7 +13,7 @@ body {
 /* HEADER */
 
 header {
-  background: #cabce0;
+  background: #9ecbf0;
   color: white;
   text-align: center;
   padding: 22px 20px;
@@ -298,7 +298,7 @@ header {
 
   height: 110px;
 
-  background: #ded8eb;
+  background: #bee0eb;
 
   position: relative;
 
@@ -410,7 +410,7 @@ header {
 
   background-repeat: no-repeat;
 
-  background-color: #f7f5fa;
+  background-color: #cbe5f7;
 
 }
 

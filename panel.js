@@ -289,8 +289,6 @@ if (!promocionEditando && comercioActual.plan === "auspiciante") {
     return;
   }
 }
-
-
     
 let imagenUrl = imagenActualEditando;
 let archivoTipo = "imagen";
@@ -345,10 +343,43 @@ if (promocionEditando) {
     return;
   }
 
-  alert("Promoción actualizada correctamente.");
+ // Si se reemplazó la imagen o el video,
+// eliminar el archivo anterior de Storage
+if (imagen && imagenActualEditando && imagenActualEditando !== imagenUrl) {
 
-  window.location.reload();
-  return;
+  const marcador = "/storage/v1/object/public/promociones/";
+  const posicion = imagenActualEditando.indexOf(marcador);
+
+  if (posicion !== -1) {
+
+    const rutaAnterior = decodeURIComponent(
+      imagenActualEditando.substring(posicion + marcador.length)
+        .split("?")[0]
+    );
+
+    // Verificar que el archivo pertenezca al comercio actual
+    if (rutaAnterior.startsWith(`promociones/${comercioActual.id}-`)) {
+
+      const { error: errorBorrarAnterior } = await db.storage
+        .from("promociones")
+        .remove([rutaAnterior]);
+
+      if (errorBorrarAnterior) {
+        console.error(
+          "No se pudo eliminar el archivo anterior:",
+          errorBorrarAnterior
+        );
+      } else {
+        console.log("Archivo anterior eliminado:", rutaAnterior);
+      }
+    }
+  }
+}
+
+alert("Promoción actualizada correctamente.");
+
+window.location.reload();
+return;
 }
 
 
@@ -430,6 +461,8 @@ window.location.reload();
       const { error: errorImagen } = await db.storage
         .from("promociones")
         .remove([rutaImagen]);
+        console.log("Archivo que se intenta eliminar:", rutaImagen);
+console.log("Resultado de eliminación:", errorImagen);
 
       if (errorImagen) {
         console.error(
