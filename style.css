@@ -2401,3 +2401,41 @@ header {
   text-decoration: underline;
 
 }
+/* Leer más en ofertas y promociones */
+
+#listaPromociones .descripcionPromo {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+  margin: 8px 0;
+}
+
+#listaPromociones .descripcionPromo.expandido {
+  display: block;
+  overflow: visible;
+}
+
+.promocionCard .descripcionPromo.expandido {
+  display: block;
+  overflow: visible;
+}
+
+.promocionCard .btnLeerMas {
+  display: inline-block;
+  width: auto;
+  padding: 0;
+  margin: 6px 0 12px;
+  border: none;
+  background: transparent;
+  color: #ff5c5c;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.promocionCard .btnLeerMas:hover {
+  background: transparent;
+  text-decoration: underline;
+}

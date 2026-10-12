@@ -156,7 +156,21 @@ async function cargarPromocionesComercio(comercioId) {
 
         <h3>${promocion.titulo || ""}</h3>
 
-        <p>${promocion.descripcion || ""}</p>
+        <p class="descripcionPromo">${promocion.descripcion || ""}</p>
+
+${(promocion.descripcion || "").length > 100 ? `
+  <button
+    type="button"
+    class="btnLeerMas"
+    onclick="
+      const descripcion = this.previousElementSibling;
+      descripcion.classList.toggle('expandido');
+      this.textContent = descripcion.classList.contains('expandido')
+        ? 'Leer menos'
+        : 'Leer más';
+    "
+  >Leer más</button>
+` : ""}
 
         <p class="promoFecha">
           Válido hasta ${promocion.fecha_fin}
