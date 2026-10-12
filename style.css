@@ -41,8 +41,8 @@ header p {
 
   background:
     linear-gradient(
-      rgba(38, 20, 66, 0.68),
-      rgba(38, 20, 66, 0.68)
+      rgba(38, 20, 66, 0.30),
+      rgba(38, 20, 66, 0.30)
     ),
     url("portada.png");
   background-size: cover;
