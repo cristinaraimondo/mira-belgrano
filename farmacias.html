@@ -73,6 +73,37 @@
       </article>
 
     </section>
+    <section class="calendarioFarmacias">
+
+  <h2>
+    <i class="fa-solid fa-calendar-days"></i>
+    Calendario de turnos 2026
+  </h2>
+
+  <p>
+    Seleccioná una farmacia para consultar
+    sus días de guardia.
+  </p>
+
+  <label for="selectorFarmacia">
+    Farmacia
+  </label>
+
+  <select id="selectorFarmacia">
+    <option value="">Seleccionar farmacia</option>
+  </select>
+
+  <div id="calendariosFarmacias"
+       class="calendariosGrid">
+  </div>
+
+  <p class="calendarioAviso">
+    Los turnos comienzan a las 8:30 hs
+    y finalizan a las 8:30 hs del día siguiente.
+    Consultá posibles modificaciones antes de acudir.
+  </p>
+
+</section>
 
   </main>
 
@@ -88,6 +119,7 @@
     "https://ezyqqnyhsqgpxclpkbzq.supabase.co",
     "sb_publishable_vFfGaVSYjYXXzxvlrAds5A_qxu_Zvk9"
   );
+
 
   async function cargarFarmaciaDeTurno() {
   // Obtener fecha y hora de Argentina
@@ -198,6 +230,118 @@ if (ubicacion) {
   botonMapa.style.display = "none";
 }
   }
+  async function cargarCalendarioFarmacias() {
+
+  const { data, error } = await supabaseFarmacias
+    .from("farmacias_turnos")
+    .select(`
+      fecha,
+      farmacias (
+        nombre
+      )
+    `)
+    .gte("fecha", "2026-10-01")
+    .lte("fecha", "2026-12-31")
+    .order("fecha", { ascending: true });
+
+  if (error) {
+    console.error("Error calendario:", error);
+    return;
+  }
+
+  const turnos = data || [];
+
+  const nombres = [...new Set(
+    turnos
+      .map(t => t.farmacias?.nombre)
+      .filter(Boolean)
+  )].sort((a, b) =>
+    a.localeCompare(b, "es")
+  );
+
+  const selector = document.getElementById("selectorFarmacia");
+
+  nombres.forEach(nombre => {
+    const opcion = document.createElement("option");
+    opcion.value = nombre;
+    opcion.textContent = nombre;
+    selector.appendChild(opcion);
+  });
+
+  function dibujarCalendarios() {
+
+    const farmacia = selector.value;
+    const contenedor =
+      document.getElementById("calendariosFarmacias");
+
+    contenedor.innerHTML = "";
+
+    if (!farmacia) return;
+
+    const fechas = new Set(
+      turnos
+        .filter(t => t.farmacias?.nombre === farmacia)
+        .map(t => t.fecha)
+    );
+
+    const meses = ["Octubre", "Noviembre", "Diciembre"];
+    const diasSemana = ["D", "L", "M", "M", "J", "V", "S"];
+
+    [9, 10, 11].forEach((mes, indice) => {
+
+      const primerDia = new Date(2026, mes, 1).getDay();
+      const cantidadDias = new Date(2026, mes + 1, 0).getDate();
+
+      const calendario = document.createElement("div");
+      calendario.className = "mesFarmacia";
+
+      calendario.innerHTML = `
+        <h3>${meses[indice]} 2026</h3>
+        <div class="diasFarmacia"></div>
+      `;
+
+      const grilla = calendario.querySelector(".diasFarmacia");
+
+      diasSemana.forEach(dia => {
+        const celda = document.createElement("span");
+        celda.className = "diaSemana";
+        celda.textContent = dia;
+        grilla.appendChild(celda);
+      });
+
+      for (let i = 0; i < primerDia; i++) {
+        grilla.appendChild(document.createElement("span"));
+      }
+
+      for (let dia = 1; dia <= cantidadDias; dia++) {
+
+        const fecha =
+          `2026-${String(mes + 1).padStart(2, "0")}-${String(dia).padStart(2, "0")}`;
+
+        const celda = document.createElement("span");
+        celda.textContent = dia;
+
+        if (fechas.has(fecha)) {
+          celda.className = "diaConTurno";
+          celda.title = `${farmacia}: ${fecha}`;
+        }
+
+        grilla.appendChild(celda);
+      }
+
+      contenedor.appendChild(calendario);
+    });
+  }
+
+  selector.addEventListener("change", dibujarCalendarios);
+
+  if (nombres.length > 0) {
+    selector.value = nombres[0];
+    dibujarCalendarios();
+  }
+}
+
+cargarCalendarioFarmacias();
 
   cargarFarmaciaDeTurno();
 </script>

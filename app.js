@@ -94,19 +94,7 @@ function filtrarCategoria(categoria) {
       .trim();
 
   const categoriaBuscada = normalizar(categoria);
-const destinoEspecial = seccionesEspeciales.find(seccion =>
-  seccion.palabras.some(palabra =>
-    texto === palabra || texto.includes(palabra)
-  )
-);
-
-if (destinoEspecial) {
-  window.location.href = destinoEspecial.pagina;
-  return;
-}
-
   const tarjetas = document.querySelectorAll(".comercioCard");
-  console.log("BUSCADOR EJECUTADO:", texto);
 
   let encontrados = 0;
 
@@ -124,6 +112,11 @@ if (destinoEspecial) {
 
   });
 
+  document.getElementById("tituloComercios").textContent =
+    categoria;
+
+  document.getElementById("buscador").value = "";
+
   let mensaje = document.getElementById("sinResultados");
 
   if (!mensaje) {
@@ -136,6 +129,13 @@ if (destinoEspecial) {
     encontrados === 0
       ? "Todavía no hay comercios en esta categoría."
       : "";
+
+  // Bajar a los comercios de la categoría seleccionada
+  document.getElementById("tituloComercios").scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+
 }
 function buscarComercios() {
  const texto = document
