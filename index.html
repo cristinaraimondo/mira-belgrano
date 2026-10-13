@@ -55,14 +55,15 @@
       <h2>¿Qué buscás en General Belgrano?</h2>
 
       <div class="buscador">
-        <input
-          type="text"
-          id="buscador"
-          placeholder="Buscar comercios, servicios..."
-          oninput="buscarComercios()"
-        >
+       <input
+  type="text"
+  id="buscador"
+  placeholder="Buscar comercios, servicios..."
+  oninput="buscarComercios()"
+  onkeydown="if(event.key === 'Enter') buscarYDesplazar()"
+>
 
-       <button onclick="buscarComercios()">Buscar</button>
+<button onclick="buscarYDesplazar()">Buscar</button>
       </div>
 
     </section>
