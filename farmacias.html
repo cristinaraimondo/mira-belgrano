@@ -77,7 +77,7 @@
 
   <h2>
     <i class="fa-solid fa-calendar-days"></i>
-    Calendario de turnos 2026
+    Calendario de turnos 
   </h2>
 
   <p>
@@ -121,7 +121,7 @@
   );
 
 
-  async function cargarFarmaciaDeTurno() {
+async function cargarFarmaciaDeTurno() {
   // Obtener fecha y hora de Argentina
 const ahora = new Date();
 
@@ -231,6 +231,18 @@ if (ubicacion) {
 }
   }
   async function cargarCalendarioFarmacias() {
+    const partesFecha = new Intl.DateTimeFormat("en-GB", {
+  timeZone: "America/Argentina/Buenos_Aires",
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit"
+}).formatToParts(new Date());
+
+const obtenerParte = tipo =>
+  partesFecha.find(parte => parte.type === tipo).value;
+
+const anioActual = Number(obtenerParte("year"));
+const mesActual = Number(obtenerParte("month")) - 1;
 
   const { data, error } = await supabaseFarmacias
     .from("farmacias_turnos")
@@ -240,8 +252,8 @@ if (ubicacion) {
         nombre
       )
     `)
-    .gte("fecha", "2026-10-01")
-    .lte("fecha", "2026-12-31")
+   .gte("fecha", `${anioActual}-01-01`)
+   .lte("fecha", `${anioActual}-12-31`)
     .order("fecha", { ascending: true });
 
   if (error) {
@@ -284,21 +296,27 @@ if (ubicacion) {
         .map(t => t.fecha)
     );
 
-    const meses = ["Octubre", "Noviembre", "Diciembre"];
+    const meses = [
+  "Enero", "Febrero", "Marzo", "Abril",
+  "Mayo", "Junio", "Julio", "Agosto",
+  "Septiembre", "Octubre", "Noviembre", "Diciembre"
+];
     const diasSemana = ["D", "L", "M", "M", "J", "V", "S"];
 
-    [9, 10, 11].forEach((mes, indice) => {
+    Array.from(
+  { length: 12 - mesActual },
+  (_, i) => mesActual + i
+).forEach((mes) => {
 
-      const primerDia = new Date(2026, mes, 1).getDay();
-      const cantidadDias = new Date(2026, mes + 1, 0).getDate();
-
+      const primerDia = new Date(anioActual, mes, 1).getDay();
+      const cantidadDias = new Date(anioActual, mes + 1, 0).getDate();
       const calendario = document.createElement("div");
       calendario.className = "mesFarmacia";
 
       calendario.innerHTML = `
-        <h3>${meses[indice]} 2026</h3>
-        <div class="diasFarmacia"></div>
-      `;
+  <h3>${meses[mes]} ${anioActual}</h3>
+  <div class="diasFarmacia"></div>
+  `;
 
       const grilla = calendario.querySelector(".diasFarmacia");
 
@@ -316,7 +334,7 @@ if (ubicacion) {
       for (let dia = 1; dia <= cantidadDias; dia++) {
 
         const fecha =
-          `2026-${String(mes + 1).padStart(2, "0")}-${String(dia).padStart(2, "0")}`;
+      `${anioActual}-${String(mes + 1).padStart(2, "0")}-${String(dia).padStart(2, "0")}`;
 
         const celda = document.createElement("span");
         celda.textContent = dia;
