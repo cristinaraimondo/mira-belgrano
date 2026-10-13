@@ -94,8 +94,19 @@ function filtrarCategoria(categoria) {
       .trim();
 
   const categoriaBuscada = normalizar(categoria);
+const destinoEspecial = seccionesEspeciales.find(seccion =>
+  seccion.palabras.some(palabra =>
+    texto === palabra || texto.includes(palabra)
+  )
+);
+
+if (destinoEspecial) {
+  window.location.href = destinoEspecial.pagina;
+  return;
+}
 
   const tarjetas = document.querySelectorAll(".comercioCard");
+  console.log("BUSCADOR EJECUTADO:", texto);
 
   let encontrados = 0;
 
@@ -139,7 +150,35 @@ function buscarComercios() {
 } else {
   document.getElementById("tituloComercios").textContent = "Resultados de búsqueda";
 }
+// BÚSQUEDAS ESPECIALES DE MIRÁBELGRANO
 
+const seccionesEspeciales = [
+  {
+    palabras: ["farmacia", "farmacias", "farmacia de turno", "farmacias de turno", "guardia"],
+    pagina: "farmacias.html"
+  },
+  {
+    palabras: ["evento", "eventos", "fiesta", "fiestas", "feria", "ferias", "agenda"],
+    pagina: "eventos.html"
+  },
+  {
+    palabras: ["turismo", "que visitar", "lugares para visitar", "atractivos"],
+    pagina: "turismo.html"
+  },
+  {
+    palabras: ["como llegar", "rutas", "accesos"],
+    pagina: "como-llegar.html"
+  }
+];
+
+const destinoEspecial = seccionesEspeciales.find(seccion =>
+  seccion.palabras.some(palabra => texto === palabra)
+);
+
+if (destinoEspecial) {
+  window.location.href = destinoEspecial.pagina;
+  return;
+}
   const tarjetas = document.querySelectorAll(".comercioCard");
   let encontrados = 0;
 
