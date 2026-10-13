@@ -208,6 +208,15 @@ if (destinoEspecial) {
     encontrados === 0
       ? "No encontramos comercios con esa búsqueda."
       : "";
+      // Desplazar automáticamente hacia los resultados
+const seccionResultados = document.getElementById("tituloComercios");
+
+if (seccionResultados) {
+  seccionResultados.scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+}
 }
 function mostrarTodos() {
   const tarjetas = document.querySelectorAll(".comercioCard");
