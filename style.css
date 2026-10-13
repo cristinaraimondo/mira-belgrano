@@ -2456,3 +2456,64 @@ header {
   max-height: none;
   overflow: visible !important;
 }
+/* FARMACIA DE TURNO EN EL ENCABEZADO */
+
+.avisoFarmacia {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  width: fit-content;
+  max-width: 95%;
+  margin: 12px auto;
+
+  padding: 9px 15px;
+
+  background: #e5f6e9;
+  border: 1px solid #8dd3a0;
+  border-radius: 12px;
+
+  color: #176b35;
+  text-decoration: none;
+
+  transition: background 0.2s ease;
+}
+
+.avisoFarmacia:hover {
+  background: #c9efd3;
+}
+
+.avisoFarmacia span {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.avisoFarmacia small {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.avisoFarmacia strong {
+  font-size: 14px;
+}
+
+.avisoFarmacia i {
+  font-size: 18px;
+}
+
+.avisoFarmacia i:last-child {
+  font-size: 12px;
+}
+
+@media (max-width: 600px) {
+  .avisoFarmacia {
+    padding: 7px 11px;
+    margin: 10px auto;
+  }
+
+  .avisoFarmacia strong {
+    font-size: 12px;
+  }
+}

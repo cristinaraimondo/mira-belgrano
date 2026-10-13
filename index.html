@@ -40,6 +40,21 @@
   <img src="logo.png" alt="Mirá Belgrano" class="logo">
 
   <p>Encontrá. Elegí. Disfrutá.</p>
+  <a href="farmacias.html"
+   id="avisoFarmacia"
+   class="avisoFarmacia"
+   style="display:none;">
+
+  <i class="fa-solid fa-square-plus"></i>
+
+  <span>
+    <small>FARMACIA DE TURNO</small>
+    <strong id="farmaciaTurnoHeader">Consultando...</strong>
+  </span>
+
+  <i class="fa-solid fa-chevron-right"></i>
+
+</a>
 
   <button id="btnInstalar" type="button" hidden>
     <i class="fa-solid fa-download"></i>
@@ -217,6 +232,71 @@
 </script>
 
 <script src="/pwa/install.js" defer></script>
+<script>
+async function cargarAvisoFarmacia() {
+  const aviso = document.getElementById("avisoFarmacia");
+  const nombre = document.getElementById("farmaciaTurnoHeader");
+
+  if (!aviso || !nombre) return;
+
+  // Fecha y hora actual en Argentina
+  const partes = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "America/Argentina/Buenos_Aires",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23"
+  }).formatToParts(new Date());
+
+  const valor = tipo =>
+    partes.find(p => p.type === tipo).value;
+
+  const hora = Number(valor("hour"));
+  const minuto = Number(valor("minute"));
+
+  const fecha = new Date(Date.UTC(
+    Number(valor("year")),
+    Number(valor("month")) - 1,
+    Number(valor("day"))
+  ));
+
+  // El turno cambia a las 08:30
+  if (hora < 8 || (hora === 8 && minuto < 30)) {
+    fecha.setUTCDate(fecha.getUTCDate() - 1);
+  }
+
+  const fechaTurno = fecha.toISOString().slice(0, 10);
+
+  try {
+    // Reutiliza la conexión Supabase de app.js
+    const { data, error } = await db
+      .from("farmacias_turnos")
+      .select("nombre, farmacias(nombre)")
+      .eq("fecha", fechaTurno)
+      .maybeSingle();
+
+    if (error) throw error;
+
+    if (data) {
+      nombre.textContent = data.farmacias?.nombre || data.nombre;
+      aviso.style.display = "flex";
+    } else {
+      aviso.style.display = "none";
+    }
+
+  } catch (error) {
+    console.error("Error al consultar farmacia de turno:", error);
+    aviso.style.display = "none";
+  }
+}
+
+cargarAvisoFarmacia();
+
+// Actualiza el aviso periódicamente si la página permanece abierta
+setInterval(cargarAvisoFarmacia, 60000);
+</script>
 
 </body>
 </html>
