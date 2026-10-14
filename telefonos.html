@@ -1,0 +1,277 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#7138a8">
+
+  <title>Teléfonos útiles | MiráBelgrano</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f8f7fb;
+      color: #20133d;
+    }
+
+    header {
+      text-align: center;
+      padding: 40px 20px 25px;
+    }
+
+    header h1 {
+      font-size: 32px;
+      margin: 0 0 12px;
+    }
+
+    header p {
+      color: #666;
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .contenedor {
+      max-width: 1100px;
+      margin: 25px auto 60px;
+      padding: 0 20px;
+    }
+
+    .telefonosGrid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .telefonoCard {
+      background: white;
+      border-radius: 18px;
+      padding: 30px 15px;
+      text-align: center;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.07);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .telefonoCard i {
+      color: #7138a8;
+      font-size: 34px;
+      margin-bottom: 18px;
+    }
+
+    .telefonoCard h2 {
+      font-size: 18px;
+      margin: 0 0 14px;
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .numero {
+      font-size: 16px;
+      color: #555;
+      margin-bottom: 8px;
+      overflow-wrap: anywhere;
+    }
+
+    .numero a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .llamar {
+      margin-top: auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #7138a8;
+      color: white;
+      padding: 12px 22px;
+      border-radius: 9px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 14px;
+      transition: background 0.2s;
+    }
+
+    .llamar:hover {
+      background: #53277e;
+    }
+
+    .llamar i {
+      font-size: 14px;
+      color: white;
+      margin: 0;
+    }
+
+    .numeros {
+      margin-bottom: 20px;
+    }
+
+    .volver {
+      display: block;
+      width: fit-content;
+      margin: 35px auto 0;
+      color: #7138a8;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .nota {
+      text-align: center;
+      color: #777;
+      font-size: 12px;
+      margin-top: 25px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 900px) {
+      .telefonosGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 520px) {
+      header h1 {
+        font-size: 26px;
+      }
+
+      .telefonosGrid {
+        grid-template-columns: 1fr;
+      }
+
+      .telefonoCard {
+        padding: 25px 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1><i class="fa-solid fa-phone-volume" style="color:#7138a8"></i> Teléfonos útiles</h1>
+    <p>Contactos importantes y servicios de General Belgrano.</p>
+  </header>
+
+  <main class="contenedor">
+
+    <div class="telefonosGrid">
+
+      <article class="telefonoCard">
+        <i class="fa-solid fa-hospital"></i>
+        <h2>Hospital Guardia</h2>
+        <div class="numeros">
+          <div class="numero">02243-453130</div>
+          <div class="numero">Emergencias: 107</div>
+        </div>
+        <a class="llamar" href="tel:02243453130">
+          <i class="fa-solid fa-phone"></i> Llamar
+        </a>
+      </article>
+
+      <article class="telefonoCard">
+        <i class="fa-solid fa-shield-halved"></i>
+        <h2>Policía</h2>
+        <div class="numeros">
+          <div class="numero">02243-452113</div>
+          <div class="numero">Emergencias: 101</div>
+        </div>
+        <a class="llamar" href="tel:02243452113">
+          <i class="fa-solid fa-phone"></i> Llamar
+        </a>
+      </article>
+
+      <article class="telefonoCard">
+        <i class="fa-solid fa-fire-extinguisher"></i>
+        <h2>Bomberos</h2>
+        <div class="numeros">
+          <div class="numero">02243-452103</div>
+          <div class="numero">Emergencias: 100</div>
+        </div>
+        <a class="llamar" href="tel:02243452103">
+          <i class="fa-solid fa-phone"></i> Llamar
+        </a>
+      </article>
+
+      <article class="telefonoCard">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <h2>Defensa Civil</h2>
+        <div class="numeros">
+          <div class="numero">02243-45400672</div>
+        </div>
+        <a class="llamar" href="tel:0224345400672">
+          <i class="fa-solid fa-phone"></i> Llamar
+        </a>
+      </article>
+
+      <article class="telefonoCard">
+        <i class="fa-solid fa-building-columns"></i>
+        <h2>Municipalidad</h2>
+        <div class="numeros">
+          <div class="numero">02243-459000</div>
+        </div>
+        <a class="llamar" href="tel:02243459000">
+          <i class="fa-solid fa-phone"></i> Llamar
+        </a>
+      </article>
+
+      <article class="telefonoCard">
+        <i class="fa-solid fa-helmet-safety"></i>
+        <h2>Obras Públicas</h2>
+        <div class="numeros">
+          <div class="numero">02243-452144</div>
+        </div>
+        <a class="llamar" href="tel:02243452144">
+          <i class="fa-solid fa-phone"></i> Llamar
+        </a>
+      </article>
+
+      <article class="telefonoCard">
+        <i class="fa-solid fa-chart-line"></i>
+        <h2>Desarrollo Local</h2>
+        <div class="numeros">
+          <div class="numero">02243-452140</div>
+        </div>
+        <a class="llamar" href="tel:02243452140">
+          <i class="fa-solid fa-phone"></i> Llamar
+        </a>
+      </article>
+
+      <article class="telefonoCard">
+        <i class="fa-solid fa-file-invoice-dollar"></i>
+        <h2>Ingresos Públicos</h2>
+        <div class="numeros">
+          <div class="numero">02243-400171</div>
+        </div>
+        <a class="llamar" href="tel:02243400171">
+          <i class="fa-solid fa-phone"></i> Llamar
+        </a>
+      </article>
+
+    </div>
+
+    <p class="nota">
+  Ante una emergencia, comunicate directamente con el servicio correspondiente.
+  También podés llamar al 911.
+</p>
+
+    <a class="volver" href="index.html">
+      <i class="fa-solid fa-arrow-left"></i>
+      Volver a MiráBelgrano
+    </a>
+
+  </main>
+
+</body>
+</html>
