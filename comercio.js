@@ -44,6 +44,43 @@ const descripcionSEO = data.descripcion
 
 // Título individual
 document.title = `${nombreSEO} | MiráBelgrano`;
+// Datos estructurados automáticos para Google
+const datosEstructurados = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": nombreSEO,
+  "description": data.descripcion || `Comercio en General Belgrano, Buenos Aires`,
+  "url": `${window.location.origin}/comercio.html?slug=${encodeURIComponent(slug)}`,
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "General Belgrano",
+    "addressRegion": "Buenos Aires",
+    "addressCountry": "AR"
+  }
+};
+
+if (data.direccion) {
+  datosEstructurados.address.streetAddress = data.direccion;
+}
+
+if (data.telefono) {
+  datosEstructurados.telephone = data.telefono;
+}
+
+if (data.foto_url) {
+  datosEstructurados.image = data.foto_url;
+}
+
+let scriptSEO = document.getElementById("datosEstructuradosComercio");
+
+if (!scriptSEO) {
+  scriptSEO = document.createElement("script");
+  scriptSEO.id = "datosEstructuradosComercio";
+  scriptSEO.type = "application/ld+json";
+  document.head.appendChild(scriptSEO);
+}
+
+scriptSEO.textContent = JSON.stringify(datosEstructurados);
 
 // Descripción individual
 let metaDescripcion = document.querySelector('meta[name="description"]');
