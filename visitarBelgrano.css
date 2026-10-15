@@ -332,12 +332,27 @@
 
 #listaEventos {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 360px));
+  grid-template-columns: repeat(3, minmax(0, 360px));
   justify-content: center;
   gap: 24px;
   width: 100%;
-  max-width: 900px;
+  max-width: 1150px;
   margin: 30px auto;
+}
+
+/* Tablets */
+@media (max-width: 900px) {
+  #listaEventos {
+    grid-template-columns: repeat(2, minmax(0, 360px));
+  }
+}
+
+/* Celulares */
+@media (max-width: 650px) {
+  #listaEventos {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 400px;
+  }
 }
 
 #listaEventos .turismoCard {
@@ -378,3 +393,4 @@
     gap: 20px;
   }
 }
+
