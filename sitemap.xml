@@ -1,28 +1,48 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
   <url>
     <loc>https://mirabelgrano.com.ar/</loc>
   </url>
-
   <url>
     <loc>https://mirabelgrano.com.ar/turismo.html</loc>
   </url>
-
   <url>
     <loc>https://mirabelgrano.com.ar/como-llegar.html</loc>
   </url>
-
   <url>
     <loc>https://mirabelgrano.com.ar/eventos.html</loc>
   </url>
-
   <url>
     <loc>https://mirabelgrano.com.ar/farmacias.html</loc>
   </url>
-
   <url>
     <loc>https://mirabelgrano.com.ar/telefonos.html</loc>
   </url>
-
+  <url>
+    <loc>https://mirabelgrano.com.ar/comercio.html?slug=Pabloger-animation-studio</loc>
+  </url>
+  <url>
+    <loc>https://mirabelgrano.com.ar/comercio.html?slug=qrcrea</loc>
+  </url>
+  <url>
+    <loc>https://mirabelgrano.com.ar/comercio.html?slug=nuevo-imperio-steel-frame</loc>
+  </url>
+  <url>
+    <loc>https://mirabelgrano.com.ar/comercio.html?slug=pitucos</loc>
+  </url>
+  <url>
+    <loc>https://mirabelgrano.com.ar/comercio.html?slug=pixora-estudio-creativo-digital</loc>
+  </url>
+  <url>
+    <loc>https://mirabelgrano.com.ar/comercio.html?slug=tomas-d-addona</loc>
+  </url>
+  <url>
+    <loc>https://mirabelgrano.com.ar/comercio.html?slug=raimondo-electronica</loc>
+  </url>
+  <url>
+    <loc>https://mirabelgrano.com.ar/comercio.html?slug=mime</loc>
+  </url>
+  <url>
+    <loc>https://mirabelgrano.com.ar/comercio.html?slug=materiales-ruta-41</loc>
+  </url>
 </urlset>
