@@ -56,7 +56,7 @@ data.forEach(comercio => {
   <small>${comercio.categoria || ""}</small>
       <div class="comercioInfo">
 
-        <small>${comercio.categoria || ""}</small>
+      
 
         <h3>${comercio.nombre}</h3>
 
