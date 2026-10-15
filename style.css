@@ -2517,3 +2517,13 @@ header {
     font-size: 12px;
   }
 }
+.creditoPixora {
+  margin-top: 22px;
+  font-size: 12px;
+  opacity: 0.75;
+}
+
+.creditoPixora strong {
+  font-weight: 700;
+  letter-spacing: 1px;
+}
