@@ -2527,3 +2527,13 @@ header {
   font-weight: 700;
   letter-spacing: 1px;
 }
+.etiquetaDestacado {
+  display: inline-block;
+  background: #f0e8fa;
+  color: #7138a8;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 4px 9px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}

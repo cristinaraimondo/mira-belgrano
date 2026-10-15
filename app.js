@@ -47,9 +47,13 @@ data.forEach(comercio => {
   background-position: center;
 "
       >
-       ${comercio.destacado ? `<span>DESTACADO</span>` : ""}
+     
       </div>
+<div class="comercioInfo">
 
+  ${comercio.destacado ? `<span class="etiquetaDestacado">DESTACADO</span>` : ""}
+
+  <small>${comercio.categoria || ""}</small>
       <div class="comercioInfo">
 
         <small>${comercio.categoria || ""}</small>
