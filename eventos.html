@@ -36,40 +36,90 @@
 
     <div class="turismoGrid" id="listaEventos">
 
-      <!-- TARJETA DE EJEMPLO -->
-      <article class="turismoCard">
 
-        <img src="img/evento-ejemplo.jpg"
-             alt="Imagen del evento">
 
-        <div class="turismoCardContenido">
+  <!-- EVENTO 1: ROTOS DE AMOR -->
+  <article class="turismoCard" data-fecha-fin="2026-10-18">
+    <img src="img/rotos-de-amor.webp" alt="Afiche de Rotos de amor">
 
-          <h2>Próximamente nuevos eventos</h2>
+    <div class="turismoCardContenido">
 
-          <p>
-            <i class="fa-solid fa-calendar-days"></i>
-            Fecha a confirmar
-          </p>
+      <h2>🎭 Rotos de amor</h2>
 
-          <p>
-            <i class="fa-solid fa-clock"></i>
-            Horario a confirmar
-          </p>
+      <p>
+        <i class="fa-solid fa-calendar-days"></i>
+        Domingo 18 de octubre de 2026
+      </p>
 
-          <p>
-            <i class="fa-solid fa-location-dot"></i>
-            General Belgrano
-          </p>
+      <p>
+        <i class="fa-solid fa-clock"></i>
+        20:30 hs
+      </p>
 
-          <p>
-            Muy pronto vas a encontrar aquí las próximas
-            actividades, ferias y espectáculos de nuestra ciudad.
-          </p>
+      <p>
+        <i class="fa-solid fa-location-dot"></i>
+        Cine Teatro Español – General Belgrano
+      </p>
 
-        </div>
-      </article>
+      <p>
+        Una propuesta teatral para disfrutar de una noche
+        de cultura y entretenimiento en nuestra ciudad.
+      </p>
+
+      <a href="https://generalbelgrano.gob.ar/eventos/"
+         target="_blank"
+         rel="noopener noreferrer">
+        <i class="fa-solid fa-circle-info"></i>
+        Más información →
+      </a>
 
     </div>
+  </article>
+
+  <!-- EVENTO 2: EXPO ORIGEN -->
+  <article class="turismoCard" data-fecha-fin="2026-10-25">
+    <img src="img/expo-origen.webp" alt="Afiche de Expo Origen">
+
+    <div class="turismoCardContenido">
+
+      <h2>🌿 Expo Origen</h2>
+
+      <p>
+        <i class="fa-solid fa-calendar-days"></i>
+        Del 23 al 25 de octubre de 2026
+      </p>
+     
+
+      <p>
+        <i class="fa-solid fa-clock"></i>
+        Desde las 10:00 hs
+      </p>
+      <p>
+  <i class="fa-solid fa-ticket"></i>
+  <strong>Entrada libre y gratuita</strong>
+</p>
+
+      <p>
+        <i class="fa-solid fa-location-dot"></i>
+        Sociedad Rural – General Belgrano
+      </p>
+
+      <p>
+        Una exposición para conocer y disfrutar
+        de las propuestas de nuestra comunidad.
+      </p>
+
+      <a href="https://generalbelgrano.gob.ar/eventos/"
+         target="_blank"
+         rel="noopener noreferrer">
+        <i class="fa-solid fa-circle-info"></i>
+        Más información →
+      </a>
+
+    </div>
+  </article>
+
+</div>
 
   </main>
 
@@ -77,6 +127,44 @@
     <strong>Mirá Belgrano</strong>
     <p>Todo lo que buscás en General Belgrano, en un solo lugar.</p>
   </footer>
+  
+<script>
+  function actualizarEventos() {
+    const hoy = new Intl.DateTimeFormat("en-CA", {
+      timeZone: "America/Argentina/Buenos_Aires",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit"
+    }).format(new Date());
+
+    const eventos = document.querySelectorAll(
+      "#listaEventos .turismoCard"
+    );
+
+    let visibles = 0;
+
+    eventos.forEach(evento => {
+      const fechaFin = evento.dataset.fechaFin;
+
+      if (fechaFin && fechaFin < hoy) {
+        evento.style.display = "none";
+      } else {
+        evento.style.display = "";
+        visibles++;
+      }
+    });
+
+    if (visibles === 0) {
+      document.getElementById("listaEventos").innerHTML = `
+        <p>Próximamente publicaremos nuevos eventos
+        en General Belgrano.</p>
+      `;
+    }
+  }
+
+  actualizarEventos();
+</script>
+
 
 </body>
 </html>
