@@ -35,6 +35,38 @@ async function cargarComercio() {
   await cargarPromocionesComercio(data.id);
 
   console.log("Comercio cargado:", data);
+  // SEO automático para cada comercio
+
+const nombreSEO = data.nombre || "Comercio";
+const descripcionSEO = data.descripcion
+  ? data.descripcion.replace(/\s+/g, " ").trim().slice(0, 155)
+  : `Conocé ${nombreSEO} en General Belgrano, Buenos Aires. Encontrá información y datos de contacto en MiráBelgrano.`;
+
+// Título individual
+document.title = `${nombreSEO} | MiráBelgrano`;
+
+// Descripción individual
+let metaDescripcion = document.querySelector('meta[name="description"]');
+
+if (!metaDescripcion) {
+  metaDescripcion = document.createElement("meta");
+  metaDescripcion.name = "description";
+  document.head.appendChild(metaDescripcion);
+}
+
+metaDescripcion.content = descripcionSEO;
+
+// Dirección canónica individual
+let canonical = document.querySelector('link[rel="canonical"]');
+
+if (!canonical) {
+  canonical = document.createElement("link");
+  canonical.rel = "canonical";
+  document.head.appendChild(canonical);
+}
+
+canonical.href =
+  `${window.location.origin}/comercio.html?slug=${encodeURIComponent(slug)}`;
   document.getElementById("comercioNombre").textContent = data.nombre;
 
 document.getElementById("comercioCategoria").textContent =
