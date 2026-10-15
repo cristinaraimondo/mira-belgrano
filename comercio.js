@@ -43,13 +43,20 @@ const descripcionSEO = data.descripcion
   : `Conocé ${nombreSEO} en General Belgrano, Buenos Aires. Encontrá información y datos de contacto en MiráBelgrano.`;
 
 // Título individual
-document.title = `${nombreSEO} | MiráBelgrano`;
+const rubroSEO = (data.rubro || data.categoria || "").trim();
+
+document.title = rubroSEO
+  ? `${nombreSEO} | ${rubroSEO} en General Belgrano | MiráBelgrano`
+  : `${nombreSEO} | MiráBelgrano`;
 // Datos estructurados automáticos para Google
 const datosEstructurados = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
-  "name": nombreSEO,
-  "description": data.descripcion || `Comercio en General Belgrano, Buenos Aires`,
+"name": nombreSEO,
+"description": [
+  rubroSEO ? `${rubroSEO} en General Belgrano, Buenos Aires` : "",
+  data.descripcion || ""
+].filter(Boolean).join(". "),
   "url": `${window.location.origin}/comercio.html?slug=${encodeURIComponent(slug)}`,
   "address": {
     "@type": "PostalAddress",
@@ -91,7 +98,14 @@ if (!metaDescripcion) {
   document.head.appendChild(metaDescripcion);
 }
 
-metaDescripcion.content = descripcionSEO;
+metaDescripcion.content = [
+  data.nombre,
+  rubroSEO
+    ? `${rubroSEO} en General Belgrano, Buenos Aires`
+    : "General Belgrano, Buenos Aires",
+  data.descripcion || "",
+  "Encontrá información y contacto en MiráBelgrano"
+].filter(Boolean).join(". ");
 
 // Dirección canónica individual
 let canonical = document.querySelector('link[rel="canonical"]');
