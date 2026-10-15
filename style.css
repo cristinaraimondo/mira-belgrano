@@ -2537,3 +2537,56 @@ header {
   border-radius: 6px;
   margin-bottom: 8px;
 }
+/* Botones de acceso para comercios */
+
+.accesos-comercios {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.accesos-comercios a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 18px;
+  border-radius: 30px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+/* Registrar comercio */
+
+.boton-registro {
+  background: #321052;
+  color: white;
+}
+
+/* Ingresar */
+
+.accesos-comercios .acceso-panel {
+  position: static;
+  background: white;
+  color: #321052;
+  border: 2px solid #321052;
+}
+
+@media (max-width: 650px) {
+  .accesos-comercios {
+    position: static;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 12px auto;
+    gap: 8px;
+  }
+
+  .accesos-comercios a {
+    font-size: 12px;
+    padding: 10px 12px;
+  }
+}
