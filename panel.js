@@ -54,14 +54,17 @@ async function cargarPanel() {
   const panelPromociones = document.getElementById("panelPromociones");
 
 
+
 if (
   comercio.bonificado === true ||
-  (comercio.plan === "auspiciante" && comercio.estado === "activo")
+  (comercio.plan === "auspiciante" && comercio.estado === "activo") ||
+  (comercio.plan === "auspiciante" && comercio.vista_previa === true)
 ) {
   panelPromociones.style.display = "block";
 } else {
   panelPromociones.style.display = "none";
 }
+
 
 
   console.log("Comercio del usuario:", comercio);
@@ -91,11 +94,17 @@ if (comercio.bonificado === true) {
 const panelContenido = document.getElementById("panelContenido");
 
 
-if (comercio.estado === "activo" || comercio.bonificado === true) {
+
+if (
+  comercio.estado === "activo" ||
+  comercio.bonificado === true ||
+  comercio.vista_previa === true
+) {
   panelContenido.style.display = "block";
 } else {
   panelContenido.style.display = "none";
 }
+
 
 
 if (comercio.plan) {
