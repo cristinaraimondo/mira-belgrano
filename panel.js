@@ -570,87 +570,9 @@ document.getElementById("contratarPlan")
 
     window.location.href = data.init_point;
   });
-  
-/* CAMBIAR CONTRASEÑA DEL COMERCIANTE */
-
-document
-  .getElementById("formCambiarPassword")
-  .addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const nuevaPassword =
-      document.getElementById("nuevaPassword").value;
-
-    const confirmarPassword =
-      document.getElementById("confirmarPassword").value;
-
-    const mensaje =
-      document.getElementById("mensajePassword");
-
-    if (nuevaPassword.length < 8) {
-      mensaje.textContent =
-        "La contraseña debe tener al menos 8 caracteres.";
-      return;
-    }
-
-    if (nuevaPassword !== confirmarPassword) {
-      mensaje.textContent =
-        "Las contraseñas no coinciden.";
-      return;
-    }
-
-    mensaje.textContent = "Actualizando contraseña...";
-
-    const { data: { user }, error: errorSesion } =
-      await db.auth.getUser();
-
-    if (errorSesion || !user) {
-      mensaje.textContent =
-        "Tu sesión expiró. Iniciá sesión nuevamente.";
-      return;
-    }
-
-   
-const codigoPassword =
-  document.getElementById("codigoPassword").value.trim();
-
-if (!codigoPassword) {
-  mensaje.textContent =
-    "Primero solicitá e ingresá el código enviado a tu correo.";
-  return;
-}
-
-const { error } = await db.auth.updateUser({
-  password: nuevaPassword,
-  nonce: codigoPassword
-});
 
 
-    if (error) {
-      console.error("Error al cambiar contraseña:", error);
-      mensaje.textContent =
-        "No se pudo cambiar la contraseña: " + error.message;
-      return;
-    }
-
-    mensaje.textContent =
-      "¡Contraseña actualizada correctamente!";
-
-    document.getElementById("formCambiarPassword").reset();
-  });
-  
-document
-  .getElementById("mostrarPassword")
-  .addEventListener("change", function () {
-
-    const tipo = this.checked ? "text" : "password";
-
-    document.getElementById("nuevaPassword").type = tipo;
-    document.getElementById("confirmarPassword").type = tipo;
-
-  });
-  
-/* Enviar código de seguridad al correo */
+/* Enviar enlace de recuperación al correo */
 
 document
   .getElementById("enviarCodigoPassword")
@@ -663,17 +585,33 @@ document
       document.getElementById("enviarCodigoPassword");
 
     boton.disabled = true;
-    mensaje.textContent = "Enviando código de verificación...";
+    mensaje.textContent = "Enviando enlace de recuperación...";
 
-    const { error } = await db.auth.reauthenticate();
+    const { data: { user }, error: errorUsuario } =
+      await db.auth.getUser();
+
+    if (errorUsuario || !user?.email) {
+      mensaje.textContent =
+        "No se pudo identificar el correo de tu cuenta.";
+      boton.disabled = false;
+      return;
+    }
+
+    const { error } = await db.auth.resetPasswordForEmail(
+      user.email,
+      {
+        redirectTo:
+          "https://mirabelgrano.com.ar/restablecer-password.html"
+      }
+    );
 
     if (error) {
-      console.error("Error enviando código:", error);
+      console.error("Error enviando enlace:", error);
       mensaje.textContent =
-        "No se pudo enviar el código: " + error.message;
+        "No se pudo enviar el enlace: " + error.message;
     } else {
       mensaje.textContent =
-        "Te enviamos un código de verificación al correo de tu cuenta.";
+        "Revisá tu correo electrónico para cambiar la contraseña.";
     }
 
     boton.disabled = false;
