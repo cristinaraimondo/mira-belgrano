@@ -610,9 +610,21 @@ document
       return;
     }
 
-    const { error } = await db.auth.updateUser({
-      password: nuevaPassword
-    });
+   
+const codigoPassword =
+  document.getElementById("codigoPassword").value.trim();
+
+if (!codigoPassword) {
+  mensaje.textContent =
+    "Primero solicitá e ingresá el código enviado a tu correo.";
+  return;
+}
+
+const { error } = await db.auth.updateUser({
+  password: nuevaPassword,
+  nonce: codigoPassword
+});
+
 
     if (error) {
       console.error("Error al cambiar contraseña:", error);
@@ -637,4 +649,34 @@ document
     document.getElementById("confirmarPassword").type = tipo;
 
   });
+  
+/* Enviar código de seguridad al correo */
+
+document
+  .getElementById("enviarCodigoPassword")
+  .addEventListener("click", async () => {
+
+    const mensaje =
+      document.getElementById("mensajePassword");
+
+    const boton =
+      document.getElementById("enviarCodigoPassword");
+
+    boton.disabled = true;
+    mensaje.textContent = "Enviando código de verificación...";
+
+    const { error } = await db.auth.reauthenticate();
+
+    if (error) {
+      console.error("Error enviando código:", error);
+      mensaje.textContent =
+        "No se pudo enviar el código: " + error.message;
+    } else {
+      mensaje.textContent =
+        "Te enviamos un código de verificación al correo de tu cuenta.";
+    }
+
+    boton.disabled = false;
+  });
+
 
