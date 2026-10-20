@@ -2699,4 +2699,31 @@ header {
   cursor: pointer;
 }
 
+/* Botón para recuperar contraseña */
+
+#enviarCodigoPassword {
+  display: block;
+  width: 100%;
+  padding: 14px 16px;
+  margin-top: 18px;
+  background: #4b376e;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#enviarCodigoPassword:hover {
+  background: #352450;
+}
+
+#enviarCodigoPassword:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+
 
