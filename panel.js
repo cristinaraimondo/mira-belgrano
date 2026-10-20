@@ -570,3 +570,59 @@ document.getElementById("contratarPlan")
 
     window.location.href = data.init_point;
   });
+  
+/* CAMBIAR CONTRASEÑA DEL COMERCIANTE */
+
+document
+  .getElementById("formCambiarPassword")
+  .addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const nuevaPassword =
+      document.getElementById("nuevaPassword").value;
+
+    const confirmarPassword =
+      document.getElementById("confirmarPassword").value;
+
+    const mensaje =
+      document.getElementById("mensajePassword");
+
+    if (nuevaPassword.length < 8) {
+      mensaje.textContent =
+        "La contraseña debe tener al menos 8 caracteres.";
+      return;
+    }
+
+    if (nuevaPassword !== confirmarPassword) {
+      mensaje.textContent =
+        "Las contraseñas no coinciden.";
+      return;
+    }
+
+    mensaje.textContent = "Actualizando contraseña...";
+
+    const { data: { user }, error: errorSesion } =
+      await db.auth.getUser();
+
+    if (errorSesion || !user) {
+      mensaje.textContent =
+        "Tu sesión expiró. Iniciá sesión nuevamente.";
+      return;
+    }
+
+    const { error } = await db.auth.updateUser({
+      password: nuevaPassword
+    });
+
+    if (error) {
+      console.error("Error al cambiar contraseña:", error);
+      mensaje.textContent =
+        "No se pudo cambiar la contraseña: " + error.message;
+      return;
+    }
+
+    mensaje.textContent =
+      "¡Contraseña actualizada correctamente!";
+
+    document.getElementById("formCambiarPassword").reset();
+  });

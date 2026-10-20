@@ -160,25 +160,49 @@ ${data.direccion ? `
 `;
 const galeria = document.getElementById("comercioGaleria");
 
+
 const fotosGaleria = [
-  data.galeria_1,
-  data.galeria_2,
-  data.galeria_3
-].filter(Boolean);
+  {
+    foto: data.galeria_1,
+    descripcion: data.descripcion_galeria1
+  },
+  {
+    foto: data.galeria_2,
+    descripcion: data.descripcion_galeria2
+  },
+  {
+    foto: data.galeria_3,
+    descripcion: data.descripcion_galeria3
+  }
+].filter(item => item.foto);
 
 if (fotosGaleria.length > 0) {
   galeria.innerHTML = fotosGaleria
-    .map(foto => `
-      <img
-        src="${foto}"
-        alt="Foto de ${data.nombre}"
-        loading="lazy"
-      >
+    .map(item => `
+      <figure class="galeriaItem">
+        <img
+          src="${item.foto}"
+          alt="Foto de ${data.nombre}"
+          loading="lazy"
+        >
+        ${item.descripcion ? `
+          <figcaption class="galeriaDescripcion"></figcaption>
+        ` : ""}
+      </figure>
     `)
     .join("");
+
+  galeria.querySelectorAll(".galeriaItem").forEach((figura, i) => {
+    const descripcion = figura.querySelector(".galeriaDescripcion");
+    if (descripcion) {
+      descripcion.textContent = fotosGaleria[i].descripcion;
+    }
+  });
+
 } else {
   galeria.style.display = "none";
 }
+
 }
 
 cargarComercio();

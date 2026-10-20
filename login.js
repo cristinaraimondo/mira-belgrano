@@ -11,6 +11,17 @@ const db = window.supabase.createClient(
 const loginForm = document.getElementById("loginForm");
 const mensaje = document.getElementById("loginMensaje");
 
+async function comprobarSesion() {
+  const { data, error } = await db.auth.getUser();
+
+  if (!error && data.user) {
+    window.location.replace("panel.html");
+  }
+}
+
+comprobarSesion();
+
+
 loginForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 

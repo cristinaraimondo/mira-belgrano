@@ -66,6 +66,16 @@ async function cargarComercio() {
 
   document.getElementById("web").value =
     comercio.web || "";
+    
+document.getElementById("descripcionGaleria1").value =
+  comercio.descripcion_galeria1 || "";
+
+document.getElementById("descripcionGaleria2").value =
+  comercio.descripcion_galeria2 || "";
+
+document.getElementById("descripcionGaleria3").value =
+  comercio.descripcion_galeria3 || "";
+
     const vistaFoto =
   document.getElementById("vistaFotoPrincipal");
 
@@ -269,9 +279,20 @@ try {
     .update({
         foto_url: fotoUrl,
         foto_url: fotoUrl,
+
 galeria_1: galeria1Url,
 galeria_2: galeria2Url,
 galeria_3: galeria3Url,
+
+descripcion_galeria1:
+  document.getElementById("descripcionGaleria1").value.trim(),
+
+descripcion_galeria2:
+  document.getElementById("descripcionGaleria2").value.trim(),
+
+descripcion_galeria3:
+  document.getElementById("descripcionGaleria3").value.trim(),
+
 
       nombre:
         document.getElementById("nombre").value.trim(),

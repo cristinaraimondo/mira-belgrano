@@ -139,6 +139,39 @@
 
 </div>
 
+<section class="cambiarPassword">
+  <h3>Seguridad de mi cuenta</h3>
+  <p>Cambiá tu contraseña de acceso.</p>
+
+  <form id="formCambiarPassword">
+    <label for="nuevaPassword">Nueva contraseña</label>
+    <input
+      type="password"
+      id="nuevaPassword"
+      minlength="8"
+      placeholder="Mínimo 8 caracteres"
+      autocomplete="new-password"
+      required
+    >
+
+    <label for="confirmarPassword">Confirmar contraseña</label>
+    <input
+      type="password"
+      id="confirmarPassword"
+      minlength="8"
+      placeholder="Repetí la contraseña"
+      autocomplete="new-password"
+      required
+    >
+
+    <button type="submit">
+      Cambiar contraseña
+    </button>
+
+    <p id="mensajePassword" aria-live="polite"></p>
+  </form>
+</section>
+
       <button id="cerrarSesion">
         Cerrar sesión
       </button>

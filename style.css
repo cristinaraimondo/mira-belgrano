@@ -1312,29 +1312,7 @@ video.promoImagen {
 
 }
 
-.comercioGaleria {
 
-  width: 100%;
-
-  height: 300px;
-
-  padding: 10px;
-
-  box-sizing: border-box;
-
-  background: #f7f5fa;
-
-  border-radius: 18px;
-
-  display: grid;
-
-  grid-template-columns: repeat(3, 1fr);
-
-  gap: 10px;
-
-  align-self: start;
-
-}
 
 .comercioGaleria img {
 
@@ -2590,3 +2568,121 @@ header {
     padding: 10px 12px;
   }
 }
+
+/* Galería con descripciones */
+
+.galeriaItem {
+  margin: 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.galeriaItem img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.galeriaDescripcion {
+  font-size: 14px;
+  color: #454052;
+  text-align: center;
+  line-height: 1.5;
+  padding: 0 8px;
+  overflow-wrap: anywhere;
+}
+
+/* Corrección de galería de comercios */
+
+#comercioGaleria {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  height: auto;
+  align-items: start;
+}
+
+#comercioGaleria .galeriaItem {
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+}
+
+#comercioGaleria .galeriaItem img {
+  display: block;
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+#comercioGaleria .galeriaDescripcion {
+  text-align: center;
+  padding: 10px 5px;
+  font-size: 14px;
+}
+
+@media (max-width: 600px) {
+  #comercioGaleria {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Seguridad de la cuenta */
+
+.cambiarPassword {
+  margin: 30px 0;
+  padding: 24px;
+  background: #f7f5fa;
+  border: 1px solid #e4dcef;
+  border-radius: 18px;
+}
+
+.cambiarPassword h3 {
+  color: #24104d;
+  margin-bottom: 10px;
+}
+
+.cambiarPassword p {
+  color: #555;
+  font-size: 14px;
+}
+
+#formCambiarPassword {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+#formCambiarPassword input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  border: 1px solid #d8cee6;
+  border-radius: 10px;
+  font-size: 15px;
+}
+
+#formCambiarPassword button {
+  padding: 13px;
+  background: #4b376e;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#formCambiarPassword button:hover {
+  background: #352450;
+}
+
+#mensajePassword {
+  font-size: 14px;
+}
+
+
