@@ -626,3 +626,15 @@ document
 
     document.getElementById("formCambiarPassword").reset();
   });
+  
+document
+  .getElementById("mostrarPassword")
+  .addEventListener("change", function () {
+
+    const tipo = this.checked ? "text" : "password";
+
+    document.getElementById("nuevaPassword").type = tipo;
+    document.getElementById("confirmarPassword").type = tipo;
+
+  });
+
