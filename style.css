@@ -2725,5 +2725,119 @@ header {
   cursor: wait;
 }
 
+/* =====================================
+   RESTABLECER CONTRASEÑA - MIRÁ BELGRANO
+===================================== */
+
+body:has(#formRestablecerPassword) {
+  min-height: 100vh;
+  margin: 0;
+  background: #f7f5fa;
+}
+
+body:has(#formRestablecerPassword) main.cambiarPassword {
+  width: calc(100% - 32px);
+  max-width: 460px !important;
+  margin: 80px auto !important;
+  padding: 35px;
+  box-sizing: border-box;
+  background: #ffffff;
+  border: 1px solid #e5dcef;
+  border-radius: 22px;
+  box-shadow: 0 12px 35px rgba(36, 16, 77, 0.08);
+}
+
+body:has(#formRestablecerPassword) h2 {
+  color: #24104d;
+  font-size: 28px;
+  margin: 0 0 14px;
+}
+
+body:has(#formRestablecerPassword) main p {
+  color: #555;
+  line-height: 1.5;
+}
+
+#formRestablecerPassword {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 24px;
+}
+
+#formRestablecerPassword label {
+  color: #24104d;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+#formRestablecerPassword input[type="password"],
+#formRestablecerPassword input[type="text"] {
+  width: 100%;
+  padding: 13px 14px;
+  box-sizing: border-box;
+  border: 1px solid #d8cee6;
+  border-radius: 10px;
+  background: #fff;
+  font-size: 16px;
+}
+
+#formRestablecerPassword input:focus {
+  outline: none;
+  border-color: #4b376e;
+  box-shadow: 0 0 0 3px rgba(75, 55, 110, 0.12);
+}
+
+#formRestablecerPassword .mostrarPassword {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  cursor: pointer;
+}
+
+#formRestablecerPassword .mostrarPassword input {
+  width: auto;
+  margin: 0;
+}
+
+#formRestablecerPassword button {
+  width: 100%;
+  padding: 14px;
+  background: #4b376e;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#formRestablecerPassword button:hover {
+  background: #352450;
+}
+
+#formRestablecerPassword button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+#mensajeRestablecer {
+  font-size: 14px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 600px) {
+  body:has(#formRestablecerPassword) main.cambiarPassword {
+    margin: 40px auto !important;
+    padding: 24px;
+  }
+
+  body:has(#formRestablecerPassword) h2 {
+    font-size: 24px;
+  }
+}
+
+
 
 

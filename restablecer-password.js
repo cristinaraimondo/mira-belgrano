@@ -76,12 +76,15 @@ form.addEventListener("submit", async (e) => {
     return;
   }
 
-  recuperacionAutorizada = false;
-  form.reset();
-  mensaje.textContent =
-    "¡Contraseña actualizada! Ya podés ingresar con tu nueva contraseña.";
 
-  await db.auth.signOut();
+recuperacionAutorizada = false;
+form.reset();
+
+mensaje.textContent =
+  "¡Contraseña actualizada! Redirigiendo a tu panel...";
+
+window.location.replace("panel.html");
+
 });
 document
   .getElementById("mostrarPassword")
