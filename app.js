@@ -24,9 +24,11 @@ const lista = document.getElementById("listaComercios");
 lista.innerHTML = "";
 
 data.forEach(comercio => {
-  if (comercio.estado === "inactivo") {
+  
+if (comercio.estado !== "activo" && comercio.vista_previa !== true) {
   return;
 }
+
 
   const oculto = comercio.destacado ? "" : "display: none;";
 
@@ -244,27 +246,33 @@ function mostrarTodos() {
   document.getElementById("buscador").value = "";
   document.getElementById("tituloComercios").textContent = "Comercios destacados";
 }
+
 async function cargarPromociones() {
   const hoy = new Date().toISOString().split("T")[0];
 
-const { data, error } = await db
-  .from("promociones")
-  .select(`
-    *,
-   comercios!inner (
-  nombre,
-  slug,
-  estado
-)
-`)
-.eq("activo", true)
-.eq("comercios.estado", "activo")
-.lte("fecha_inicio", hoy)
-.gte("fecha_fin", hoy);
+  const { data, error } = await db
+    .from("promociones")
+    .select(`
+      *,
+      comercios!inner (
+        nombre,
+        slug,
+        estado,
+        vista_previa
+      )
+    `)
+    .eq("activo", true)
+    .or("estado.eq.activo,vista_previa.eq.true", {
+      foreignTable: "comercios"
+    })
+    .lte("fecha_inicio", hoy)
+    .gte("fecha_fin", hoy);
+
   if (error) {
     console.error("Error al cargar promociones:", error);
     return;
   }
+
 
   console.log("Promociones cargadas:", data);
   const lista = document.getElementById("listaPromociones");
