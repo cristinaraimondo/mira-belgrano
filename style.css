@@ -2858,6 +2858,17 @@ a[href="editar-comercio.html"]:hover {
   color: white;
 }
 
+#editarComercioForm select {
+  width: 100%;
+  padding: 13px 16px;
+  border: 1px solid #4b376e;
+  border-radius: 12px;
+  background: white;
+  color: #24104d;
+  font-size: 16px;
+  cursor: pointer;
+}
+
 
 
 
