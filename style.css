@@ -2838,6 +2838,26 @@ body:has(#formRestablecerPassword) main p {
   }
 }
 
+/* Botón editar comercio */
+
+a[href="editar-comercio.html"] {
+  display: inline-block;
+  padding: 13px 22px;
+  background: #4b376e;
+  color: white;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 10px;
+  margin: 15px 0 25px;
+  transition: background 0.2s ease;
+}
+
+a[href="editar-comercio.html"]:hover {
+  background: #352450;
+  color: white;
+}
+
 
 
 
