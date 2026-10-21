@@ -1,0 +1,236 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Veterinarias | Mirá Belgrano</title>
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <style>
+    .veterinariasContenedor {
+      max-width: 1100px;
+      margin: 50px auto;
+      padding: 20px;
+    }
+
+    .veterinariasEncabezado {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .veterinariasEncabezado h1 {
+      color: #24104d;
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .veterinariasEncabezado h1 i {
+      color: #713ba5;
+    }
+
+    .veterinariasEncabezado p {
+      color: #666;
+      font-size: 16px;
+    }
+
+    .veterinariasGrid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .veterinariaCard {
+      background: white;
+      padding: 28px 22px;
+      border-radius: 18px;
+      text-align: center;
+      box-shadow: 0 5px 20px #00000012;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .veterinariaIcono {
+      font-size: 32px;
+      color: #713ba5;
+      margin-bottom: 15px;
+    }
+
+    .veterinariaCard h2 {
+      color: #24104d;
+      font-size: 21px;
+      margin: 0 0 8px;
+    }
+
+    .veterinariaNombre {
+      color: #713ba5;
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+
+    .veterinariaTelefono {
+      color: #333;
+      font-size: 21px;
+      font-weight: bold;
+      margin-bottom: 18px;
+    }
+
+    .veterinariaBoton {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: auto;
+      padding: 12px 26px;
+      border-radius: 10px;
+      background: #713ba5;
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .veterinariaBoton:hover {
+      background: #4b237d;
+      color: white;
+    }
+
+    .veterinariasAviso {
+      text-align: center;
+      color: #666;
+      font-size: 13px;
+      margin-top: 30px;
+    }
+
+    .veterinariasVolver {
+      text-align: center;
+      margin-top: 35px;
+    }
+
+    .veterinariasVolver a {
+      color: #713ba5;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    @media (max-width: 600px) {
+      .veterinariasContenedor {
+        margin: 20px auto;
+      }
+
+      .veterinariasEncabezado h1 {
+        font-size: 26px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="veterinariasContenedor">
+
+    <header class="veterinariasEncabezado">
+      <h1>
+        <i class="fa-solid fa-paw"></i>
+        Veterinarias de General Belgrano
+      </h1>
+      <p>
+        Encontrá profesionales veterinarios
+        y comunicate directamente.
+      </p>
+    </header>
+
+    <section class="veterinariasGrid">
+
+      <article class="veterinariaCard">
+        <i class="fa-solid fa-shield-dog veterinariaIcono"></i>
+        <h2>Univet</h2>
+        <p class="veterinariaNombre">Melisa Vázquez</p>
+        <p class="veterinariaTelefono">2243 434503</p>
+        <a class="veterinariaBoton" href="tel:+542243434503">
+          <i class="fa-solid fa-phone"></i> Llamar
+        </a>
+      </article>
+
+      <article class="veterinariaCard">
+        <i class="fa-solid fa-paw veterinariaIcono"></i>
+        <h2>Newton</h2>
+        <p class="veterinariaNombre">Felipe Ibarra</p>
+        <p class="veterinariaTelefono">2243 401444</p>
+        <a class="veterinariaBoton" href="tel:+542243401444">
+          <i class="fa-solid fa-phone"></i> Llamar
+        </a>
+      </article>
+
+      <article class="veterinariaCard">
+        <i class="fa-solid fa-shield-cat veterinariaIcono"></i>
+        <h2>Seres</h2>
+        <p class="veterinariaNombre">Agustín Bidondo</p>
+        <p class="veterinariaTelefono">2243 405479</p>
+        <a class="veterinariaBoton" href="tel:+542243405479">
+          <i class="fa-solid fa-phone"></i> Llamar
+        </a>
+      </article>
+
+      <article class="veterinariaCard">
+        <i class="fa-solid fa-paw veterinariaIcono"></i>
+        <h2>Mariano Zanetti</h2>
+        <p class="veterinariaNombre">Veterinario</p>
+        <p class="veterinariaTelefono">2243 496705</p>
+        <a class="veterinariaBoton" href="tel:+542243496705">
+          <i class="fa-solid fa-phone"></i> Llamar
+        </a>
+      </article>
+
+      <article class="veterinariaCard">
+        <i class="fa-solid fa-shield-dog veterinariaIcono"></i>
+        <h2>La Tacuara</h2>
+        <p class="veterinariaNombre">Sandra Martín</p>
+        <p class="veterinariaTelefono">11 3791 1764</p>
+        <a class="veterinariaBoton" href="tel:+541137911764">
+          <i class="fa-solid fa-phone"></i> Llamar
+        </a>
+      </article>
+
+      <article class="veterinariaCard">
+        <i class="fa-solid fa-paw veterinariaIcono"></i>
+        <h2>Mi Poncho</h2>
+        <p class="veterinariaNombre">José Luis</p>
+        <p class="veterinariaTelefono">2241 464573</p>
+        <a class="veterinariaBoton" href="tel:+542241464573">
+          <i class="fa-solid fa-phone"></i> Llamar
+        </a>
+      </article>
+
+      <article class="veterinariaCard">
+        <i class="fa-solid fa-paw veterinariaIcono"></i>
+        <h2>Mi Poncho</h2>
+        <p class="veterinariaNombre">Ramón</p>
+        <p class="veterinariaTelefono">2241 41-4577</p>
+        <a class="veterinariaBoton" href="tel:+542241414577">
+          <i class="fa-solid fa-phone"></i> Llamar
+        </a>
+      </article>
+
+    </section>
+
+    <p class="veterinariasAviso">
+      Los teléfonos fueron recopilados de una publicación
+      informativa. Recomendamos confirmar su vigencia.
+    </p>
+
+    <div class="veterinariasVolver">
+      <a href="index.html">
+        <i class="fa-solid fa-arrow-left"></i>
+        Volver a Mirá Belgrano
+      </a>
+    </div>
+
+  </main>
+
+</body>
+</html>
