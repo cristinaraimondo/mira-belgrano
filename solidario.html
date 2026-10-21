@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Belgrano Solidario | Mirá Belgrano</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .solidarioContenedor {
+      max-width: 1100px;
+      margin: 50px auto;
+      padding: 20px;
+    }
+
+    .solidarioTitulo {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .solidarioTitulo h1 {
+      color: #24104d;
+    }
+
+    .solidarioGrid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .solidarioCard {
+      background: white;
+      border-radius: 18px;
+      padding: 30px;
+      box-shadow: 0 5px 20px #00000012;
+      text-align: center;
+    }
+
+    .solidarioCard h2 {
+      color: #24104d;
+      margin-bottom: 15px;
+    }
+
+    .solidarioCard p {
+      line-height: 1.6;
+      color: #555;
+    }
+
+    .solidarioBoton {
+      display: inline-block;
+      margin-top: 20px;
+      background: #713ba5;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <main class="solidarioContenedor">
+
+    <div class="solidarioTitulo">
+      <h1>💜 Belgrano Solidario</h1>
+      <p>Conocé las organizaciones que trabajan por nuestra comunidad.</p>
+    </div>
+
+  <div class="solidarioGrid" id="listaOrganizaciones">
+  <p>Cargando organizaciones...</p>
+</div>
+
+    <p style="text-align:center; margin-top:40px;">
+      <a href="index.html">← Volver a Mirá Belgrano</a>
+    </p>
+
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="solidario.js"></script>
+
+</body>
+</html>
