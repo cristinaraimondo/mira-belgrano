@@ -44,7 +44,7 @@ if (comercio.estado !== "activo" && comercio.vista_previa !== true) {
         class="comercioImagen"
       style="
   background-image: url('${comercio.foto_url || "logo.png"}');
-  background-size: ${comercio.foto_url ? "cover" : "contain"};
+ background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 "

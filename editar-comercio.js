@@ -94,6 +94,27 @@ if (comercio.foto_url) {
     >
   `;
 }
+const vistaPortada = document.getElementById("vistaPortadaFicha");
+
+if (vistaPortada) {
+  vistaPortada.replaceChildren();
+
+  if (comercio.portada_url) {
+    const imagen = document.createElement("img");
+    imagen.src = comercio.portada_url;
+    imagen.alt = "Portada del comercio";
+    imagen.style.cssText = `
+      width: 100%;
+      max-width: 500px;
+      max-height: 250px;
+      object-fit: contain;
+      border-radius: 12px;
+      margin-top: 10px;
+    `;
+
+    vistaPortada.appendChild(imagen);
+  }
+}
 const galerias = [
   {
     url: comercio.galeria_1,
@@ -197,6 +218,44 @@ if (archivoFoto) {
 
   fotoUrl = urlData.publicUrl;
 }
+
+// PORTADA DE LA FICHA DEL COMERCIO
+let portadaUrl = comercioActual.portada_url || null;
+
+const archivoPortada =
+  document.getElementById("portadaFicha").files[0];
+
+if (archivoPortada) {
+  const { data: { user } } = await db.auth.getUser();
+
+  if (!user) {
+    mensaje.textContent = "No se pudo identificar el usuario.";
+    return;
+  }
+
+  const extension =
+    archivoPortada.name.split(".").pop().toLowerCase();
+
+  const nombreArchivo =
+    `${user.id}/portada-${Date.now()}.${extension}`;
+
+  const { error: errorSubida } = await db.storage
+    .from("comercios")
+    .upload(nombreArchivo, archivoPortada);
+
+  if (errorSubida) {
+    console.error("Error subiendo portada:", errorSubida);
+    mensaje.textContent = "No se pudo subir la portada.";
+    return;
+  }
+
+  const { data: urlData } = db.storage
+    .from("comercios")
+    .getPublicUrl(nombreArchivo);
+
+  portadaUrl = urlData.publicUrl;
+}
+
 // ========================================
 // GALERÍA
 // ========================================
@@ -277,8 +336,8 @@ try {
   const { error } = await db
     .from("comercios")
     .update({
-        foto_url: fotoUrl,
-        foto_url: fotoUrl,
+       foto_url: fotoUrl,
+portada_url: portadaUrl,
 
 galeria_1: galeria1Url,
 galeria_2: galeria2Url,

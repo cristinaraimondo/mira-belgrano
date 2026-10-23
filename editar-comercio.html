@@ -58,7 +58,6 @@
 
         <label for="direccion">Dirección</label>
         <input type="text" id="direccion">
-        <label for="fotoPrincipal">Imagen principal del comercio</label>
         <label for="maps_url">Ubicación en Google Maps</label>
 <input
   type="url"
@@ -66,15 +65,31 @@
   placeholder="Pegá aquí el enlace de Google Maps"
 >
 
+
+<!-- Logo para las tarjetas del directorio -->
+<label for="fotoPrincipal">Logo del comercio</label>
 <input
   type="file"
   id="fotoPrincipal"
   accept="image/jpeg,image/png,image/webp"
 >
-
 <small class="archivoAyuda">
-  JPG, PNG o WEBP
+  Imagen para las tarjetas del directorio. JPG, PNG o WEBP.
 </small>
+<div id="vistaFotoPrincipal"></div>
+
+<!-- Portada horizontal para la ficha -->
+<label for="portadaFicha">Portada de la ficha</label>
+<input
+  type="file"
+  id="portadaFicha"
+  accept="image/jpeg,image/png,image/webp"
+>
+<small class="archivoAyuda">
+  Imagen horizontal recomendada: 1200 × 600 píxeles.
+</small>
+<div id="vistaPortadaFicha"></div>
+
 
 <div id="vistaFotoPrincipal"></div>
 <label>Galería del comercio</label>

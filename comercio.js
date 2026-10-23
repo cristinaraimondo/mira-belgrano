@@ -128,8 +128,10 @@ document.getElementById("comercioDescripcion").textContent =
 
 const foto = document.getElementById("comercioFoto");
 
-if (data.foto_url) {
-  foto.style.backgroundImage = `url('${data.foto_url}')`;
+const imagenPortada = data.portada_url || data.foto_url;
+
+if (imagenPortada) {
+  foto.style.backgroundImage = `url('${imagenPortada}')`;
   foto.classList.remove("sin-foto");
 } else {
   foto.style.backgroundImage = "";

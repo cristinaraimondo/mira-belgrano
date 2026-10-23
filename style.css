@@ -295,17 +295,12 @@ header {
 }
 
 .comercioImagen {
-
   height: 110px;
-
-  background: #bee0eb;
-
+  background-color: #ffffff;
   position: relative;
-
-  background-size: cover;
-
+  background-size: contain;
   background-position: center;
-
+  background-repeat: no-repeat;
 }
 
 .comercioImagen span {
