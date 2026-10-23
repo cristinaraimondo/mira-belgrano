@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administrar cobros | Mirá Belgrano</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .adminCobros {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    .adminCobros h1 {
+      color: #713ba5;
+      text-align: center;
+    }
+
+    .tarjetaCobro {
+      background: white;
+      padding: 24px;
+      margin: 20px 0;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px #00000012;
+    }
+
+    .tarjetaCobro p {
+      margin: 10px 0;
+      overflow-wrap: anywhere;
+    }
+
+    .tarjetaCobro button {
+      background: #267447;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .tarjetaCobro button:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="adminCobros">
+    <h1>💜 Administración de cobros</h1>
+
+    <p style="text-align:center;">
+      Belgrano Solidario — Rifas y donaciones
+    </p>
+
+    <div id="listaCobrosAdmin">
+      <p>Verificando acceso...</p>
+    </div>
+    <section id="seccionSolicitudes" hidden>
+  <h2 style="color:#713ba5; margin-top:35px;">
+    📝 Solicitudes de corrección
+  </h2>
+
+  <p>
+    Revisá los cambios solicitados por las instituciones
+    antes de autorizar cualquier modificación bancaria.
+  </p>
+
+  <div id="listaSolicitudesAdmin">
+    <p>Cargando solicitudes...</p>
+  </div>
+</section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="admin-cobros.js"></script>
+</body>
+</html>

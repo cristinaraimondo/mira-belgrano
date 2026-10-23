@@ -1,0 +1,297 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Organización | Mirá Belgrano</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .organizacionContenedor {
+      max-width: 950px;
+      margin: 45px auto;
+      padding: 20px;
+    }
+
+    .organizacionFicha {
+      background: white;
+      border-radius: 20px;
+      padding: 35px;
+      box-shadow: 0 5px 25px #00000012;
+    }
+
+    .organizacionEncabezado {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+  .organizacionLogo {
+ width: 330px;
+height: 200px;
+  object-fit: contain;
+  margin-bottom: 15px;
+}
+
+    .organizacionEncabezado h1 {
+      color: #24104d;
+      margin-bottom: 12px;
+    }
+
+    .organizacionDescripcion {
+      color: #555;
+      line-height: 1.8;
+      font-size: 16px;
+      white-space: pre-line;
+    }
+
+    .organizacionContacto {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+    }
+
+    .organizacionContacto a {
+      display: block;
+      margin: 12px 0;
+      color: #713ba5;
+      overflow-wrap: anywhere;
+    }
+
+    .organizacionDonar {
+      display: inline-block;
+      background: #713ba5;
+      color: white;
+      padding: 14px 30px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 25px;
+    }
+
+    .organizacionVolver {
+      display: block;
+      text-align: center;
+      margin-top: 30px;
+      color: #713ba5;
+    }
+
+    @media (max-width: 600px) {
+      .organizacionFicha {
+        padding: 22px;
+      }
+    }
+    .organizacionDonar[hidden] {
+  display: none !important;
+}
+#organizacionRevista {
+  text-align: center;
+  margin-top: 30px;
+  padding: 25px;
+  background: #f8f5fc;
+  border-radius: 15px;
+}
+
+#organizacionRevista h2 {
+  color: #24104d;
+}
+
+#organizacionRevista[hidden] {
+  display: none !important;
+}
+#etiquetaVistaPrevia {
+  color: #713ba5;
+  font-size: 13px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+#etiquetaVistaPrevia[hidden] {
+  display: none !important;
+}
+#organizacionRifas {
+  margin-top: 30px;
+  padding: 25px;
+  background: #f8f5fc;
+  border-radius: 15px;
+  text-align: center;
+}
+
+#organizacionRifas[hidden] {
+  display: none !important;
+}
+
+.rifaGrilla {
+  display: grid;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+  gap: 6px;
+  margin-top: 20px;
+}
+
+.rifaNumero {
+  padding: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: white;
+  color: #24104d;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.rifaNumero:hover {
+  background: #e5d7f3;
+}
+
+@media (max-width: 600px) {
+  .rifaGrilla {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+#rifaFormulario {
+  margin-top: 25px;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+}
+
+#rifaFormulario[hidden] {
+  display: none !important;
+}
+
+#rifaNombre {
+  display: block;
+  width: 100%;
+  max-width: 350px;
+  padding: 12px;
+  margin: 12px auto;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.rifaPrivacidad {
+  display: block;
+  margin: 15px 0;
+}
+
+#rifaConfirmar {
+  background: #713ba5;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 22px;
+}
+
+#rifaConfirmar:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.rifaNumero:disabled {
+  cursor: not-allowed;
+}
+
+.rifaNumero.reservado {
+  background: #fff0c2;
+  color: #805600;
+  border-color: #e8c76b;
+}
+
+.rifaNumero.vendido {
+  background: #d9f2df;
+  color: #216b38;
+  border-color: #9bcda7;
+}
+  </style>
+</head>
+
+<body>
+
+  <main class="organizacionContenedor">
+
+    <article class="organizacionFicha">
+
+      <div class="organizacionEncabezado">
+        <img id="organizacionLogo"
+             class="organizacionLogo"
+             alt="Logo de la organización"
+             hidden>
+
+        <h1 id="organizacionNombre">Cargando...</h1>
+        <p id="etiquetaVistaPrevia" hidden>
+  🔒 Vista previa — Organización pendiente de publicación
+</p>
+      </div>
+
+      <p id="organizacionDescripcion"
+         class="organizacionDescripcion"></p>
+
+      <div id="organizacionContacto"
+           class="organizacionContacto"
+           hidden></div>
+           <div id="organizacionRevista" hidden>
+  <h2>📖 Nuestra revista digital</h2>
+  <p>Conocé nuestras publicaciones y actividades.</p>
+  <a id="organizacionRevistaLink"
+     class="organizacionDonar"
+     target="_blank"
+     rel="noopener noreferrer">
+    Leer revista →
+  </a>
+</div>
+<section id="organizacionRifas" hidden>
+  <h2>🎟️ Rifas solidarias</h2>
+  <p>Elegí tu número y colaborá con esta institución.</p>
+
+  <div id="rifaInformacion"></div>
+
+  <div id="rifaGrilla" class="rifaGrilla"></div>
+  <div id="rifaFormulario" hidden>
+  <h3 id="rifaNumeroElegido"></h3>
+
+  <label for="rifaNombre">Nombre y apellido</label>
+  <input
+    type="text"
+    id="rifaNombre"
+    placeholder="Ingresá tu nombre completo"
+    maxlength="100"
+    autocomplete="name"
+  >
+
+  <label class="rifaPrivacidad">
+    <input type="checkbox" id="rifaMostrarNombre">
+    Autorizo a mostrar mi nombre en la grilla una vez confirmado el pago.
+  </label>
+
+  <button type="button" id="rifaConfirmar" disabled>
+    Confirmar reserva
+  </button>
+
+  <p id="rifaMensaje">
+    Las reservas y los pagos todavía no están habilitados.
+  </p>
+</div>
+</section>
+
+      <div style="text-align:center">
+        <a id="organizacionDonar"
+           class="organizacionDonar"
+           target="_blank"
+           rel="noopener noreferrer"
+           hidden>
+          ❤️ Donar
+        </a>
+      </div>
+
+    </article>
+
+    <a class="organizacionVolver" href="solidario.html">
+      ← Volver a Belgrano Solidario
+    </a>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="organizacion.js"></script>
+  <script src="rifas.js"></script>
+
+</body>
+</html>

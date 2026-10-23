@@ -12,7 +12,7 @@ async function cargarOrganizaciones() {
 
   const { data, error } = await db
     .from("organizaciones")
-    .select("nombre, descripcion, enlace_donacion")
+    .select("nombre, descripcion, enlace_donacion, slug")
     .eq("publicada", true)
     .eq("verificada", true)
     .order("nombre");
@@ -42,6 +42,15 @@ async function cargarOrganizaciones() {
     descripcion.textContent = org.descripcion || "";
 
     tarjeta.append(titulo, descripcion);
+    // Botón para conocer la institución
+if (org.slug) {
+  const botonFicha = document.createElement("a");
+  botonFicha.className = "solidarioBoton";
+  botonFicha.textContent = "Conocer institución →";
+  botonFicha.href = `organizacion.html?slug=${encodeURIComponent(org.slug)}`;
+
+  tarjeta.appendChild(botonFicha);
+}
 
     if (org.enlace_donacion) {
       const boton = document.createElement("a");

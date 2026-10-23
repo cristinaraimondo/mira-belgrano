@@ -1,0 +1,358 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Panel de Instituciones | Mirá Belgrano</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .panelInstitucion {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    .panelInstitucion h1 {
+      color: #24104d;
+      text-align: center;
+    }
+
+    .panelBienvenida {
+      text-align: center;
+      color: #666;
+      margin-bottom: 30px;
+    }
+
+    .panelOpciones {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+
+    .panelOpcion {
+      background: white;
+      border-radius: 16px;
+      padding: 25px;
+      box-shadow: 0 5px 20px #00000012;
+    }
+
+    .panelOpcion h2 {
+      color: #713ba5;
+      font-size: 20px;
+    }
+
+    .panelOpcion p {
+      color: #555;
+      line-height: 1.6;
+    }
+
+    .panelOpcion button {
+      background: #713ba5;
+      color: white;
+      border: none;
+      border-radius: 9px;
+      padding: 12px 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .panelOpcion button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    #seccionCobros {
+  margin-top: 30px;
+}
+
+#seccionCobros[hidden] {
+  display: none !important;
+}
+
+#formularioCobros label {
+  display: block;
+  margin-top: 16px;
+  font-weight: bold;
+}
+
+#formularioCobros input {
+  display: block;
+  width: 100%;
+  max-width: 450px;
+  padding: 12px;
+  margin-top: 6px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+#seccionRifas {
+  margin-top: 30px;
+}
+
+#seccionRifas[hidden] {
+  display: none !important;
+}
+
+#formularioRifas label {
+  display: block;
+  margin-top: 16px;
+  font-weight: bold;
+}
+
+#formularioRifas input {
+  display: block;
+  width: 100%;
+  max-width: 450px;
+  padding: 12px;
+  margin-top: 6px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+#guardarRifa {
+  margin-top: 20px;
+}
+#rifaImagenVistaPrevia {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  max-height: 250px;
+  object-fit: contain;
+  margin-top: 15px;
+  border-radius: 12px;
+}
+
+#rifaImagenVistaPrevia[hidden] {
+  display: none !important;
+}
+  </style>
+</head>
+
+<body>
+
+  <main class="panelInstitucion">
+
+    <h1>💜 Belgrano Solidario</h1>
+
+    <p class="panelBienvenida">
+      Panel de administración de instituciones
+    </p>
+
+    <div class="panelOpciones">
+
+      <section class="panelOpcion">
+        <h2>🏠 Mi institución</h2>
+        <p>Actualizá la información, imágenes y datos de contacto.</p>
+        <button disabled>Administrar institución</button>
+      </section>
+
+      <section class="panelOpcion">
+        <h2>🎟️ Mis rifas</h2>
+        <p>Creá rifas y administrá los números y participantes.</p>
+      <button type="button" id="abrirRifas" disabled>
+  Administrar rifas
+</button>
+      </section>
+
+      <section class="panelOpcion">
+        <h2>💳 Datos de cobro</h2>
+        <p>Configurá el alias, CVU y titular de tu cuenta.</p>
+        <button type="button" id="abrirCobros" disabled>
+  Configurar cobros
+</button>
+      </section>
+
+      <section class="panelOpcion">
+        <h2>✅ Confirmar pagos</h2>
+        <p>Revisá las transferencias y confirmá los números vendidos.</p>
+        <button disabled>Ver pagos</button>
+      </section>
+
+    </div>
+    <section id="seccionRifas" class="panelOpcion" hidden>
+  <h2>🎟️ Crear una rifa solidaria</h2>
+  <p>Completá los datos de la rifa de tu institución.</p>
+
+  <form id="formularioRifas">
+
+    <label for="rifaTitulo">Nombre de la rifa</label>
+    <input type="text" id="rifaTitulo"
+           placeholder="Ejemplo: Rifa solidaria de primavera"
+           required maxlength="120">
+
+    <label for="rifaPremio">Premio</label>
+    <input type="text" id="rifaPremio"
+           placeholder="Ejemplo: Una canasta de productos"
+           required>
+           <label for="rifaImagen">📸 Fotografía del premio</label>
+
+<input
+  type="file"
+  id="rifaImagen"
+  accept="image/jpeg,image/png,image/webp"
+>
+
+<img
+  id="rifaImagenVistaPrevia"
+  alt="Vista previa del premio"
+  hidden
+>
+
+    <label for="rifaPrecio">Precio por número ($)</label>
+    <input type="number" id="rifaPrecio"
+           min="1" step="0.01" required>
+
+    <label for="rifaCantidad">Cantidad de números</label>
+    <input type="number" id="rifaCantidad"
+           min="1" max="1000" required>
+
+    <label for="rifaFecha">Fecha del sorteo</label>
+    <input type="date" id="rifaFecha" required>
+
+    <button type="submit" id="guardarRifa" disabled>
+      Crear rifa
+    </button>
+
+    <p id="mensajeRifas"></p>
+    <h3 style="margin-top:30px;">🎟️ Mis rifas creadas</h3>
+
+<div id="listaRifasInstitucion">
+  <p>Cargando rifas...</p>
+</div>
+  </form>
+</section>
+    
+<section id="seccionCobros" class="panelOpcion" hidden>
+  <h2>💳 Mis datos de cobro</h2>
+
+  <p>
+    Estos datos se utilizarán para recibir directamente
+    las transferencias de las rifas solidarias.
+  </p>
+  <p class="avisoTransparencia">
+  🔒 <strong>Transparencia en tus cobros</strong>
+</p>
+
+<p>
+  Mirá Belgrano no recibe el dinero de tus rifas.
+  Las transferencias se realizan directamente a la cuenta
+  que figura en este panel y que fue autorizada por tu institución.
+</p>
+
+<p>
+  Tus datos de cobro permanecerán visibles para vos,
+  incluso después de confirmarlos. Cualquier modificación
+  posterior requerirá autorización y quedará registrada.
+</p>
+
+  <form id="formularioCobros">
+
+    <label for="cobroTitular">Titular de la cuenta</label>
+    <input
+      id="cobroTitular"
+      type="text"
+      maxlength="120"
+      autocomplete="name"
+      required
+    >
+
+    <label for="cobroAlias">Alias bancario</label>
+    <input
+      id="cobroAlias"
+      type="text"
+      maxlength="100"
+      placeholder="Ejemplo: proama.solidaria"
+    >
+
+    <label for="cobroCvu">CBU o CVU</label>
+    <input
+      id="cobroCvu"
+      type="text"
+      inputmode="numeric"
+      maxlength="22"
+      placeholder="22 dígitos"
+    >
+
+<button type="submit" id="guardarCobros" disabled>
+  Guardar datos
+</button>
+
+<button
+  type="button"
+  id="confirmarCobros"
+  disabled
+  style="margin-top:12px;background:#267447;"
+>
+  🔒 Confirmar datos de cobro
+</button>
+
+<p id="estadoCobros"></p>
+<p id="mensajeCobros"></p>
+<div id="seccionSolicitudCobros" hidden>
+
+  <button type="button" id="abrirSolicitudCobros">
+    ✏️ Solicitar corrección de datos
+  </button>
+
+  <div id="formularioSolicitudCobros" hidden>
+
+    <h3>Solicitar modificación de cuenta</h3>
+
+    <p>
+      Los datos actuales permanecerán sin cambios
+      hasta que Mirá Belgrano revise tu solicitud.
+    </p>
+
+    <label for="solicitudMotivo">Motivo de la corrección</label>
+    <textarea
+      id="solicitudMotivo"
+      rows="3"
+      maxlength="500"
+      placeholder="Explicá por qué necesitás modificar los datos"
+    ></textarea>
+
+    <label for="solicitudTitular">Nuevo titular</label>
+    <input type="text" id="solicitudTitular" maxlength="120">
+
+    <label for="solicitudAlias">Nuevo alias</label>
+    <input type="text" id="solicitudAlias" maxlength="100">
+
+    <label for="solicitudCvu">Nuevo CBU o CVU</label>
+    <input type="text" id="solicitudCvu" maxlength="22" inputmode="numeric">
+
+    <button type="button" id="enviarSolicitudCobros" disabled>
+      Enviar solicitud
+    </button>
+
+    <p id="mensajeSolicitudCobros"></p>
+
+  </div>
+</div>
+
+  </form>
+  <div id="historialCobros" style="margin-top:30px;">
+  <h3>📋 Historial de datos de cobro</h3>
+
+  <p style="color:#666;">
+    Aquí podrás consultar las modificaciones realizadas
+    en los datos bancarios de tu institución.
+  </p>
+
+  <div id="listaHistorialCobros">
+    <p>Cargando historial...</p>
+  </div>
+</div>
+</section>
+
+
+    <p style="text-align:center; margin-top:35px;">
+      <a href="solidario.html">← Volver a Belgrano Solidario</a>
+    </p>
+
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="panel-institucion.js"></script>
+
+</body>
+</html>
