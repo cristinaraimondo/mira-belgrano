@@ -126,6 +126,109 @@
 #rifaImagenVistaPrevia[hidden] {
   display: none !important;
 }
+/* Formulario de historias */
+#seccionHistorias {
+  margin-top: 30px;
+}
+
+#seccionHistorias[hidden] {
+  display: none !important;
+}
+
+#formularioHistorias label {
+  display: block;
+  margin-top: 18px;
+  margin-bottom: 6px;
+  font-weight: bold;
+  color: #333;
+}
+
+#formularioHistorias input[type="text"],
+#formularioHistorias textarea {
+  display: block;
+  width: 100%;
+  max-width: 650px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font: inherit;
+  box-sizing: border-box;
+}
+
+#formularioHistorias textarea {
+  min-height: 180px;
+  resize: vertical;
+}
+
+#formularioHistorias input[type="file"] {
+  display: block;
+  margin-top: 8px;
+}
+
+#guardarHistoria {
+  display: block;
+  margin-top: 22px;
+  background: #713ba5;
+  color: white;
+  border: none;
+  border-radius: 9px;
+  padding: 12px 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#guardarHistoria:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+#listaHistoriasInstitucion {
+  margin-top: 15px;
+}
+
+/* Historias de las instituciones */
+.historiaContenido {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.historiaFoto {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.historiaTexto {
+  min-width: 0;
+}
+
+.historiaTexto h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+.historiaTexto p {
+  line-height: 1.6;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 650px) {
+  .historiaContenido {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .historiaFoto {
+    height: auto;
+    max-height: 300px;
+    object-fit: contain;
+  }
+}
+
   </style>
 </head>
 
@@ -162,14 +265,86 @@
   Configurar cobros
 </button>
       </section>
+      <section class="panelOpcion">
+  <h2>📖 Mis historias</h2>
+
+  <p>
+    Compartí las actividades, proyectos,
+    necesidades y logros de tu institución.
+  </p>
+
+  <button type="button" id="abrirHistorias" >
+    Administrar historias
+  </button>
+</section>
 
       <section class="panelOpcion">
         <h2>✅ Confirmar pagos</h2>
         <p>Revisá las transferencias y confirmá los números vendidos.</p>
-        <button disabled>Ver pagos</button>
+      <button type="button" id="abrirPagos">Ver pagos</button>
       </section>
 
     </div>
+    <section id="seccionHistorias" class="panelOpcion" hidden>
+  <h2>📖 Historias de mi institución</h2>
+
+  <p>
+    Contale a la comunidad qué hace tu institución,
+    cuáles son sus proyectos y cómo pueden colaborar.
+  </p>
+
+  <form id="formularioHistorias">
+
+    <label for="historiaTitulo">Título de la historia</label>
+    <input
+      type="text"
+      id="historiaTitulo"
+      maxlength="120"
+      required
+      placeholder="Ejemplo: Un nuevo proyecto para nuestra comunidad"
+    >
+
+    <label for="historiaDescripcion">Contá tu historia</label>
+    <textarea
+      id="historiaDescripcion"
+      rows="8"
+      maxlength="5000"
+      required
+      placeholder="Contá qué hicieron, por qué es importante y cómo puede ayudar la comunidad..."
+    ></textarea>
+
+    <label for="historiaImagen">Fotografía</label>
+    <input
+      type="file"
+      id="historiaImagen"
+      accept="image/jpeg,image/png,image/webp"
+    >
+
+    <button type="submit" id="guardarHistoria" disabled>
+      Publicar historia
+    </button>
+
+    <p id="mensajeHistorias"></p>
+
+  </form>
+
+  <h3>Mis historias publicadas</h3>
+
+  <div id="listaHistoriasInstitucion">
+    <p>Todavía no hay historias publicadas.</p>
+  </div>
+</section>
+    <section id="seccionPagos" class="panelOpcion" hidden>
+  <h2>💳 Pagos de mis rifas</h2>
+  <p>
+    Consultá las reservas, los datos de los compradores
+    y los pagos pendientes de verificación.
+  </p>
+
+  <div id="listaPagosInstitucion">
+    Cargando pagos...
+  </div>
+</section>
     <section id="seccionRifas" class="panelOpcion" hidden>
   <h2>🎟️ Crear una rifa solidaria</h2>
   <p>Completá los datos de la rifa de tu institución.</p>

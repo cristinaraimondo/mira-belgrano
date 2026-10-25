@@ -24,10 +24,15 @@ const esAdministrador =
 
   const { data, error } = await db
     .from("organizaciones")
-    .select(`
+  
+.select(`
+      id,
+      publicada,
+      verificada,
       nombre,
       descripcion,
       logo_url,
+
       telefono,
       whatsapp,
       email,
@@ -39,10 +44,11 @@ const esAdministrador =
   .eq("slug", slug)
 .maybeSingle();
 
-  if (error || !data) {
-    nombre.textContent = "Organización no disponible";
-    return;
-  }
+if (error || !data) {
+  console.error("Error al cargar organización:", error);
+  nombre.textContent = "Organización no disponible";
+  return;
+}
   // Impedir mostrar fichas pendientes a otros usuarios
 if (!esAdministrador && (!data.verificada || !data.publicada)) {
   nombre.textContent = "Organización no disponible";
@@ -136,6 +142,9 @@ if (data.revista_url) {
   }
 }
 
+  // Cargar historias públicas de esta institución
+  await cargarHistoriasPublicas(data.id);
+
   // Donaciones
   if (data.enlace_donacion) {
     try {
@@ -151,5 +160,56 @@ if (data.revista_url) {
     }
   }
 }
+async function cargarHistoriasPublicas(institucionId) {
+  const seccion = document.getElementById("organizacionHistorias");
+  const contenedor = document.getElementById("listaHistoriasPublicas");
 
+
+const { data: historias, error } = await db
+.from("historias_instituciones")
+.select("titulo, descripcion, imagen_url, created_at")
+.eq("organizacion_id", institucionId)
+.eq("publicada", true)
+.order("created_at", { ascending: false });
+
+if (error) {
+console.error("Error al cargar historias públicas:", error);
+return;
+}
+
+if (!historias?.length) return;
+
+contenedor.replaceChildren();
+
+historias.forEach(historia => {
+const tarjeta = document.createElement("article");
+tarjeta.className = "historiaPublica";
+
+if (historia.imagen_url) {
+const imagen = document.createElement("img");
+imagen.src = historia.imagen_url;
+imagen.alt = historia.titulo;
+imagen.loading = "lazy";
+tarjeta.appendChild(imagen);
+}
+
+const contenido = document.createElement("div");
+
+const titulo = document.createElement("h3");
+titulo.textContent = historia.titulo;
+
+const descripcion = document.createElement("p");
+descripcion.textContent = historia.descripcion;
+
+const fecha = document.createElement("small");
+fecha.textContent = new Date(historia.created_at)
+.toLocaleDateString("es-AR");
+
+contenido.append(titulo, descripcion, fecha);
+tarjeta.appendChild(contenido);
+contenedor.appendChild(tarjeta);
+});
+
+seccion.hidden = false;
+}
 cargarOrganizacion();

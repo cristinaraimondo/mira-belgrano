@@ -158,7 +158,9 @@ height: 200px;
   display: none !important;
 }
 
-#rifaNombre {
+#rifaNombre,
+#rifaWhatsapp,
+#rifaEmail {
   display: block;
   width: 100%;
   max-width: 350px;
@@ -200,6 +202,88 @@ height: 200px;
   color: #216b38;
   border-color: #9bcda7;
 }
+/* Número disponible */
+.rifaNumero:not(:disabled) {
+  background-color: #d8f3dc;
+  color: #166534;
+  border: 2px solid #86c99a;
+  cursor: pointer;
+}
+
+/* Número reservado durante 24 horas */
+.rifaNumero.reservado {
+  background-color: #ffe4b5;
+  color: #92400e;
+  border: 2px solid #f59e0b;
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+/* Número vendido */
+.rifaNumero.vendido {
+  background-color: #fecaca;
+  color: #991b1b;
+  border: 2px solid #ef4444;
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+/* Historias públicas de Belgrano Solidario */
+#organizacionHistorias {
+  margin-top: 35px;
+  padding-top: 25px;
+  border-top: 1px solid #eee;
+}
+
+#organizacionHistorias[hidden] {
+  display: none !important;
+}
+
+#organizacionHistorias h2 {
+  color: #24104d;
+}
+
+.historiaPublica {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: 24px;
+  padding: 22px;
+  margin-top: 20px;
+  background: #f8f5fc;
+  border-radius: 15px;
+  align-items: start;
+}
+
+.historiaPublica img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.historiaPublica h3 {
+  margin-top: 0;
+  color: #24104d;
+}
+
+.historiaPublica p {
+  line-height: 1.7;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 650px) {
+  .historiaPublica {
+    grid-template-columns: 1fr;
+  }
+
+  .historiaPublica img {
+    height: auto;
+    max-height: 300px;
+    object-fit: contain;
+  }
+}
+
   </style>
 </head>
 
@@ -227,6 +311,14 @@ height: 200px;
       <div id="organizacionContacto"
            class="organizacionContacto"
            hidden></div>
+           
+<section id="organizacionHistorias" hidden>
+  <h2>💜 Nuestras historias</h2>
+  <p>Conocé las actividades, proyectos y novedades de nuestra institución.</p>
+
+  <div id="listaHistoriasPublicas"></div>
+</section>
+
            <div id="organizacionRevista" hidden>
   <h2>📖 Nuestra revista digital</h2>
   <p>Conocé nuestras publicaciones y actividades.</p>
@@ -255,19 +347,41 @@ height: 200px;
     maxlength="100"
     autocomplete="name"
   >
+<label for="rifaWhatsapp">WhatsApp de contacto</label>
+<input
+  type="tel"
+  id="rifaWhatsapp"
+  placeholder="Ejemplo: 1123456789"
+  maxlength="30"
+  autocomplete="tel"
+  required
+>
 
+<label for="rifaEmail">Correo electrónico (opcional)</label>
+<input
+  type="email"
+  id="rifaEmail"
+  placeholder="tuemail@ejemplo.com"
+  maxlength="254"
+  autocomplete="email"
+>
   <label class="rifaPrivacidad">
     <input type="checkbox" id="rifaMostrarNombre">
     Autorizo a mostrar mi nombre en la grilla una vez confirmado el pago.
   </label>
-
+<div
+  class="cf-turnstile"
+  data-sitekey="0x4AAAAAAFjZvTDCae9iojVD"
+  data-theme="light">
+</div>
   <button type="button" id="rifaConfirmar" disabled>
     Confirmar reserva
   </button>
 
-  <p id="rifaMensaje">
-    Las reservas y los pagos todavía no están habilitados.
-  </p>
+ <p id="rifaMensaje">
+  Tu número quedará reservado durante 24 horas.
+  La institución deberá confirmar el pago para completar la compra.
+</p>
 </div>
 </section>
 
@@ -291,6 +405,11 @@ height: 200px;
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="organizacion.js"></script>
+  <script
+  src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+  async
+  defer>
+</script>
   <script src="rifas.js"></script>
 
 </body>

@@ -48,9 +48,119 @@ async function iniciarPanelInstitucion() {
     `Bienvenido al panel de ${institucion.nombre}`;
 
   opciones.hidden = false;
+  configurarPublicacionHistorias(institucion);
+  cargarHistoriasInstitucion(institucion.id);
   crearRifa(institucion, user);
   cargarHistorialCobros(institucion.id);
   cargarRifasInstitucion(institucion.id);
+  // Mostrar los pagos de la institución
+const abrirPagos = document.getElementById("abrirPagos");
+const seccionPagos = document.getElementById("seccionPagos");
+const listaPagos = document.getElementById("listaPagosInstitucion");
+
+abrirPagos.addEventListener("click", async () => {
+  seccionPagos.hidden = false;
+  listaPagos.textContent = "Cargando pagos...";
+
+  const { data: compras, error: errorPagos } = await db
+    .rpc("consultar_compras_institucion");
+
+  if (errorPagos) {
+    console.error("Error al consultar pagos:", errorPagos);
+    listaPagos.textContent = "No se pudieron cargar los pagos.";
+    return;
+  }
+
+  listaPagos.replaceChildren();
+
+  if (!compras?.length) {
+    listaPagos.textContent = "Todavía no hay reservas registradas.";
+    return;
+  }
+
+  compras.forEach(compra => {
+    const tarjeta = document.createElement("div");
+    tarjeta.className = "panelOpcion";
+
+    const detalle = document.createElement("p");
+    detalle.textContent =
+      `🎟️ ${compra.rifa_titulo} | Número ${String(compra.numero).padStart(2, "0")}
+      | Comprador: ${compra.nombre_comprador}
+      | WhatsApp: ${compra.whatsapp}
+      | Estado: ${compra.estado}`;
+
+    tarjeta.appendChild(detalle);
+    if (compra.estado === "pendiente") {
+  const botonVerificar = document.createElement("button");
+  botonVerificar.type = "button";
+  botonVerificar.textContent = "💳 Pago informado";
+
+  botonVerificar.addEventListener("click", async () => {
+    const confirmar = confirm(
+      "¿El comprador informó que realizó el pago? Esto NO confirma que el dinero haya ingresado."
+    );
+
+    if (!confirmar) return;
+
+    botonVerificar.disabled = true;
+
+    const { data, error } = await db.rpc(
+      "marcar_pago_en_verificacion",
+      { p_compra_id: compra.compra_id }
+    );
+
+    if (error || data !== true) {
+      alert("No se pudo actualizar el pago.");
+      botonVerificar.disabled = false;
+      return;
+    }
+
+    alert("Pago marcado como en verificación.");
+    abrirPagos.click();
+  });
+
+  tarjeta.appendChild(botonVerificar);
+}
+
+if (
+  compra.estado === "en_verificacion" ||
+  compra.estado === "comprobante_enviado"
+) {
+  const botonConfirmar = document.createElement("button");
+  botonConfirmar.type = "button";
+  botonConfirmar.textContent = "✅ Confirmar pago";
+
+  botonConfirmar.addEventListener("click", async () => {
+    const confirmar = confirm(
+      "¿Verificaste que el dinero ingresó a la cuenta de la institución? Esta acción marcará el número como VENDIDO."
+    );
+
+    if (!confirmar) return;
+
+    botonConfirmar.disabled = true;
+
+    const { data, error } = await db.rpc(
+      "confirmar_pago_rifa",
+      { p_compra_id: compra.compra_id }
+    );
+
+    if (error || data !== true) {
+      console.error("Error al confirmar pago:", error);
+      alert("No se pudo confirmar el pago.");
+      botonConfirmar.disabled = false;
+      return;
+    }
+
+    alert("Pago confirmado. Número vendido.");
+    abrirPagos.click();
+  });
+
+  tarjeta.appendChild(botonConfirmar);
+}
+
+    listaPagos.appendChild(tarjeta);
+  });
+});
   // Mostrar y cargar los datos de cobro de la institución
 const seccionCobros = document.getElementById("seccionCobros");
 const formularioCobros = document.getElementById("formularioCobros");
@@ -601,3 +711,468 @@ async function cargarHistorialCobros(institucionId) {
   });
 }
 iniciarPanelInstitucion();
+// Abrir y cerrar el formulario de historias
+const abrirHistorias = document.getElementById("abrirHistorias");
+const seccionHistorias = document.getElementById("seccionHistorias");
+
+abrirHistorias?.addEventListener("click", () => {
+  seccionHistorias.hidden = !seccionHistorias.hidden;
+
+  if (!seccionHistorias.hidden) {
+    seccionHistorias.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  }
+});
+// Validar formulario de historias
+const formularioHistorias =
+  document.getElementById("formularioHistorias");
+
+const historiaTitulo =
+  document.getElementById("historiaTitulo");
+
+const historiaDescripcion =
+  document.getElementById("historiaDescripcion");
+
+const guardarHistoria =
+  document.getElementById("guardarHistoria");
+
+function validarHistoria() {
+  const tituloValido =
+    historiaTitulo.value.trim().length >= 3;
+
+  const descripcionValida =
+    historiaDescripcion.value.trim().length >= 10;
+
+  guardarHistoria.disabled = !(tituloValido && descripcionValida);
+}
+
+historiaTitulo?.addEventListener("input", validarHistoria);
+historiaDescripcion?.addEventListener("input", validarHistoria);
+
+function configurarPublicacionHistorias(institucion) {
+  const formulario = document.getElementById("formularioHistorias");
+  const boton = document.getElementById("guardarHistoria");
+  const mensaje = document.getElementById("mensajeHistorias");
+
+  formulario.addEventListener("submit", async (evento) => {
+    evento.preventDefault();
+
+    const titulo = document.getElementById("historiaTitulo").value.trim();
+    const descripcion = document.getElementById("historiaDescripcion").value.trim();
+
+    if (titulo.length < 3 || descripcion.length < 10) {
+      mensaje.textContent = "Completá correctamente el título y la descripción.";
+      return;
+    }
+
+    boton.disabled = true;
+    mensaje.textContent = "Publicando historia...";
+
+    try {
+
+const archivo = document.getElementById("historiaImagen").files[0];
+
+let imagenUrl = null;
+let rutaImagen = null;
+
+if (archivo) {
+  mensaje.textContent = "Comprimiendo fotografía...";
+
+  const imagenComprimida = await comprimirImagenHistoria(archivo);
+
+  const { data: { user }, error: errorUsuario } =
+    await db.auth.getUser();
+
+  if (errorUsuario || !user) {
+    throw new Error("No se pudo verificar la sesión.");
+  }
+
+  rutaImagen = `${user.id}/${crypto.randomUUID()}.webp`;
+
+  mensaje.textContent = "Subiendo fotografía...";
+
+  const { error: errorImagen } = await db.storage
+    .from("historias-solidarias")
+    .upload(rutaImagen, imagenComprimida, {
+      contentType: "image/webp",
+      upsert: false
+    });
+
+  if (errorImagen) throw errorImagen;
+
+  imagenUrl = db.storage
+    .from("historias-solidarias")
+    .getPublicUrl(rutaImagen).data.publicUrl;
+}
+
+const { error } = await db
+  .from("historias_instituciones")
+  .insert({
+    organizacion_id: institucion.id,
+    titulo,
+    descripcion,
+    imagen_url: imagenUrl,
+    publicada: true
+  });
+
+if (error) {
+  if (rutaImagen) {
+    await db.storage
+      .from("historias-solidarias")
+      .remove([rutaImagen]);
+  }
+
+  throw error;
+}
+
+
+      
+formulario.reset();
+mensaje.textContent = "✓ Historia publicada correctamente.";
+
+await cargarHistoriasInstitucion(institucion.id);
+
+    } catch (error) {
+      console.error("Error al publicar historia:", error);
+      mensaje.textContent =
+        error.code === "P0001"
+          ? "Alcanzaste el límite de 10 historias."
+          : "No se pudo publicar la historia.";
+    } finally {
+      boton.disabled = false;
+      validarHistoria();
+    }
+  });
+}
+
+async function comprimirImagenHistoria(archivo) {
+  const formatos = ["image/jpeg", "image/png", "image/webp"];
+
+  if (!formatos.includes(archivo.type)) {
+    throw new Error("Seleccioná una imagen JPG, PNG o WebP.");
+  }
+
+  if (archivo.size > 10 * 1024 * 1024) {
+    throw new Error("La imagen original no puede superar los 10 MB.");
+  }
+
+  const imagen = await createImageBitmap(archivo);
+
+  try {
+    const escala = Math.min(1, 1200 / Math.max(imagen.width, imagen.height));
+
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.round(imagen.width * escala);
+    canvas.height = Math.round(imagen.height * escala);
+
+    const contexto = canvas.getContext("2d");
+    contexto.drawImage(imagen, 0, 0, canvas.width, canvas.height);
+
+    for (const calidad of [0.8, 0.65, 0.5, 0.35, 0.2]) {
+      const blob = await new Promise(resolve => {
+        canvas.toBlob(resolve, "image/webp", calidad);
+      });
+
+      if (!blob) {
+        throw new Error("No se pudo comprimir la fotografía.");
+      }
+
+      if (blob.size <= 200 * 1024) {
+        return blob;
+      }
+    }
+
+    throw new Error(
+      "La fotografía no pudo reducirse a 200 KB. Probá con otra imagen."
+    );
+  } finally {
+    imagen.close();
+  }
+}
+
+async function cargarHistoriasInstitucion(institucionId) {
+  const contenedor = document.getElementById("listaHistoriasInstitucion");
+
+  const { data: historias, error } = await db
+    .from("historias_instituciones")
+    .select("id, titulo, descripcion, imagen_url, created_at")
+    .eq("organizacion_id", institucionId)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Error al cargar historias:", error);
+    contenedor.textContent = "No se pudieron cargar las historias.";
+    return;
+  }
+
+  contenedor.replaceChildren();
+
+  if (!historias.length) {
+    contenedor.textContent = "Todavía no hay historias publicadas.";
+    return;
+  }
+
+  historias.forEach(historia => {
+    const tarjeta = document.createElement("div");
+    tarjeta.className = "panelOpcion";
+    tarjeta.style.marginTop = "15px";
+    
+
+
+const contenido = document.createElement("div");
+contenido.className = "historiaContenido";
+
+const texto = document.createElement("div");
+texto.className = "historiaTexto";
+
+const titulo = document.createElement("h3");
+titulo.textContent = historia.titulo;
+texto.appendChild(titulo);
+
+const descripcion = document.createElement("p");
+descripcion.textContent = historia.descripcion;
+texto.appendChild(descripcion);
+
+if (historia.imagen_url) {
+  const imagen = document.createElement("img");
+  imagen.src = historia.imagen_url;
+  imagen.alt = historia.titulo;
+  imagen.className = "historiaFoto";
+  contenido.appendChild(imagen);
+}
+
+contenido.appendChild(texto);
+tarjeta.appendChild(contenido);
+
+
+    const fecha = document.createElement("small");
+    fecha.textContent = new Date(historia.created_at)
+      .toLocaleDateString("es-AR");
+  
+tarjeta.appendChild(fecha);
+
+const botonEliminar = document.createElement("button");
+botonEliminar.type = "button";
+botonEliminar.textContent = "🗑️ Eliminar historia";
+botonEliminar.style.marginTop = "15px";
+
+botonEliminar.addEventListener("click", async () => {
+  if (!confirm(`¿Querés eliminar la historia "${historia.titulo}"?`)) {
+    return;
+  }
+
+  botonEliminar.disabled = true;
+
+  const { data, error } = await db
+    .from("historias_instituciones")
+    .delete()
+    .eq("id", historia.id)
+    .eq("organizacion_id", institucionId)
+    .select("id");
+
+  if (error || !data?.length) {
+    console.error("Error al eliminar historia:", error);
+    alert("No se pudo eliminar la historia.");
+    botonEliminar.disabled = false;
+    return;
+  }
+
+if (historia.imagen_url) {
+  const marcador = "/storage/v1/object/public/historias-solidarias/";
+  const posicion = historia.imagen_url.indexOf(marcador);
+
+  if (posicion !== -1) {
+    const rutaImagen = decodeURIComponent(
+      historia.imagen_url.slice(posicion + marcador.length)
+    );
+
+    const { error: errorImagen } = await db.storage
+      .from("historias-solidarias")
+      .remove([rutaImagen]);
+
+    if (errorImagen) {
+      console.error("No se pudo eliminar la fotografía:", errorImagen);
+      alert("La historia se eliminó, pero no se pudo borrar su fotografía.");
+    }
+  }
+}
+
+  await cargarHistoriasInstitucion(institucionId);
+});
+
+const botonEditar = document.createElement("button");
+botonEditar.type = "button";
+botonEditar.textContent = "✏️ Editar historia";
+botonEditar.style.marginRight = "10px";
+botonEditar.style.marginTop = "15px";
+
+botonEditar.addEventListener("click", async () => {
+  const nuevoTitulo = prompt(
+    "Editar título de la historia:",
+    historia.titulo
+  );
+
+  if (nuevoTitulo === null) return;
+
+  const nuevaDescripcion = prompt(
+    "Editar descripción:",
+    historia.descripcion
+  );
+
+  if (nuevaDescripcion === null) return;
+
+  const titulo = nuevoTitulo.trim();
+  const descripcion = nuevaDescripcion.trim();
+
+  if (
+    titulo.length < 3 ||
+    titulo.length > 120 ||
+    descripcion.length < 10 ||
+    descripcion.length > 5000
+  ) {
+    alert("El título debe tener entre 3 y 120 caracteres y la descripción entre 10 y 5000.");
+    return;
+  }
+
+  botonEditar.disabled = true;
+
+  const { data, error } = await db
+    .from("historias_instituciones")
+    .update({
+      titulo,
+      descripcion,
+      updated_at: new Date().toISOString()
+    })
+    .eq("id", historia.id)
+    .eq("organizacion_id", institucionId)
+    .select("id");
+
+  if (error || !data?.length) {
+    console.error("Error al editar historia:", error);
+    alert("No se pudo actualizar la historia.");
+    botonEditar.disabled = false;
+    return;
+  }
+
+  await cargarHistoriasInstitucion(institucionId);
+});
+
+tarjeta.appendChild(botonEditar);
+
+tarjeta.appendChild(botonEliminar);
+
+const botonCambiarFoto = document.createElement("button");
+botonCambiarFoto.type = "button";
+botonCambiarFoto.textContent = "📷 Cambiar fotografía";
+botonCambiarFoto.style.marginRight = "10px";
+botonCambiarFoto.style.marginTop = "15px";
+
+const selectorFoto = document.createElement("input");
+selectorFoto.type = "file";
+selectorFoto.accept = "image/jpeg,image/png,image/webp";
+selectorFoto.hidden = true;
+
+botonCambiarFoto.addEventListener("click", () => {
+  selectorFoto.click();
+});
+
+tarjeta.appendChild(selectorFoto);
+tarjeta.appendChild(botonCambiarFoto);
+
+selectorFoto.addEventListener("change", async () => {
+  const archivo = selectorFoto.files[0];
+  if (!archivo) return;
+
+  botonCambiarFoto.disabled = true;
+  botonCambiarFoto.textContent = "⏳ Actualizando...";
+
+  let rutaNueva = null;
+
+  try {
+    const imagen = await comprimirImagenHistoria(archivo);
+
+    const { data: { user }, error: errorUsuario } =
+      await db.auth.getUser();
+
+    if (errorUsuario || !user) {
+      throw new Error("No se pudo verificar la sesión.");
+    }
+
+    rutaNueva = `${user.id}/${crypto.randomUUID()}.webp`;
+
+    const { error: errorSubida } = await db.storage
+      .from("historias-solidarias")
+      .upload(rutaNueva, imagen, {
+        contentType: "image/webp",
+        upsert: false
+      });
+
+    if (errorSubida) throw errorSubida;
+
+    const nuevaUrl = db.storage
+      .from("historias-solidarias")
+      .getPublicUrl(rutaNueva).data.publicUrl;
+
+    const { data, error: errorActualizar } = await db
+      .from("historias_instituciones")
+      .update({
+        imagen_url: nuevaUrl,
+        updated_at: new Date().toISOString()
+      })
+      .eq("id", historia.id)
+      .eq("organizacion_id", institucionId)
+      .select("id");
+
+    if (errorActualizar || !data?.length) {
+      throw errorActualizar || new Error("No se actualizó la historia.");
+    }
+
+    // Eliminar la fotografía anterior para ahorrar espacio.
+    if (historia.imagen_url) {
+      const marcador = "/storage/v1/object/public/historias-solidarias/";
+      const posicion = historia.imagen_url.indexOf(marcador);
+
+      if (posicion !== -1) {
+        const rutaAnterior = decodeURIComponent(
+          historia.imagen_url.slice(posicion + marcador.length)
+        );
+
+        const { error: errorBorrado } = await db.storage
+          .from("historias-solidarias")
+          .remove([rutaAnterior]);
+
+        if (errorBorrado) {
+          console.error("No se pudo borrar la fotografía anterior:", errorBorrado);
+        }
+      }
+    }
+
+    await cargarHistoriasInstitucion(institucionId);
+
+  } catch (error) {
+    console.error("Error al cambiar fotografía:", error);
+
+    // Si falló la actualización, eliminar la nueva imagen subida.
+    if (rutaNueva) {
+      await db.storage
+        .from("historias-solidarias")
+        .remove([rutaNueva]);
+    }
+
+    alert(error.message || "No se pudo cambiar la fotografía.");
+
+  } finally {
+    botonCambiarFoto.disabled = false;
+    botonCambiarFoto.textContent = "📷 Cambiar fotografía";
+    selectorFoto.value = "";
+  }
+});
+
+contenedor.appendChild(tarjeta);
+
+  });
+}
+
+
