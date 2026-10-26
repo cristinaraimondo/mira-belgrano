@@ -76,25 +76,50 @@ if (esAdministrador && (!data.verificada || !data.publicada)) {
   // Contacto
   const contacto = document.getElementById("organizacionContacto");
 
-  function agregarContacto(etiqueta, valor, enlace) {
-    if (!valor) return;
+ 
+function agregarContacto(etiqueta, valor, enlace) {
+  if (!valor) return;
 
-    const elemento = document.createElement("a");
-    elemento.textContent = `${etiqueta}: ${valor}`;
+  const iconos = {
+    "Teléfono": "📞",
+    "WhatsApp": "💬",
+    "Correo": "✉️",
+    "Dirección": "📍",
+    "Sitio web": "🌐"
+  };
 
-    if (enlace) {
-      elemento.href = enlace;
-      if (enlace.startsWith("http")) {
-        elemento.target = "_blank";
-        elemento.rel = "noopener noreferrer";
-      }
-    } else {
-      elemento.removeAttribute("href");
+  const elemento = document.createElement(enlace ? "a" : "div");
+  elemento.className = "contactoItem";
+
+  if (enlace) {
+    elemento.href = enlace;
+
+    if (enlace.startsWith("http")) {
+      elemento.target = "_blank";
+      elemento.rel = "noopener noreferrer";
     }
-
-    contacto.appendChild(elemento);
-    contacto.hidden = false;
   }
+
+  const icono = document.createElement("span");
+  icono.className = "contactoIcono";
+  icono.textContent = iconos[etiqueta] || "📌";
+
+  const contenido = document.createElement("span");
+  contenido.className = "contactoContenido";
+
+  const titulo = document.createElement("strong");
+  titulo.textContent = etiqueta;
+
+  const dato = document.createElement("span");
+  dato.textContent = valor;
+
+  contenido.append(titulo, dato);
+  elemento.append(icono, contenido);
+
+  contacto.appendChild(elemento);
+  contacto.hidden = false;
+}
+
 
   agregarContacto(
     "Teléfono",
@@ -129,18 +154,56 @@ if (esAdministrador && (!data.verificada || !data.publicada)) {
     }
   }
   // Revista digital
-if (data.revista_url) {
-  try {
-    const url = new URL(data.revista_url);
 
-    if (url.protocol === "https:") {
-      document.getElementById("organizacionRevistaLink").href = url.href;
-      document.getElementById("organizacionRevista").hidden = false;
-    }
-  } catch {
-    console.warn("Enlace de revista inválido");
+  // Revistas digitales de la institución
+  const seccionRevistas = document.getElementById("organizacionRevista");
+  const galeriaRevistas = document.getElementById("galeriaRevistas");
+
+  const { data: revistas, error: errorRevistas } = await db
+    .from("revistas_instituciones")
+    .select("id, titulo, url, portada_url")
+    .eq("organizacion_id", data.id)
+    .eq("publicada", true)
+    .order("created_at", { ascending: false });
+
+  if (errorRevistas) {
+    console.error("Error al cargar revistas:", errorRevistas);
+  } else if (revistas?.length && seccionRevistas && galeriaRevistas) {
+    galeriaRevistas.replaceChildren();
+
+    revistas.forEach(revista => {
+      try {
+        const enlace = new URL(revista.url);
+
+        if (!["https:", "http:"].includes(enlace.protocol)) return;
+
+        const tarjeta = document.createElement("a");
+        tarjeta.className = "revistaTarjeta";
+        tarjeta.href = enlace.href;
+        tarjeta.target = "_blank";
+        tarjeta.rel = "noopener noreferrer";
+
+        if (revista.portada_url) {
+          const imagen = document.createElement("img");
+          imagen.src = revista.portada_url;
+          imagen.alt = `Portada de ${revista.titulo}`;
+          imagen.loading = "lazy";
+          tarjeta.appendChild(imagen);
+        }
+
+        const titulo = document.createElement("strong");
+        titulo.textContent = revista.titulo;
+
+        tarjeta.appendChild(titulo);
+        galeriaRevistas.appendChild(tarjeta);
+      } catch {
+        console.warn("Enlace de revista inválido:", revista.id);
+      }
+    });
+
+    seccionRevistas.hidden = galeriaRevistas.children.length === 0;
   }
-}
+
 
   // Cargar historias públicas de esta institución
   await cargarHistoriasPublicas(data.id);

@@ -30,7 +30,7 @@ async function cargarRifaSolidaria() {
   // Buscar su única rifa activa
   const { data: rifa, error: errorRifa } = await db
     .from("rifas_solidarias")
-    .select("id, titulo, premio, precio, cantidad_numeros, fecha_sorteo")
+    .select("id, titulo, premio, precio, cantidad_numeros, fecha_sorteo, imagen_premio_url")
     .eq("organizacion_id", institucion.id)
     .eq("activa", true)
     .maybeSingle();
@@ -50,6 +50,18 @@ const { data: numeros, error: errorNumeros } = await db
   informacion.textContent =
     `${rifa.titulo} · Premio: ${rifa.premio} · ` +
     `${rifa.cantidad_numeros} números · $${rifa.precio} por número`;
+ document.querySelectorAll(".rifaImagenPremio").forEach(img => img.remove());   
+if (rifa.imagen_premio_url) {
+  const imagenPremio = document.createElement("img");
+
+  imagenPremio.src = rifa.imagen_premio_url;
+  imagenPremio.alt = `Premio de la rifa: ${rifa.premio}`;
+  imagenPremio.loading = "lazy";
+  imagenPremio.className = "rifaImagenPremio";
+
+  informacion.insertAdjacentElement("afterend", imagenPremio);
+}
+
 
   numeros.forEach(item => {
     const boton = document.createElement("button");
