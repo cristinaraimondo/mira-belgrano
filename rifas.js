@@ -292,9 +292,10 @@ if (telefono) {
   mensaje.appendChild(enlace);
 }
 // Ocultar los campos del formulario después de reservar
+// Ocultar los campos después de una reserva exitosa
 Array.from(formulario.children).forEach(elemento => {
   if (elemento !== mensaje) {
-    elemento.hidden = true;
+    elemento.style.display = "none";
   }
 });
 mensaje.scrollIntoView({
