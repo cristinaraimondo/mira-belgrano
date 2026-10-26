@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administración | Belgrano Solidario</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    body {
+      background: #f6f3fa;
+      font-family: Arial, sans-serif;
+    }
+
+    .adminContenedor {
+      max-width: 1050px;
+      margin: 45px auto;
+      padding: 20px;
+    }
+
+    .adminTitulo {
+      text-align: center;
+      color: #30134e;
+      margin-bottom: 35px;
+    }
+
+    .adminGrid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 22px;
+    }
+
+    .adminTarjeta {
+      background: white;
+      padding: 28px;
+      border-radius: 18px;
+      box-shadow: 0 5px 25px #00000010;
+    }
+
+    .adminTarjeta h2 {
+      color: #30134e;
+      font-size: 20px;
+    }
+
+    .adminTarjeta p {
+      color: #625a6c;
+      line-height: 1.6;
+    }
+
+    .adminBoton {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 12px 20px;
+      background: #713ba5;
+      color: white;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .adminBoton:hover {
+      background: #4b1985;
+    }
+
+    #adminContenido[hidden] {
+      display: none !important;
+    }
+
+    #adminEstado {
+      text-align: center;
+      color: #625a6c;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="adminContenedor">
+
+    <h1 class="adminTitulo">
+      💜 Administración de Belgrano Solidario
+    </h1>
+
+    <p id="adminEstado">Verificando acceso...</p>
+
+    <div id="adminContenido" hidden>
+      <div class="adminGrid">
+
+      <section class="adminTarjeta">
+  <h2>🏢 Instituciones</h2>
+  <p>
+    Consultá las instituciones registradas
+    y administrá su publicación y verificación.
+  </p>
+
+  <div id="listaInstitucionesAdmin">
+    Cargando instituciones...
+  </div>
+</section>
+
+        <section class="adminTarjeta">
+          <h2>👥 Accesos</h2>
+          <p>
+            Gestionar los representantes
+            vinculados a cada institución.
+          </p>
+          <p>Próximamente</p>
+        </section>
+
+        <section class="adminTarjeta">
+          <h2>💳 Cobros</h2>
+          <p>
+            Aprobar cuentas bancarias y revisar
+            solicitudes de modificación.
+          </p>
+          <a class="adminBoton" href="admin-cobros.html">
+            Administrar cobros
+          </a>
+        </section>
+
+        <section class="adminTarjeta">
+          <h2>📚 Contenido</h2>
+          <p>
+            Supervisar historias solidarias,
+            revistas digitales y rifas.
+          </p>
+          <p>Próximamente</p>
+        </section>
+
+      </div>
+    </div>
+
+    <p style="text-align:center; margin-top:35px;">
+      <a href="solidario.html">← Volver a Belgrano Solidario</a>
+    </p>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="admin-solidario.js"></script>
+</body>
+</html>
