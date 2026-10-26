@@ -17,15 +17,32 @@ async function cargarRifaSolidaria() {
   if (formulario) formulario.hidden = true;
 
   // Buscar la institución publicada y verificada
-  const { data: institucion, error: errorInstitucion } = await db
-    .from("organizaciones")
-    .select("id")
-    .eq("slug", slug)
-    .eq("publicada", true)
-    .eq("verificada", true)
-    .maybeSingle();
+const { data: institucion, error: errorInstitucion } = await db
+  .from("organizaciones")
+  .select("id, nombre, whatsapp")
+  .eq("slug", slug)
+  .eq("publicada", true)
+  .eq("verificada", true)
+  .maybeSingle();
 
   if (errorInstitucion || !institucion) return;
+  // Obtener únicamente la cuenta aprobada por el administrador
+const { data: datosCobro, error: errorCobro } = await db
+  .rpc("consultar_cobro_rifa", {
+    p_organizacion_id: institucion.id
+  });
+
+if (errorCobro) {
+  console.error("Error al consultar datos de cobro:", errorCobro);
+}
+
+// Guardar los datos para mostrarlos después de reservar
+window.rifaDatosPago = {
+  institucion: institucion.nombre,
+  whatsapp: institucion.whatsapp,
+  alias: datosCobro?.[0]?.alias || null,
+  titular: datosCobro?.[0]?.titular || null
+};
 
   // Buscar su única rifa activa
   const { data: rifa, error: errorRifa } = await db
@@ -208,8 +225,77 @@ if (error || !data?.success) {
   mensaje.textContent =
     "⚠️ " + (detalle || "No se pudo completar la reserva.");
 } else {
-  mensaje.textContent =
-    `✅ ¡Reserva confirmada! El número ${String(reserva.p_numero).padStart(2, "0")} quedó reservado durante 24 horas. Código de reserva: ${data.compra_id}. Guardá este código.`;
+  const pago = window.rifaDatosPago || {};
+const numero = String(reserva.p_numero).padStart(2, "0");
+const codigo = data.compra_id;
+
+mensaje.replaceChildren();
+
+const titulo = document.createElement("h3");
+titulo.textContent = `✅ ¡Reservaste el número ${numero}!`;
+
+const detalle = document.createElement("p");
+detalle.textContent =
+  `Código de reserva: #${codigo}. Tenés 24 horas para pagar.`;
+
+mensaje.append(titulo, detalle);
+
+if (pago.alias) {
+  const transferencia = document.createElement("p");
+  transferencia.textContent = "🏦 Para pagar por transferencia:";
+
+  const alias = document.createElement("strong");
+  alias.textContent = `Alias: ${pago.alias}`;
+
+  const titular = document.createElement("p");
+  titular.textContent = `Titular: ${pago.titular || "No informado"}`;
+
+  const copiar = document.createElement("button");
+  copiar.type = "button";
+  copiar.textContent = "📋 Copiar alias";
+
+  copiar.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(pago.alias);
+      copiar.textContent = "✅ Alias copiado";
+    } catch {
+      copiar.textContent = "No se pudo copiar el alias";
+    }
+  });
+
+  mensaje.append(transferencia, alias, titular, copiar);
+}
+
+const instrucciones = document.createElement("p");
+instrucciones.textContent =
+  "Después de transferir, avisá a la institución por WhatsApp. " +
+  "Si preferís pagar en efectivo, coordiná la entrega por ese mismo medio.";
+
+mensaje.appendChild(instrucciones);
+
+const telefono = String(pago.whatsapp || "").replace(/\D/g, "");
+
+if (telefono) {
+  const textoWhatsapp =
+    `Hola, soy ${reserva.p_nombre}. Reservé el número ${numero} ` +
+    `de la rifa de ${pago.institucion || "la institución"}. ` +
+    `Mi código de reserva es #${codigo}. ` +
+    `Quisiera coordinar el pago o enviar el comprobante.`;
+
+  const enlace = document.createElement("a");
+  enlace.href =
+    `https://wa.me/${telefono}?text=${encodeURIComponent(textoWhatsapp)}`;
+  enlace.target = "_blank";
+  enlace.rel = "noopener noreferrer";
+  enlace.textContent = "💬 Avisar por WhatsApp a la institución";
+
+  mensaje.appendChild(enlace);
+}
+
+mensaje.scrollIntoView({
+  behavior: "smooth",
+  block: "center"
+});
 
   const numeroReservado = document.querySelector(
     `.rifaNumero[data-numero="${reserva.p_numero}"]`
