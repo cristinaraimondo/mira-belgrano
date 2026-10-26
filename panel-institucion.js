@@ -27,7 +27,7 @@ async function iniciarPanelInstitucion() {
 
   const { data: institucion, error } = await db
     .from("organizaciones")
-    .select(`
+.select(`
   id,
   nombre,
   usuario_id,
@@ -38,7 +38,9 @@ async function iniciarPanelInstitucion() {
   email,
   direccion,
   sitio_web,
-  enlace_donacion
+  enlace_donacion,
+  donacion_alias,
+  donacion_titular
 `)
     .eq("usuario_id", user.id)
     .maybeSingle();
@@ -60,6 +62,334 @@ async function iniciarPanelInstitucion() {
     `Bienvenido al panel de ${institucion.nombre}`;
 
   opciones.hidden = false;
+  
+async function cargarRevistasInstitucion() {
+  const lista = document.getElementById("listaRevistasInstitucion");
+  lista.textContent = "Cargando revistas...";
+
+  const { data: revistas, error } = await db
+    .from("revistas_instituciones")
+    .select("id, titulo, url, portada_url, publicada")
+    .eq("organizacion_id", institucion.id)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Error al cargar revistas:", error);
+    lista.textContent = "No se pudieron cargar las revistas.";
+    return;
+  }
+
+  lista.replaceChildren();
+
+  if (!revistas?.length) {
+    lista.textContent = "Todavía no hay revistas publicadas.";
+    return;
+  }
+
+  revistas.forEach(revista => {
+    const tarjeta = document.createElement("div");
+    tarjeta.className = "revistaTarjetaPanel";
+
+    if (revista.portada_url) {
+      const imagen = document.createElement("img");
+      imagen.src = revista.portada_url;
+      imagen.alt = `Portada de ${revista.titulo}`;
+      imagen.loading = "lazy";
+      imagen.style.cssText =
+        "width:110px;max-width:100%;border-radius:10px;";
+      tarjeta.appendChild(imagen);
+    }
+
+    const titulo = document.createElement("h4");
+    titulo.textContent = revista.titulo;
+    tarjeta.appendChild(titulo);
+
+    const enlace = document.createElement("a");
+    enlace.textContent = "Ver revista";
+    enlace.target = "_blank";
+    enlace.rel = "noopener noreferrer";
+
+    try {
+      const url = new URL(revista.url);
+      if (url.protocol === "https:" || url.protocol === "http:") {
+        enlace.href = url.href;
+        tarjeta.appendChild(enlace);
+      }
+    } catch {
+      console.warn("Enlace inválido:", revista.id);
+    }
+
+const botonEditar = document.createElement("button");
+botonEditar.type = "button";
+botonEditar.textContent = "✏️ Editar revista";
+botonEditar.style.marginTop = "12px";
+botonEditar.style.marginRight = "10px";
+
+botonEditar.addEventListener("click", () => {
+  document.getElementById("revistaIdEditar").value = revista.id;
+  document.getElementById("revistaTitulo").value = revista.titulo;
+  document.getElementById("revistaUrl").value = revista.url;
+
+  const portada = document.getElementById("revistaPortada");
+  portada.value = "";
+  portada.required = false;
+
+  const guardar = document.getElementById("guardarRevista");
+  guardar.textContent = "Guardar cambios";
+  document.getElementById("cancelarEdicionRevista").hidden = false;
+
+  document.getElementById("mensajeRevistas").textContent =
+    "Estás editando una revista. Podés conservar la portada actual.";
+
+  document.getElementById("formularioRevistas").scrollIntoView({
+    behavior: "smooth",
+    block: "center"
+  });
+});
+
+tarjeta.appendChild(botonEditar);
+
+const botonEliminar = document.createElement("button");
+botonEliminar.type = "button";
+botonEliminar.textContent = "🗑️ Eliminar revista";
+botonEliminar.style.marginTop = "12px";
+
+botonEliminar.addEventListener("click", async () => {
+  const confirmar = confirm(
+    `¿Seguro que querés eliminar la revista "${revista.titulo}"?`
+  );
+
+  if (!confirmar) return;
+
+  botonEliminar.disabled = true;
+  botonEliminar.textContent = "Eliminando...";
+
+  const { error } = await db
+    .from("revistas_instituciones")
+    .delete()
+    .eq("id", revista.id)
+    .eq("organizacion_id", institucion.id);
+
+  if (error) {
+    console.error("Error al eliminar revista:", error);
+    alert("No se pudo eliminar la revista.");
+    botonEliminar.disabled = false;
+    botonEliminar.textContent = "🗑️ Eliminar revista";
+    return;
+  }
+
+  await cargarRevistasInstitucion();
+});
+
+tarjeta.appendChild(botonEliminar);
+
+    lista.appendChild(tarjeta);
+  });
+}
+
+await cargarRevistasInstitucion();
+
+  
+  // Publicar revistas digitales
+  const formularioRevistas = document.getElementById("formularioRevistas");
+  const guardarRevista = document.getElementById("guardarRevista");
+  const mensajeRevistas = document.getElementById("mensajeRevistas");
+  const cancelarEdicionRevista =
+  document.getElementById("cancelarEdicionRevista");
+
+cancelarEdicionRevista.addEventListener("click", () => {
+  formularioRevistas.reset();
+
+  document.getElementById("revistaIdEditar").value = "";
+  document.getElementById("revistaPortada").required = true;
+
+  guardarRevista.textContent = "Publicar revista";
+  cancelarEdicionRevista.hidden = true;
+  cancelarEdicionRevista.hidden = true;
+
+  mensajeRevistas.textContent = "";
+});
+
+  guardarRevista.disabled = false;
+
+
+formularioRevistas.addEventListener("submit", async (evento) => {
+  evento.preventDefault();
+
+  const campoId = document.getElementById("revistaIdEditar");
+  const revistaId = campoId.value.trim();
+  const editando = revistaId !== "";
+
+  const titulo = document.getElementById("revistaTitulo").value.trim();
+  const urlTexto = document.getElementById("revistaUrl").value.trim();
+  const campoPortada = document.getElementById("revistaPortada");
+  const archivo = campoPortada.files[0];
+
+  if (!titulo || (!editando && !archivo)) {
+    mensajeRevistas.textContent =
+      "Completá el título y seleccioná una portada.";
+    return;
+  }
+
+  let url;
+
+  try {
+    url = new URL(urlTexto);
+
+    if (!["https:", "http:"].includes(url.protocol)) {
+      throw new Error("Enlace inválido");
+    }
+  } catch {
+    mensajeRevistas.textContent =
+      "Ingresá un enlace válido de la revista.";
+    return;
+  }
+
+  guardarRevista.disabled = true;
+  mensajeRevistas.textContent = editando
+    ? "Guardando cambios..."
+    : "Publicando revista...";
+
+  try {
+    let portadaUrl = null;
+
+    // Solo subir una portada cuando se selecciona un archivo
+    if (archivo) {
+      if (
+        !["image/jpeg", "image/png", "image/webp"].includes(archivo.type)
+      ) {
+        throw new Error("La portada debe ser JPG, PNG o WebP.");
+      }
+
+      if (archivo.size > 10 * 1024 * 1024) {
+        throw new Error("La imagen original supera los 10 MB.");
+      }
+
+      const imagen = await createImageBitmap(archivo);
+
+      const escala = Math.min(
+        1,
+        800 / imagen.width,
+        1100 / imagen.height
+      );
+
+      const canvas = document.createElement("canvas");
+      canvas.width = Math.max(1, Math.round(imagen.width * escala));
+      canvas.height = Math.max(1, Math.round(imagen.height * escala));
+
+      const contexto = canvas.getContext("2d");
+
+      if (!contexto) {
+        imagen.close();
+        throw new Error("No se pudo procesar la imagen.");
+      }
+
+      contexto.drawImage(
+        imagen,
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+
+      imagen.close();
+
+      const portada = await new Promise((resolve, reject) => {
+        canvas.toBlob(
+          blob => blob
+            ? resolve(blob)
+            : reject(new Error("No se pudo convertir la portada.")),
+          "image/webp",
+          0.82
+        );
+      });
+
+      if (portada.size > 2 * 1024 * 1024) {
+        throw new Error("La portada supera los 2 MB.");
+      }
+
+      const ruta = `${user.id}/${crypto.randomUUID()}.webp`;
+
+      const { error: errorSubida } = await db.storage
+        .from("portadas-revistas")
+        .upload(ruta, portada, {
+          contentType: "image/webp",
+          upsert: false
+        });
+
+      if (errorSubida) throw errorSubida;
+
+      const { data: archivoPublico } = db.storage
+        .from("portadas-revistas")
+        .getPublicUrl(ruta);
+
+      portadaUrl = archivoPublico.publicUrl;
+    }
+
+    if (editando) {
+      // Modificar la revista existente
+      const cambios = {
+        titulo,
+        url: url.href
+      };
+
+      // Si no se seleccionó imagen, conservar la portada anterior
+      if (portadaUrl) {
+        cambios.portada_url = portadaUrl;
+      }
+
+      const { data: actualizada, error } = await db
+        .from("revistas_instituciones")
+        .update(cambios)
+        .eq("id", revistaId)
+        .eq("organizacion_id", institucion.id)
+        .select("id");
+
+      if (error) throw error;
+
+      if (!actualizada?.length) {
+        throw new Error("No se encontró la revista para actualizar.");
+      }
+
+    } else {
+      // Publicar una revista nueva
+      const { error } = await db
+        .from("revistas_instituciones")
+        .insert({
+          organizacion_id: institucion.id,
+          titulo,
+          url: url.href,
+          portada_url: portadaUrl,
+          publicada: true
+        });
+
+      if (error) throw error;
+    }
+
+    formularioRevistas.reset();
+    campoId.value = "";
+    campoPortada.required = true;
+
+    guardarRevista.textContent = "Publicar revista";
+
+    mensajeRevistas.textContent = editando
+      ? "✅ Revista actualizada correctamente."
+      : "✅ Revista publicada correctamente.";
+
+    await cargarRevistasInstitucion();
+
+  } catch (error) {
+    console.error("Error al guardar revista:", error);
+
+    mensajeRevistas.textContent =
+      `No se pudo guardar la revista: ${error.message}`;
+
+  } finally {
+    guardarRevista.disabled = false;
+  }
+});
+
+
   
 const formularioMiInstitucion =
   document.getElementById("formularioMiInstitucion");
@@ -85,7 +415,9 @@ formularioMiInstitucion.addEventListener("submit", async (evento) => {
     email: document.getElementById("institucionEmail").value.trim() || null,
     direccion: document.getElementById("institucionDireccion").value.trim() || null,
     sitio_web: document.getElementById("institucionSitioWeb").value.trim() || null,
-    enlace_donacion: document.getElementById("institucionDonacion").value.trim() || null
+   enlace_donacion: document.getElementById("institucionDonacion").value.trim() || null,
+   donacion_alias: document.getElementById("institucionDonacionAlias").value.trim() || null,
+   donacion_titular: document.getElementById("institucionDonacionTitular").value.trim() || null
   };
 
   try {
@@ -181,6 +513,11 @@ document.getElementById("institucionSitioWeb").value =
 
 document.getElementById("institucionDonacion").value =
   institucion.enlace_donacion || "";
+  document.getElementById("institucionDonacionAlias").value =
+  institucion.donacion_alias || "";
+
+document.getElementById("institucionDonacionTitular").value =
+  institucion.donacion_titular || "";
 
 const logoActual = document.getElementById("institucionLogoActual");
 
@@ -1371,6 +1708,26 @@ async function prepararLogoWebP(archivo) {
     imagen.close();
   }
 }
+
+/* Administración de revistas digitales */
+const botonAbrirRevistas = document.getElementById("abrirRevistas");
+const seccionRevistas = document.getElementById("seccionRevistas");
+
+if (botonAbrirRevistas && seccionRevistas) {
+  botonAbrirRevistas.addEventListener("click", () => {
+    const estabaOculta = seccionRevistas.hidden;
+
+    seccionRevistas.hidden = !estabaOculta;
+
+    if (estabaOculta) {
+      seccionRevistas.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    }
+  });
+}
+
 
 
 

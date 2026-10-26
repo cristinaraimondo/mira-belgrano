@@ -38,8 +38,10 @@ const esAdministrador =
       email,
       direccion,
      sitio_web,
-    enlace_donacion,
-    revista_url
+enlace_donacion,
+donacion_alias,
+donacion_titular,
+revista_url
     `)
   .eq("slug", slug)
 .maybeSingle();
@@ -209,19 +211,73 @@ function agregarContacto(etiqueta, valor, enlace) {
   await cargarHistoriasPublicas(data.id);
 
   // Donaciones
-  if (data.enlace_donacion) {
-    try {
-      const url = new URL(data.enlace_donacion);
+  
+const datosDonacion = document.getElementById("organizacionDatosDonacion");
+const aliasDonacion = document.getElementById("organizacionDonacionAlias");
+const titularDonacion = document.getElementById("organizacionDonacionTitular");
+const copiarAlias = document.getElementById("copiarAliasDonacion");
+const mensajeAlias = document.getElementById("mensajeAliasDonacion");
 
-      if (["https:", "http:"].includes(url.protocol)) {
-        const boton = document.getElementById("organizacionDonar");
-        boton.href = url.href;
-        boton.hidden = false;
-      }
-    } catch {
-      console.warn("Enlace de donación inválido");
+if (data.donacion_alias?.trim()) {
+  const alias = data.donacion_alias.trim();
+
+  aliasDonacion.textContent = alias;
+  titularDonacion.textContent = data.donacion_titular || "No informado";
+
+  datosDonacion.hidden = false;
+
+  copiarAlias.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(alias);
+      mensajeAlias.textContent = "✅ Alias copiado. Ya podés realizar tu transferencia.";
+    } catch (error) {
+      console.error("No se pudo copiar el alias:", error);
+      mensajeAlias.textContent = "Seleccioná y copiá el alias manualmente.";
     }
+  });
+}
+
+
+const botonDonar = document.getElementById("organizacionDonar");
+
+let enlaceValido = null;
+
+if (data.enlace_donacion) {
+  try {
+    const url = new URL(data.enlace_donacion);
+
+    if (["https:", "http:"].includes(url.protocol)) {
+      enlaceValido = url.href;
+    }
+  } catch {
+    console.warn("Enlace de donación inválido");
   }
+}
+
+if (data.donacion_alias?.trim()) {
+  botonDonar.hidden = false;
+  botonDonar.removeAttribute("href");
+  botonDonar.removeAttribute("target");
+  botonDonar.textContent = "❤️ Donar";
+
+  botonDonar.addEventListener("click", (evento) => {
+    evento.preventDefault();
+
+    datosDonacion.hidden = !datosDonacion.hidden;
+
+    if (!datosDonacion.hidden) {
+      datosDonacion.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
+    }
+  });
+} else if (enlaceValido) {
+  botonDonar.href = enlaceValido;
+  botonDonar.target = "_blank";
+  botonDonar.hidden = false;
+}
+
 }
 async function cargarHistoriasPublicas(institucionId) {
   const seccion = document.getElementById("organizacionHistorias");
