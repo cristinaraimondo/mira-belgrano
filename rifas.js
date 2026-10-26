@@ -291,7 +291,12 @@ if (telefono) {
 
   mensaje.appendChild(enlace);
 }
-
+// Ocultar los campos del formulario después de reservar
+Array.from(formulario.children).forEach(elemento => {
+  if (elemento !== mensaje) {
+    elemento.hidden = true;
+  }
+});
 mensaje.scrollIntoView({
   behavior: "smooth",
   block: "center"
