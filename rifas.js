@@ -105,6 +105,17 @@ if (rifa.imagen_premio_url) {
           document.getElementById("rifaMostrarNombre");
 
         if (!formulario || !numeroElegido) return;
+        // Restaurar el formulario al seleccionar otro número
+Array.from(formulario.children).forEach(elemento => {
+  elemento.style.display = "";
+  elemento.hidden = false;
+});
+
+const mensajeReserva = document.getElementById("rifaMensaje");
+
+if (mensajeReserva) {
+  mensajeReserva.replaceChildren();
+}
 
         numeroElegido.textContent =
           `🎟️ Elegiste el número ${String(item.numero).padStart(2, "0")}`;
