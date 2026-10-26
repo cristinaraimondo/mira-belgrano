@@ -1,0 +1,153 @@
+
+:root {
+  --violeta: #6425a8;
+  --oscuro: #30134e;
+  --fondo: #f6f3fa;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: #292334;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#panelAdmin {
+  max-width: 1150px;
+  margin: 0 auto;
+  padding: 35px 24px;
+}
+
+#panelAdmin[hidden],
+#pantallaAcceso[hidden] {
+  display: none !important;
+}
+
+.encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 35px;
+}
+
+.marca {
+  color: var(--violeta);
+  font-size: 18px;
+  font-weight: bold;
+}
+
+h1 {
+  color: var(--oscuro);
+  margin: 12px 0;
+}
+
+.encabezado p,
+.seccion > p {
+  color: #716b7b;
+}
+
+button {
+  border: 0;
+  border-radius: 9px;
+  padding: 12px 18px;
+  background: var(--violeta);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #4b1985;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.resumen {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-bottom: 35px;
+}
+
+.tarjeta,
+.seccion {
+  background: white;
+  border-radius: 16px;
+  padding: 25px;
+  box-shadow: 0 5px 20px rgba(48, 19, 78, 0.06);
+}
+
+.tarjeta span {
+  display: block;
+  color: #777;
+  font-size: 14px;
+}
+
+.tarjeta strong {
+  display: block;
+  font-size: 34px;
+  color: var(--violeta);
+  margin-top: 12px;
+}
+
+.seccion h2 {
+  color: var(--oscuro);
+  margin-top: 0;
+}
+
+.institucion {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.institucion:last-child {
+  border-bottom: 0;
+}
+
+.institucion h3 {
+  margin: 0 0 8px;
+  color: var(--oscuro);
+}
+
+.institucion p {
+  margin: 0;
+  color: #777;
+  font-size: 14px;
+}
+
+#pantallaAcceso {
+  max-width: 420px;
+  margin: 100px auto;
+  padding: 30px;
+  background: white;
+  border-radius: 16px;
+  text-align: center;
+}
+
+#pantallaAcceso a {
+  color: var(--violeta);
+}
+
+@media (max-width: 700px) {
+  .resumen {
+    grid-template-columns: 1fr;
+  }
+
+  .encabezado,
+  .institucion {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

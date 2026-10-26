@@ -27,7 +27,19 @@ async function iniciarPanelInstitucion() {
 
   const { data: institucion, error } = await db
     .from("organizaciones")
-    .select("id, nombre, usuario_id")
+    .select(`
+  id,
+  nombre,
+  usuario_id,
+  descripcion,
+  logo_url,
+  telefono,
+  whatsapp,
+  email,
+  direccion,
+  sitio_web,
+  enlace_donacion
+`)
     .eq("usuario_id", user.id)
     .maybeSingle();
 
@@ -48,6 +60,146 @@ async function iniciarPanelInstitucion() {
     `Bienvenido al panel de ${institucion.nombre}`;
 
   opciones.hidden = false;
+  
+const formularioMiInstitucion =
+  document.getElementById("formularioMiInstitucion");
+
+const guardarMiInstitucion =
+  document.getElementById("guardarMiInstitucion");
+
+const mensajeMiInstitucion =
+  document.getElementById("mensajeMiInstitucion");
+
+guardarMiInstitucion.disabled = false;
+
+formularioMiInstitucion.addEventListener("submit", async (evento) => {
+  evento.preventDefault();
+
+  guardarMiInstitucion.disabled = true;
+  mensajeMiInstitucion.textContent = "Guardando cambios...";
+
+  const cambios = {
+    descripcion: document.getElementById("institucionDescripcion").value.trim(),
+    telefono: document.getElementById("institucionTelefono").value.trim() || null,
+    whatsapp: document.getElementById("institucionWhatsapp").value.trim() || null,
+    email: document.getElementById("institucionEmail").value.trim() || null,
+    direccion: document.getElementById("institucionDireccion").value.trim() || null,
+    sitio_web: document.getElementById("institucionSitioWeb").value.trim() || null,
+    enlace_donacion: document.getElementById("institucionDonacion").value.trim() || null
+  };
+
+  try {
+    const { data, error } = await db
+      .from("organizaciones")
+      .update(cambios)
+      .eq("id", institucion.id)
+      .eq("usuario_id", user.id)
+      .select("id")
+      .single();
+
+    if (error) throw error;
+    
+const archivoLogo =
+  document.getElementById("institucionLogo").files[0];
+
+if (archivoLogo) {
+  const logoWebP = await prepararLogoWebP(archivoLogo);
+
+  const rutaLogo =
+    `${user.id}/logo-${crypto.randomUUID()}.webp`;
+
+  const { error: errorLogo } = await db.storage
+    .from("organizaciones")
+    .upload(rutaLogo, logoWebP, {
+      contentType: "image/webp",
+      upsert: false
+    });
+
+  if (errorLogo) throw errorLogo;
+
+  const { data: urlLogo } = db.storage
+    .from("organizaciones")
+    .getPublicUrl(rutaLogo);
+
+  const { error: errorActualizarLogo } = await db
+    .from("organizaciones")
+    .update({ logo_url: urlLogo.publicUrl })
+    .eq("id", institucion.id)
+    .eq("usuario_id", user.id);
+
+  if (errorActualizarLogo) throw errorActualizarLogo;
+
+  const logoActual =
+    document.getElementById("institucionLogoActual");
+
+  logoActual.src = urlLogo.publicUrl;
+  logoActual.hidden = false;
+
+  document.getElementById("institucionLogo").value = "";
+}
+
+
+    if (!data) {
+      throw new Error("No se pudo actualizar la institución.");
+    }
+
+    mensajeMiInstitucion.textContent =
+      "✅ Los datos de tu institución se guardaron correctamente.";
+
+  } catch (error) {
+    console.error("Error al guardar institución:", error);
+    mensajeMiInstitucion.textContent =
+      "No se pudieron guardar los cambios: " + error.message;
+  } finally {
+    guardarMiInstitucion.disabled = false;
+  }
+});
+
+const btnMiInstitucion = document.getElementById("abrirMiInstitucion");
+const seccionMiInstitucion = document.getElementById("seccionMiInstitucion");
+
+document.getElementById("institucionNombre").value =
+  institucion.nombre || "";
+
+document.getElementById("institucionDescripcion").value =
+  institucion.descripcion || "";
+
+document.getElementById("institucionTelefono").value =
+  institucion.telefono || "";
+
+document.getElementById("institucionWhatsapp").value =
+  institucion.whatsapp || "";
+
+document.getElementById("institucionEmail").value =
+  institucion.email || "";
+
+document.getElementById("institucionDireccion").value =
+  institucion.direccion || "";
+
+document.getElementById("institucionSitioWeb").value =
+  institucion.sitio_web || "";
+
+document.getElementById("institucionDonacion").value =
+  institucion.enlace_donacion || "";
+
+const logoActual = document.getElementById("institucionLogoActual");
+
+if (institucion.logo_url) {
+  logoActual.src = institucion.logo_url;
+  logoActual.hidden = false;
+}
+
+btnMiInstitucion.addEventListener("click", () => {
+  seccionMiInstitucion.hidden = !seccionMiInstitucion.hidden;
+
+  if (!seccionMiInstitucion.hidden) {
+    seccionMiInstitucion.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  }
+});
+
   configurarPublicacionHistorias(institucion);
   cargarHistoriasInstitucion(institucion.id);
   crearRifa(institucion, user);
@@ -1174,5 +1326,51 @@ contenedor.appendChild(tarjeta);
 
   });
 }
+
+async function prepararLogoWebP(archivo) {
+  if (!["image/jpeg", "image/png", "image/webp"].includes(archivo.type)) {
+    throw new Error("Seleccioná una imagen JPG, PNG o WebP.");
+  }
+
+  if (archivo.size > 10 * 1024 * 1024) {
+    throw new Error("La imagen original no puede superar los 10 MB.");
+  }
+
+  const imagen = await createImageBitmap(archivo);
+
+  try {
+    const escala = Math.min(1, 600 / Math.max(imagen.width, imagen.height));
+
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.max(1, Math.round(imagen.width * escala));
+    canvas.height = Math.max(1, Math.round(imagen.height * escala));
+
+    const contexto = canvas.getContext("2d");
+    contexto.drawImage(imagen, 0, 0, canvas.width, canvas.height);
+
+    const blob = await new Promise((resolve, reject) => {
+      canvas.toBlob(
+        resultado => resultado
+          ? resolve(resultado)
+          : reject(new Error("No se pudo convertir el logo.")),
+        "image/webp",
+        0.82
+      );
+    });
+
+    if (blob.type !== "image/webp") {
+      throw new Error("El navegador no pudo generar una imagen WebP.");
+    }
+
+    if (blob.size > 1024 * 1024) {
+      throw new Error("El logo convertido supera 1 MB.");
+    }
+
+    return blob;
+  } finally {
+    imagen.close();
+  }
+}
+
 
 

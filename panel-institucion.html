@@ -229,6 +229,74 @@
   }
 }
 
+/* Administración de mi institución */
+
+#seccionMiInstitucion {
+  margin-top: 30px;
+}
+
+#seccionMiInstitucion[hidden] {
+  display: none !important;
+}
+
+#formularioMiInstitucion label {
+  display: block;
+  margin-top: 18px;
+  margin-bottom: 7px;
+  font-weight: bold;
+  color: #333;
+}
+
+#formularioMiInstitucion input:not([type="file"]),
+#formularioMiInstitucion textarea {
+  display: block;
+  width: 100%;
+  max-width: 650px;
+  padding: 12px;
+  border: 1px solid #d8cde5;
+  border-radius: 9px;
+  font: inherit;
+  box-sizing: border-box;
+}
+
+#formularioMiInstitucion textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+#formularioMiInstitucion input[readonly] {
+  background: #f3f0f7;
+  color: #666;
+}
+
+#institucionLogoActual {
+  display: block;
+  max-width: 120px;
+  height: auto;
+  margin: 12px 0;
+  border-radius: 10px;
+}
+
+#institucionLogoActual[hidden] {
+  display: none !important;
+}
+
+#institucionLogo {
+  display: block;
+  margin: 12px 0;
+}
+
+#guardarMiInstitucion {
+  margin-top: 25px;
+}
+
+#mensajeMiInstitucion {
+  margin-top: 15px;
+  line-height: 1.5;
+}
+
+
+
   </style>
 </head>
 
@@ -247,7 +315,9 @@
       <section class="panelOpcion">
         <h2>🏠 Mi institución</h2>
         <p>Actualizá la información, imágenes y datos de contacto.</p>
-        <button disabled>Administrar institución</button>
+       <button type="button" id="abrirMiInstitucion">
+  Administrar institución
+</button>
       </section>
 
       <section class="panelOpcion">
@@ -285,6 +355,67 @@
       </section>
 
     </div>
+    
+<section id="seccionMiInstitucion" class="panelOpcion" hidden>
+  <h2>🏠 Datos de mi institución</h2>
+  <p>
+    Mantené actualizada la información que los visitantes
+    encontrarán en Belgrano Solidario.
+  </p>
+
+  <form id="formularioMiInstitucion">
+
+    <label for="institucionNombre">Nombre de la institución</label>
+    <input type="text" id="institucionNombre" readonly>
+
+    <label for="institucionDescripcion">Descripción</label>
+    <textarea
+      id="institucionDescripcion"
+      rows="5"
+      maxlength="2000"
+      placeholder="Contá qué hace tu institución..."
+    ></textarea>
+
+    <label for="institucionLogo">Logo de la institución</label>
+    <img
+      id="institucionLogoActual"
+      alt="Logo actual"
+      width="120"
+      hidden
+    >
+    <input
+      type="file"
+      id="institucionLogo"
+      accept="image/jpeg,image/png,image/webp"
+    >
+
+    <label for="institucionTelefono">Teléfono</label>
+    <input type="tel" id="institucionTelefono">
+
+    <label for="institucionWhatsapp">WhatsApp</label>
+    <input type="tel" id="institucionWhatsapp">
+
+    <label for="institucionEmail">Correo electrónico de contacto</label>
+    <input type="email" id="institucionEmail">
+
+    <label for="institucionDireccion">Dirección</label>
+    <input type="text" id="institucionDireccion">
+
+    <label for="institucionSitioWeb">Sitio web o red social</label>
+    <input type="url" id="institucionSitioWeb">
+
+    <label for="institucionDonacion">Enlace para colaborar o donar</label>
+    <input type="url" id="institucionDonacion">
+
+    <button type="submit" id="guardarMiInstitucion" disabled>
+      Guardar cambios
+    </button>
+
+    <p id="mensajeMiInstitucion" role="status"></p>
+
+  </form>
+</section>
+
     <section id="seccionHistorias" class="panelOpcion" hidden>
   <h2>📖 Historias de mi institución</h2>
 

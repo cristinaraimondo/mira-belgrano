@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administración | Mirá Belgrano</title>
+
+  <link rel="stylesheet" href="css/admin.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/admin.js" defer></script>
+</head>
+<body>
+
+  <main id="panelAdmin" hidden>
+
+    <header class="encabezado">
+      <div>
+        <span class="marca">💜 Mirá Belgrano</span>
+        <h1>Panel de administración</h1>
+        <p>Gestioná las instituciones de Belgrano Solidario.</p>
+      </div>
+
+      <button id="btnSalir" type="button">Cerrar sesión</button>
+    </header>
+
+    <section class="resumen">
+      <div class="tarjeta">
+        <span>Instituciones</span>
+        <strong id="totalInstituciones">0</strong>
+      </div>
+
+      <div class="tarjeta">
+        <span>Sin cuenta asignada</span>
+        <strong id="institucionesPendientes">0</strong>
+      </div>
+
+      <div class="tarjeta">
+        <span>Con cuenta vinculada</span>
+        <strong id="institucionesActivas">0</strong>
+      </div>
+    </section>
+
+    <section class="seccion">
+      <h2>Instituciones solidarias</h2>
+      <p>Administrá el acceso de cada institución a su panel.</p>
+
+      <div id="listaInstituciones"></div>
+    </section>
+
+  </main>
+
+  <div id="pantallaAcceso">
+    <h2>Administración de Mirá Belgrano</h2>
+    <p id="mensajeAcceso">Verificando acceso...</p>
+    <a href="../login.html">Iniciar sesión</a>
+  </div>
+
+</body>
+</html>
