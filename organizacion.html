@@ -574,6 +574,73 @@ body {
   display: none !important;
 }
 
+/* ===== DONACIONES SOLIDARIAS ===== */
+
+#organizacionDatosDonacion {
+  max-width: 520px;
+  margin: 24px auto 10px;
+  padding: 28px;
+  background: #f8f5fc;
+  border: 1px solid #eee5f6;
+  border-radius: 18px;
+  text-align: center;
+}
+
+#organizacionDatosDonacion[hidden] {
+  display: none !important;
+}
+
+#organizacionDatosDonacion p {
+  color: #625a6c;
+  line-height: 1.7;
+  margin: 12px 0;
+}
+
+#organizacionDatosDonacion strong {
+  color: #30134e;
+}
+
+#organizacionDonacionAlias {
+  display: inline-block;
+  font-weight: bold;
+  color: #6425a8;
+  overflow-wrap: anywhere;
+}
+
+#copiarAliasDonacion {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 13px 25px;
+  background: #6425a8;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#copiarAliasDonacion:hover {
+  background: #4b1985;
+}
+
+#mensajeAliasDonacion {
+  font-size: 13px;
+  color: #216b38 !important;
+}
+
+@media (max-width: 650px) {
+  #organizacionDatosDonacion {
+    padding: 20px 15px;
+  }
+}
+/* Ocultar los datos de donación hasta presionar Donar */
+#organizacionDatosDonacion[hidden] {
+  display: none !important;
+}
+
+
 
   </style>
 </head>

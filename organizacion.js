@@ -224,7 +224,6 @@ if (data.donacion_alias?.trim()) {
   aliasDonacion.textContent = alias;
   titularDonacion.textContent = data.donacion_titular || "No informado";
 
-  datosDonacion.hidden = false;
 
   copiarAlias.addEventListener("click", async () => {
     try {
