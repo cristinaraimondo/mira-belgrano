@@ -393,7 +393,77 @@
     grid-template-columns: 1fr;
   }
 }
+/* Personalización de la página institucional */
 
+#seccionPersonalizacion {
+  margin-top: 30px;
+}
+
+#seccionPersonalizacion[hidden] {
+  display: none !important;
+}
+
+#formularioPersonalizacion {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+#formularioPersonalizacion label {
+  display: block;
+  font-weight: 600;
+  color: #30134e;
+  margin-top: 12px;
+}
+
+#formularioPersonalizacion input[type="file"],
+#formularioPersonalizacion select {
+  width: 100%;
+  max-width: 450px;
+  padding: 12px;
+  border: 1px solid #ddd3e8;
+  border-radius: 10px;
+  box-sizing: border-box;
+  background: #fff;
+}
+
+#formularioPersonalizacion input[type="color"] {
+  width: 100px;
+  height: 50px;
+  padding: 5px;
+  border: 1px solid #ddd3e8;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+#vistaPreviaPortada {
+  width: 100%;
+  max-width: 700px;
+  max-height: 250px;
+  object-fit: cover;
+  border-radius: 14px;
+}
+
+#vistaPreviaPortada[hidden] {
+  display: none !important;
+}
+
+#guardarPersonalizacion {
+  margin-top: 15px;
+  padding: 14px 25px;
+}
+/* Color personalizado de cada institución */
+.organizacionEncabezado h1 {
+  color: var(--color-institucion, #713ba5);
+}
+
+#organizacionHistorias h2,
+#organizacionRevista h2,
+#organizacionRifas h2 {
+  color: var(--color-institucion, #713ba5);
+}
 
 
 
@@ -419,6 +489,18 @@
   Administrar institución
 </button>
       </section>
+      <section class="panelOpcion">
+  <h2>🎨 Personalizar mi página</h2>
+
+  <p>
+    Elegí una imagen de portada, destacá tu logo
+    y personalizá los colores de tu institución.
+  </p>
+
+  <button type="button" id="abrirPersonalizacion">
+    Personalizar diseño
+  </button>
+</section>
 
       <section class="panelOpcion">
         <h2>🎟️ Mis rifas</h2>
@@ -468,7 +550,67 @@
       </section>
 
     </div>
-    
+   <section id="seccionPersonalizacion" class="panelOpcion" hidden>
+
+  <h2>🎨 Personalizar mi página</h2>
+
+  <p>
+    Dale una identidad propia a tu institución.
+    Los cambios se mostrarán en tu página pública.
+  </p>
+
+  <form id="formularioPersonalizacion">
+
+    <label for="portadaInstitucion">
+      🖼️ Imagen de portada
+    </label>
+
+    <p>
+      Elegí una imagen horizontal para el encabezado
+      de tu página. Recomendamos 1920 × 600 píxeles.
+    </p>
+
+    <input
+      type="file"
+      id="portadaInstitucion"
+      accept="image/jpeg,image/png,image/webp"
+    >
+
+    <img
+      id="vistaPreviaPortada"
+      alt="Vista previa de la portada"
+      hidden
+      style="width:100%;max-height:250px;object-fit:cover;border-radius:14px;margin-top:15px;"
+    >
+
+    <label for="colorInstitucion">
+      🎨 Color principal
+    </label>
+
+    <input
+      type="color"
+      id="colorInstitucion"
+      value="#713ba5"
+    >
+
+    <label for="estiloLogo">
+      🏷️ Presentación del logo
+    </label>
+
+    <select id="estiloLogo">
+      <option value="grande">Logo grande y centrado</option>
+      <option value="portada">Logo sobre la portada</option>
+    </select>
+
+    <button type="submit" id="guardarPersonalizacion">
+      Guardar diseño
+    </button>
+
+    <p id="mensajePersonalizacion" role="status"></p>
+
+  </form>
+
+</section> 
 <section id="seccionMiInstitucion" class="panelOpcion" hidden>
   <h2>🏠 Datos de mi institución</h2>
   <p>

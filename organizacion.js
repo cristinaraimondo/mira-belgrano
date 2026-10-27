@@ -32,7 +32,9 @@ const esAdministrador =
       nombre,
       descripcion,
       logo_url,
-
+      portada_url,
+color_principal,
+estilo_logo,
       telefono,
       whatsapp,
       email,
@@ -74,7 +76,48 @@ if (esAdministrador && (!data.verificada || !data.publicada)) {
     logo.alt = `Logo de ${data.nombre}`;
     logo.hidden = false;
   }
+  // Portada personalizada
+const portada = document.getElementById("organizacionPortada");
 
+if (data.portada_url && portada) {
+  portada.style.backgroundImage = `url("${data.portada_url}")`;
+  portada.hidden = false;
+}
+// Aplicar el estilo de logo elegido por la institución
+const encabezado = document.querySelector(".organizacionEncabezado");
+
+if (encabezado) {
+  encabezado.classList.toggle(
+    "logoEnPortada",
+    data.estilo_logo === "portada" &&
+    Boolean(data.portada_url) &&
+    Boolean(data.logo_url)
+  );
+}
+// Aplicar el color principal de la institución
+const colorPrincipal = data.color_principal || "#713ba5";
+console.log("Color de Supabase:", data.color_principal);
+console.log("Color aplicado:", colorPrincipal);
+
+if (/^#[0-9a-fA-F]{6}$/.test(colorPrincipal)) {
+  document.documentElement.style.setProperty(
+    "--color-institucion",
+    colorPrincipal
+  );
+
+  // Aplicar el color al nombre de la institución
+  const tituloInstitucion = document.getElementById("organizacionNombre");
+
+  if (tituloInstitucion) {
+    tituloInstitucion.style.color = colorPrincipal;
+    // Aplicar el color a los títulos de las secciones
+document.querySelectorAll(
+  "#organizacionHistorias h2, #organizacionRevista h2, #organizacionRifas h2"
+).forEach(titulo => {
+  titulo.style.color = colorPrincipal;
+});
+  }
+}
   // Contacto
   const contacto = document.getElementById("organizacionContacto");
 
@@ -315,6 +358,9 @@ const contenido = document.createElement("div");
 
 const titulo = document.createElement("h3");
 titulo.textContent = historia.titulo;
+titulo.style.color =
+  getComputedStyle(document.documentElement)
+    .getPropertyValue("--color-institucion").trim() || "#713ba5";
 
 const descripcion = document.createElement("p");
 descripcion.textContent = historia.descripcion;

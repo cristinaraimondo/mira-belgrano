@@ -39,8 +39,11 @@ async function iniciarPanelInstitucion() {
   direccion,
   sitio_web,
   enlace_donacion,
-  donacion_alias,
-  donacion_titular
+    donacion_alias,
+  donacion_titular,
+  portada_url,
+  color_principal,
+  estilo_logo
 `)
     .eq("usuario_id", user.id)
     .maybeSingle();
@@ -62,6 +65,82 @@ async function iniciarPanelInstitucion() {
     `Bienvenido al panel de ${institucion.nombre}`;
 
   opciones.hidden = false;
+  // Mostrar la personalización guardada
+document.getElementById("colorInstitucion").value =
+  institucion.color_principal || "#713ba5";
+
+document.getElementById("estiloLogo").value =
+  institucion.estilo_logo || "grande";
+
+// Mostrar la portada existente, si la institución ya tiene una
+if (institucion.portada_url) {
+  const vistaPrevia = document.getElementById("vistaPreviaPortada");
+  vistaPrevia.src = institucion.portada_url;
+  vistaPrevia.hidden = false;
+}
+const formularioPersonalizacion = document.getElementById(
+  "formularioPersonalizacion"
+);
+
+formularioPersonalizacion?.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const boton = document.getElementById("guardarPersonalizacion");
+  const mensaje = document.getElementById("mensajePersonalizacion");
+
+  boton.disabled = true;
+  mensaje.textContent = "Guardando diseño...";
+
+  try {
+    const cambios = {
+      color_principal: document.getElementById("colorInstitucion").value,
+      estilo_logo: document.getElementById("estiloLogo").value
+    };
+
+    // Si seleccionó una nueva portada, subir la versión optimizada
+    if (document.getElementById("portadaInstitucion").files.length > 0) {
+      if (!portadaOptimizada) {
+        throw new Error("La portada todavía no está lista. Volvé a seleccionarla.");
+      }
+
+      const ruta = `${institucion.id}/portada-${crypto.randomUUID()}.webp`;
+
+      const { error: errorSubida } = await db.storage
+        .from("portadas-instituciones")
+        .upload(ruta, portadaOptimizada, {
+          contentType: "image/webp",
+          upsert: false
+        });
+
+      if (errorSubida) throw errorSubida;
+
+      const { data } = db.storage
+        .from("portadas-instituciones")
+        .getPublicUrl(ruta);
+
+      cambios.portada_url = data.publicUrl;
+    }
+
+    const { error: errorGuardado } = await db
+      .from("organizaciones")
+      .update(cambios)
+      .eq("id", institucion.id)
+      .eq("usuario_id", user.id)
+      .select("id")
+      .single();
+
+    if (errorGuardado) throw errorGuardado;
+
+    Object.assign(institucion, cambios);
+
+    mensaje.textContent = "✅ Diseño guardado correctamente.";
+  } catch (error) {
+    console.error("Error al guardar diseño:", error);
+    mensaje.textContent = "❌ " + error.message;
+  } finally {
+    boton.disabled = false;
+  }
+});
   
 async function cargarRevistasInstitucion() {
   const lista = document.getElementById("listaRevistasInstitucion");
@@ -591,7 +670,9 @@ if (telefonoComprador) {
   const textoWhatsapp =
     `Hola ${compra.nombre_comprador}, te contactamos desde la institución ` +
     `por tu reserva del número ${numero} de la rifa "${compra.rifa_titulo}". ` +
-    `Queremos comunicarnos con vos para coordinar el pago o resolver cualquier consulta.`;
+   compra.estado === "pagado"
+  ? `Queremos comunicarnos con vos para agradecerte tu colaboración y resolver cualquier consulta.`
+  : `Queremos comunicarnos con vos para coordinar el pago o resolver cualquier consulta.`;
 
   botonWhatsapp.href =
     `https://wa.me/${telefonoComprador}?text=${encodeURIComponent(textoWhatsapp)}`;
@@ -1857,6 +1938,98 @@ if (botonAbrirRevistas && seccionRevistas) {
     }
   });
 }
+// Abrir y cerrar el editor de personalización
+const abrirPersonalizacion =
+  document.getElementById("abrirPersonalizacion");
+
+const seccionPersonalizacion =
+  document.getElementById("seccionPersonalizacion");
+
+abrirPersonalizacion?.addEventListener("click", () => {
+  seccionPersonalizacion.hidden =
+    !seccionPersonalizacion.hidden;
+
+  if (!seccionPersonalizacion.hidden) {
+    seccionPersonalizacion.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  }
+});
+// Optimizar portadas antes de subirlas
+async function optimizarPortada(archivo) {
+  const imagen = await createImageBitmap(archivo);
+
+  try {
+    const anchoMaximo = 1600;
+    const altoMaximo = 500;
+
+    const escala = Math.min(
+      1,
+      anchoMaximo / imagen.width,
+      altoMaximo / imagen.height
+    );
+
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.round(imagen.width * escala);
+    canvas.height = Math.round(imagen.height * escala);
+
+    const contexto = canvas.getContext("2d");
+    contexto.drawImage(imagen, 0, 0, canvas.width, canvas.height);
+
+    for (const calidad of [0.8, 0.65, 0.5, 0.35]) {
+      const blob = await new Promise(resolve =>
+        canvas.toBlob(resolve, "image/webp", calidad)
+      );
+
+      if (blob && blob.type === "image/webp" && blob.size <= 300 * 1024) {
+        return blob;
+      }
+    }
+
+    throw new Error(
+      "La imagen no pudo reducirse a menos de 300 KB. Elegí otra fotografía."
+    );
+  } finally {
+    imagen.close();
+  }
+}
+
+const inputPortada = document.getElementById("portadaInstitucion");
+const vistaPortada = document.getElementById("vistaPreviaPortada");
+const mensajePortada = document.getElementById("mensajePersonalizacion");
+
+let portadaOptimizada = null;
+let urlVistaPortada = null;
+
+inputPortada?.addEventListener("change", async () => {
+  portadaOptimizada = null;
+
+  if (urlVistaPortada) {
+    URL.revokeObjectURL(urlVistaPortada);
+    urlVistaPortada = null;
+  }
+
+  vistaPortada.hidden = true;
+
+  const archivo = inputPortada.files?.[0];
+  if (!archivo) return;
+
+  mensajePortada.textContent = "Optimizando imagen...";
+
+  try {
+    portadaOptimizada = await optimizarPortada(archivo);
+
+    urlVistaPortada = URL.createObjectURL(portadaOptimizada);
+    vistaPortada.src = urlVistaPortada;
+    vistaPortada.hidden = false;
+
+    mensajePortada.textContent =
+      `✅ Imagen optimizada: ${Math.round(portadaOptimizada.size / 1024)} KB`;
+  } catch (error) {
+    mensajePortada.textContent = error.message;
+  }
+});
 
 
 
