@@ -101,7 +101,7 @@ fila.appendChild(btnEditar);
           if (error) throw error;
 
           const enlace =
-            `${window.location.origin}/instituciones/activar-institucion.html?token=${token}`;
+  `https://mirabelgrano.com.ar/instituciones/activar-institucion.html?token=${token}`;
 
           await navigator.clipboard.writeText(enlace);
 
