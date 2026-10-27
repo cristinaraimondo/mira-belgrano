@@ -8,6 +8,7 @@ const formulario = document.getElementById("formRegistro");
 const mensaje = document.getElementById("mensaje");
 const btnRegistro = document.getElementById("btnRegistro");
 const btnActivar = document.getElementById("btnActivar");
+const btnIniciarSesion = document.getElementById("btnIniciarSesion");
 
 const parametros = new URLSearchParams(window.location.search);
 const tokenURL = parametros.get("token");
@@ -148,7 +149,7 @@ btnActivar.addEventListener("click", async () => {
   }
 });
 
-const btnIniciarSesion = document.getElementById("btnIniciarSesion");
+//const btnIniciarSesion = document.getElementById("btnIniciarSesion");
 
 btnIniciarSesion.addEventListener("click", async () => {
   if (!validarInvitacion()) return;
