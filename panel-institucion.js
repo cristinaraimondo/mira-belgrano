@@ -579,6 +579,79 @@ abrirPagos.addEventListener("click", async () => {
       | Estado: ${compra.estado}`;
 
     tarjeta.appendChild(detalle);
+    // Contactar al comprador por WhatsApp
+const telefonoComprador = String(compra.whatsapp || "")
+  .replace(/\D/g, "");
+
+if (telefonoComprador) {
+  const botonWhatsapp = document.createElement("a");
+
+  const numero = String(compra.numero).padStart(2, "0");
+
+  const textoWhatsapp =
+    `Hola ${compra.nombre_comprador}, te contactamos desde la institución ` +
+    `por tu reserva del número ${numero} de la rifa "${compra.rifa_titulo}". ` +
+    `Queremos comunicarnos con vos para coordinar el pago o resolver cualquier consulta.`;
+
+  botonWhatsapp.href =
+    `https://wa.me/${telefonoComprador}?text=${encodeURIComponent(textoWhatsapp)}`;
+
+  botonWhatsapp.target = "_blank";
+  botonWhatsapp.rel = "noopener noreferrer";
+  botonWhatsapp.textContent = "💬 Contactar comprador";
+  botonWhatsapp.className = "botonWhatsappComprador";
+botonWhatsapp.style.cssText = `
+  display: inline-block;
+  background: #25D366;
+  color: white;
+  padding: 9px 15px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  margin: 8px 5px 8px 0;
+`;
+  tarjeta.appendChild(botonWhatsapp);
+}
+// Avisar al ganador por WhatsApp
+if (
+  compra.estado === "pagado" &&
+  compra.numero_ganador !== null &&
+  Number(compra.numero) === Number(compra.numero_ganador)
+) {
+  const telefonoGanador = String(compra.whatsapp || "")
+    .replace(/\D/g, "");
+
+  if (telefonoGanador) {
+    const botonGanador = document.createElement("a");
+
+    const mensajeGanador =
+      `🎉 ¡Felicitaciones, ${compra.nombre_comprador}! 🏆\n\n` +
+      `Te informamos que tu número ${String(compra.numero).padStart(2, "0")} ` +
+      `resultó ganador de la rifa "${compra.rifa_titulo}".\n\n` +
+      `🎁 Premio: ${compra.premio}\n\n` +
+      `¡Comunicate con nosotros para coordinar la entrega!`;
+
+    botonGanador.href =
+      `https://wa.me/${telefonoGanador}?text=${encodeURIComponent(mensajeGanador)}`;
+
+    botonGanador.target = "_blank";
+    botonGanador.rel = "noopener noreferrer";
+    botonGanador.textContent = "🏆 Avisar al ganador";
+    botonGanador.className = "botonWhatsappComprador";
+    botonGanador.style.cssText = `
+  display: inline-block;
+  background: #d4a017;
+  color: white;
+  padding: 9px 15px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  margin: 8px 5px 8px 0;
+`;
+
+    tarjeta.appendChild(botonGanador);
+  }
+}
     if (compra.estado === "pendiente") {
   const botonVerificar = document.createElement("button");
   botonVerificar.type = "button";
@@ -1037,7 +1110,7 @@ async function cargarRifasInstitucion(institucionId) {
 
   const { data: rifas, error } = await db
     .from("rifas_solidarias")
-    .select("id, titulo, premio, precio, cantidad_numeros, fecha_sorteo, imagen_premio_url, activa")
+   .select("id, titulo, premio, precio, cantidad_numeros, fecha_sorteo, imagen_premio_url, activa, numero_ganador, fecha_resultado")
     .eq("organizacion_id", institucionId)
     .order("created_at", { ascending: false });
 
@@ -1081,6 +1154,63 @@ async function cargarRifasInstitucion(institucionId) {
     const fecha = document.createElement("p");
     fecha.textContent = `Sorteo: ${rifa.fecha_sorteo || "Sin fecha"}`;
     tarjeta.appendChild(fecha);
+    // Registro del número ganador
+if (rifa.numero_ganador !== null) {
+  const resultado = document.createElement("p");
+  resultado.textContent =
+    `🏆 Número ganador: ${String(rifa.numero_ganador).padStart(2, "0")}`;
+  resultado.style.fontWeight = "bold";
+  tarjeta.appendChild(resultado);
+
+} else if (
+  rifa.fecha_sorteo &&
+  rifa.fecha_sorteo <= new Date().toLocaleDateString("en-CA")
+) {
+  const botonGanador = document.createElement("button");
+  botonGanador.type = "button";
+  botonGanador.textContent = "🏆 Registrar ganador";
+
+  botonGanador.addEventListener("click", async () => {
+    const entrada = prompt("Ingresá el número ganador:");
+
+    if (entrada === null) return;
+
+    const numero = Number(entrada.trim());
+
+    if (
+      !/^\d+$/.test(entrada.trim()) ||
+      !Number.isSafeInteger(numero) ||
+      numero < 1 ||
+      numero > rifa.cantidad_numeros
+    ) {
+      alert("Ingresá un número válido de esta rifa.");
+      return;
+    }
+
+    if (!confirm(`¿Confirmás que el número ganador es ${numero}? Esta acción no se puede deshacer desde el panel.`)) {
+      return;
+    }
+
+    botonGanador.disabled = true;
+
+    const { data, error } = await db.rpc("registrar_ganador_rifa", {
+      p_rifa_id: rifa.id,
+      p_numero: numero
+    });
+
+    if (error || data !== true) {
+      console.error("Error al registrar ganador:", error);
+      alert("No se pudo registrar el ganador. Verificá que el número esté vendido y pagado, y que la fecha del sorteo haya llegado.");
+      botonGanador.disabled = false;
+      return;
+    }
+
+    alert("🏆 ¡Ganador registrado correctamente!");
+    await cargarRifasInstitucion(institucionId);
+  });
+
+  tarjeta.appendChild(botonGanador);
+}
 
     const estado = document.createElement("p");
     estado.textContent = rifa.activa
