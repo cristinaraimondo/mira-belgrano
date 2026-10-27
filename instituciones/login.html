@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Ingresar | Belgrano Solidario</title>
+
+  <link rel="stylesheet" href="css/activar-institucion.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/login-institucion.js" defer></script>
+</head>
+
+<body>
+
+  <main class="contenedor">
+    <div class="tarjeta">
+
+      <div class="marca">💜 Mirá Belgrano</div>
+
+      <h1>Acceso a instituciones</h1>
+
+      <p class="introduccion">
+        Ingresá para administrar tu institución,
+        compartir novedades y mantener actualizada
+        tu información en Belgrano Solidario.
+      </p>
+
+      <form id="formLogin">
+
+        <label for="email">Correo electrónico</label>
+        <input
+          type="email"
+          id="email"
+          autocomplete="email"
+          required
+        >
+
+        <label for="password">Contraseña</label>
+        <input
+          type="password"
+          id="password"
+          autocomplete="current-password"
+          required
+        >
+
+        <button type="submit" id="btnIngresar">
+          Ingresar a mi institución
+        </button>
+
+      </form>
+
+      <p id="mensaje" role="status" aria-live="polite"></p>
+
+      <div class="acceso">
+        <p>¿Recibiste una invitación?</p>
+        <p>Utilizá el enlace que te enviamos para crear tu cuenta.</p>
+      </div>
+
+    </div>
+  </main>
+
+</body>
+</html>
