@@ -493,10 +493,8 @@ formularioMiInstitucion.addEventListener("submit", async (evento) => {
     whatsapp: document.getElementById("institucionWhatsapp").value.trim() || null,
     email: document.getElementById("institucionEmail").value.trim() || null,
     direccion: document.getElementById("institucionDireccion").value.trim() || null,
-    sitio_web: document.getElementById("institucionSitioWeb").value.trim() || null,
-   enlace_donacion: document.getElementById("institucionDonacion").value.trim() || null,
-   donacion_alias: document.getElementById("institucionDonacionAlias").value.trim() || null,
-   donacion_titular: document.getElementById("institucionDonacionTitular").value.trim() || null
+    sitio_web: document.getElementById("institucionSitioWeb").value.trim() || null
+  
   };
 
   try {
