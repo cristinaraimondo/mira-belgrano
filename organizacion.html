@@ -768,7 +768,29 @@ body {
     border-radius: 12px;
   }
 }
+/* Tarjetas de contacto clicables */
+.organizacionContacto .contactoEnlace {
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
 
+.organizacionContacto .contactoEnlace:hover {
+  background: #f4eaff;
+  border-color: #c9a6ef;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(90, 45, 130, 0.10);
+}
+
+.organizacionContacto .contactoEnlace:focus-visible {
+  outline: 3px solid #9656d5;
+  outline-offset: 3px;
+}
+
+.organizacionContacto .contactoEnlace .contactoContenido span:last-child {
+  color: #713ba5;
+  font-weight: 600;
+}
   </style>
 </head>
 

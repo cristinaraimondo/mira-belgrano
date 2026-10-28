@@ -135,7 +135,10 @@ function agregarContacto(etiqueta, valor, enlace) {
 
   const elemento = document.createElement(enlace ? "a" : "div");
   elemento.className = "contactoItem";
-
+if (enlace) {
+  elemento.classList.add("contactoEnlace");
+  elemento.title = `Abrir ${etiqueta}`;
+}
   if (enlace) {
     elemento.href = enlace;
 
@@ -156,7 +159,19 @@ function agregarContacto(etiqueta, valor, enlace) {
   titulo.textContent = etiqueta;
 
   const dato = document.createElement("span");
-  dato.textContent = valor;
+
+const textosContacto = {
+  "Teléfono": "Llamar ahora",
+  "WhatsApp": "Enviar mensaje",
+  "Correo": "Enviar correo",
+  "Sitio web": valor.includes("instagram.com")
+    ? "Visitar Instagram"
+    : "Visitar sitio web"
+};
+
+dato.textContent = enlace
+  ? (textosContacto[etiqueta] || valor)
+  : valor;
 
   contenido.append(titulo, dato);
   elemento.append(icono, contenido);
