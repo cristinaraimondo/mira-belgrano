@@ -544,15 +544,28 @@ document.getElementById("contratarPlan")
     }
 
     const plan = document.getElementById("seleccionarPlan").value;
+    const emailMercadoPago = prompt(
+  "¿Qué correo electrónico usás en Mercado Pago?",
+  user.email
+);
+
+if (emailMercadoPago === null) return;
+
+const correoPago = emailMercadoPago.trim().toLowerCase();
+
+if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correoPago)) {
+  alert("Ingresá un correo electrónico válido.");
+  return;
+}
 
     const { data, error } = await db.functions.invoke(
       "crear-suscripcion",
       {
-        body: {
-         email: user.email,
-          plan: plan,
-          comercio_id: comercioActual.id
-        }
+       body: {
+  payer_email: correoPago,
+  plan: plan,
+  comercio_id: comercioActual.id
+}
       }
     );
 
