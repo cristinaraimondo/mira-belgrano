@@ -1,0 +1,200 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administrar eventos | Mirá Belgrano</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    body {
+      background: #f6f3fa;
+      font-family: Arial, sans-serif;
+    }
+
+    .eventosAdmin {
+      max-width: 950px;
+      margin: 35px auto;
+      padding: 20px;
+    }
+
+    h1, h2 { color: #30134e; }
+
+    .panel {
+      background: white;
+      padding: 25px;
+      border-radius: 18px;
+      margin-bottom: 25px;
+      box-shadow: 0 5px 25px #00000010;
+    }
+
+    .formGrid {
+      display: grid;
+      grid-template-columns: repeat(
+        auto-fit, minmax(230px, 1fr)
+      );
+      gap: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+      color: #30134e;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 11px;
+      border: 1px solid #d9cde5;
+      border-radius: 9px;
+      box-sizing: border-box;
+      font: inherit;
+    }
+
+    .campo { margin-bottom: 16px; }
+
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    .boton {
+      background: #713ba5;
+      color: white;
+      padding: 12px 20px;
+      border: 0;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .boton:disabled {
+      opacity: .6;
+      cursor: wait;
+    }
+
+    .secundario { background: #777; }
+
+    #adminContenido[hidden] {
+      display: none !important;
+    }
+
+    #estado {
+      text-align: center;
+      color: #625a6c;
+    }
+
+    .eventoItem {
+      border-bottom: 1px solid #eee5f6;
+      padding: 16px 0;
+    }
+
+    .eventoItem img {
+      max-width: 120px;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="eventosAdmin">
+
+    <h1>📅 Administración de eventos</h1>
+
+    <p id="estado">Verificando acceso...</p>
+
+    <div id="adminContenido" hidden>
+
+      <section class="panel">
+        <h2 id="tituloFormulario">Publicar evento</h2>
+
+        <form id="formEvento">
+
+          <input type="hidden" id="eventoId">
+
+          <div class="campo">
+            <label for="titulo">Título *</label>
+            <input id="titulo" required maxlength="150">
+          </div>
+
+          <div class="formGrid">
+            <div class="campo">
+              <label for="fechaInicio">Fecha de inicio *</label>
+              <input type="date" id="fechaInicio" required>
+            </div>
+
+            <div class="campo">
+              <label for="fechaFin">Fecha de finalización *</label>
+              <input type="date" id="fechaFin" required>
+            </div>
+          </div>
+
+          <div class="formGrid">
+            <div class="campo">
+              <label for="horario">Horario</label>
+              <input id="horario"
+                     placeholder="Ej.: Desde las 15:30 hs">
+            </div>
+
+            <div class="campo">
+              <label for="lugar">Lugar</label>
+              <input id="lugar"
+                     placeholder="Ej.: Plaza Leandro N. Alem">
+            </div>
+          </div>
+
+          <div class="campo">
+            <label for="descripcion">Descripción</label>
+            <textarea id="descripcion"></textarea>
+          </div>
+
+          <div class="campo">
+            <label for="enlace">Enlace de información o reservas</label>
+            <input type="url" id="enlace"
+                   placeholder="https://...">
+          </div>
+
+          <div class="campo">
+            <label for="imagen">Afiche del evento</label>
+            <input type="file" id="imagen"
+                   accept="image/jpeg,image/png,image/webp">
+            <p style="font-size:13px;color:#625a6c">
+              Se convertirá automáticamente a WebP.
+            </p>
+          </div>
+
+          <button class="boton" id="guardar" type="submit">
+            Publicar evento
+          </button>
+
+          <button class="boton secundario"
+                  id="cancelar" type="button" hidden>
+            Cancelar edición
+          </button>
+
+        </form>
+      </section>
+
+      <section class="panel">
+        <h2>Eventos cargados</h2>
+        <div id="listaEventosAdmin">
+          Cargando eventos...
+        </div>
+      </section>
+
+    </div>
+
+    <p>
+      <a href="admin-solidario.html">
+        ← Volver al administrador
+      </a>
+    </p>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="admin-eventos.js"></script>
+</body>
+</html>
