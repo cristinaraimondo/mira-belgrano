@@ -33,3 +33,15 @@
 #asistente-mira .mira-figura{width:68px;height:68px}
 #asistente-mira .mira-avatar{width:68px;height:68px;object-fit:contain;border-radius:0;background:transparent}
 @media(prefers-reduced-motion:no-preference){#asistente-mira .mira-avatar{animation:mira-flotar 3.2s ease-in-out infinite}}
+
+/* Mirá más visible y diálogo en globitos */
+#asistente-mira .mira-launch{max-width:245px;min-height:86px;padding:6px 17px 6px 5px;gap:12px}
+#asistente-mira .mira-figura{width:84px;height:84px;flex:none}
+#asistente-mira .mira-avatar{width:84px;height:84px;object-fit:contain}
+#asistente-mira .mira-conversacion{display:flex;flex-direction:column;gap:10px;margin-bottom:12px}
+#asistente-mira .mira-conversacion:empty{display:none}
+#asistente-mira .mira-burbuja{max-width:94%;padding:11px 13px;border-radius:15px;font-size:14px;line-height:1.5;overflow-wrap:anywhere}
+#asistente-mira .mira-burbuja-usuario{align-self:flex-end;background:#eee1f5;color:#38154d;border-bottom-right-radius:4px}
+#asistente-mira .mira-burbuja-mira{align-self:flex-start;background:#fff3e9;color:#38154d;border-bottom-left-radius:4px}
+#asistente-mira .mira-burbuja a{color:#69218d;font-weight:700}
+@media(max-width:480px){#asistente-mira .mira-launch{max-width:220px}}
