@@ -59,3 +59,7 @@
  @keyframes mira-parpadeo-der{0%,43%,46%,100%{transform:rotate(10deg) scaleY(0);opacity:0}44%,45%{transform:rotate(10deg) scaleY(1);opacity:1}}
  @keyframes mira-saludar{0%,100%{transform:rotate(0)}30%{transform:rotate(-9deg)}65%{transform:rotate(7deg)}}
 }
+
+/* Corrección: mantener la mascota 3D quieta; la imagen plana no permite animar pupilas independientes */
+#asistente-mira .mira-avatar{animation:none!important;transform:none!important}
+#asistente-mira .mira-parpado{display:none!important}
