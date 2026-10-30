@@ -1,87 +1,68 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Administración | Mirá Belgrano</title>
-
   <link rel="stylesheet" href="css/admin.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/admin.js" defer></script>
 </head>
 <body>
-
   <main id="panelAdmin" hidden>
-
     <header class="encabezado">
       <div>
         <span class="marca">💜 Mirá Belgrano</span>
         <h1>Panel de administración</h1>
         <p>Gestioná las instituciones de Belgrano Solidario.</p>
       </div>
-
       <button id="btnSalir" type="button">Cerrar sesión</button>
     </header>
-
     <section class="resumen">
-      <div class="tarjeta">
-        <span>Instituciones</span>
-        <strong id="totalInstituciones">0</strong>
-      </div>
-
-      <div class="tarjeta">
-        <span>Sin cuenta asignada</span>
-        <strong id="institucionesPendientes">0</strong>
-      </div>
-
-      <div class="tarjeta">
-        <span>Con cuenta vinculada</span>
-        <strong id="institucionesActivas">0</strong>
-      </div>
+      <div class="tarjeta"><span>Instituciones</span><strong id="totalInstituciones">0</strong></div>
+      <div class="tarjeta"><span>Sin cuenta asignada</span><strong id="institucionesPendientes">0</strong></div>
+      <div class="tarjeta"><span>Con cuenta vinculada</span><strong id="institucionesActivas">0</strong></div>
     </section>
-
     <section class="seccion">
       <h2>Instituciones solidarias</h2>
       <p>Administrá el acceso de cada institución a su panel.</p>
-
+      <button id="btnMostrarCrear" type="button" aria-expanded="false" aria-controls="seccionCrearInstitucion">+ Crear institución</button>
+      <section id="seccionCrearInstitucion" hidden style="margin: 18px 0; padding: 20px; border: 1px solid #e7dff0; border-radius: 12px; background: #faf8fd;">
+        <h3>Nueva institución</h3>
+        <form id="formCrearInstitucion">
+          <label for="crearNombre">Nombre de la institución</label>
+          <input id="crearNombre" name="nombre" type="text" maxlength="150" required autocomplete="off" style="display:block; width:100%; max-width:450px; box-sizing:border-box; padding:10px; margin:10px 0;">
+          <button id="btnConfirmarCrear" type="submit">Crear y editar</button>
+          <button id="btnCancelarCrear" type="button">Cancelar</button>
+          <p id="mensajeCrear" role="status" aria-live="polite"></p>
+        </form>
+      </section>
       <div id="listaInstituciones"></div>
       <section id="seccionEditarInstitucion" class="seccion" hidden>
-  <h2>✏️ Editar institución</h2>
-
-  <form id="formEditarInstitucion">
-    <input type="hidden" id="editarInstitucionId">
-
-    <label for="editarNombre">Nombre</label>
-    <input type="text" id="editarNombre" required>
-
-    <label for="editarDescripcion">Descripción</label>
-    <textarea id="editarDescripcion" rows="5"></textarea>
-
-    <label for="editarTelefono">Teléfono</label>
-    <input type="text" id="editarTelefono">
-
-    <label for="editarEmail">Correo electrónico</label>
-    <input type="email" id="editarEmail">
-
-    <label for="editarDireccion">Dirección</label>
-    <input type="text" id="editarDireccion">
-
-    <button type="submit">💾 Guardar cambios</button>
-    <button type="button" id="cancelarEdicion">Cancelar</button>
-
-    <p id="mensajeEdicion"></p>
-  </form>
-</section>
+        <h2>✏️ Editar institución</h2>
+        <form id="formEditarInstitucion">
+          <input type="hidden" id="editarInstitucionId">
+          <label for="editarNombre">Nombre</label>
+          <input type="text" id="editarNombre" required>
+          <label for="editarDescripcion">Descripción</label>
+          <textarea id="editarDescripcion" rows="5"></textarea>
+          <label for="editarTelefono">Teléfono</label>
+          <input type="text" id="editarTelefono">
+          <label for="editarEmail">Correo electrónico</label>
+          <input type="email" id="editarEmail">
+          <label for="editarDireccion">Dirección</label>
+          <input type="text" id="editarDireccion">
+          <button type="submit">💾 Guardar cambios</button>
+          <button type="button" id="cancelarEdicion">Cancelar</button>
+          <p id="mensajeEdicion"></p>
+        </form>
+      </section>
     </section>
-
   </main>
-
   <div id="pantallaAcceso">
     <h2>Administración de Mirá Belgrano</h2>
     <p id="mensajeAcceso">Verificando acceso...</p>
     <a href="../login.html">Iniciar sesión</a>
   </div>
-
 </body>
 </html>
