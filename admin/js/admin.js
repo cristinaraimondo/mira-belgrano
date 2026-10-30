@@ -53,7 +53,7 @@ btnEditar.textContent = "Editar institución";
 
 btnEditar.addEventListener("click", () => {
   window.location.href =
-    `../panel-institucion.html?id=${institucion.id}`;
+  `/panel-institucion.html?id=${institucion.id}`;
 });
 
 fila.appendChild(btnEditar);
