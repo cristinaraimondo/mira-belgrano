@@ -1,0 +1,998 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Panel de Instituciones | Mirá Belgrano</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .panelInstitucion {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    .panelInstitucion h1 {
+      color: #24104d;
+      text-align: center;
+    }
+
+    .panelBienvenida {
+      text-align: center;
+      color: #666;
+      margin-bottom: 30px;
+    }
+
+    .panelOpciones {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+
+    .panelOpcion {
+      background: white;
+      border-radius: 16px;
+      padding: 25px;
+      box-shadow: 0 5px 20px #00000012;
+    }
+
+    .panelOpcion h2 {
+      color: #713ba5;
+      font-size: 20px;
+    }
+
+    .panelOpcion p {
+      color: #555;
+      line-height: 1.6;
+    }
+
+    .panelOpcion button {
+      background: #713ba5;
+      color: white;
+      border: none;
+      border-radius: 9px;
+      padding: 12px 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .panelOpcion button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    #seccionCobros {
+  margin-top: 30px;
+}
+
+#seccionCobros[hidden] {
+  display: none !important;
+}
+
+#formularioCobros label {
+  display: block;
+  margin-top: 16px;
+  font-weight: bold;
+}
+
+#formularioCobros input {
+  display: block;
+  width: 100%;
+  max-width: 450px;
+  padding: 12px;
+  margin-top: 6px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+#seccionRifas {
+  margin-top: 30px;
+}
+
+#seccionRifas[hidden] {
+  display: none !important;
+}
+
+#formularioRifas label {
+  display: block;
+  margin-top: 16px;
+  font-weight: bold;
+}
+
+#formularioRifas input {
+  display: block;
+  width: 100%;
+  max-width: 450px;
+  padding: 12px;
+  margin-top: 6px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+#guardarRifa {
+  margin-top: 20px;
+}
+#rifaImagenVistaPrevia {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  max-height: 250px;
+  object-fit: contain;
+  margin-top: 15px;
+  border-radius: 12px;
+}
+
+#rifaImagenVistaPrevia[hidden] {
+  display: none !important;
+}
+/* Formulario de historias */
+#seccionHistorias {
+  margin-top: 30px;
+}
+
+#seccionHistorias[hidden] {
+  display: none !important;
+}
+
+#formularioHistorias label {
+  display: block;
+  margin-top: 18px;
+  margin-bottom: 6px;
+  font-weight: bold;
+  color: #333;
+}
+
+#formularioHistorias input[type="text"],
+#formularioHistorias textarea {
+  display: block;
+  width: 100%;
+  max-width: 650px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font: inherit;
+  box-sizing: border-box;
+}
+
+#formularioHistorias textarea {
+  min-height: 180px;
+  resize: vertical;
+}
+
+#formularioHistorias input[type="file"] {
+  display: block;
+  margin-top: 8px;
+}
+
+#guardarHistoria {
+  display: block;
+  margin-top: 22px;
+  background: #713ba5;
+  color: white;
+  border: none;
+  border-radius: 9px;
+  padding: 12px 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#guardarHistoria:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+#listaHistoriasInstitucion {
+  margin-top: 15px;
+}
+
+/* Historias de las instituciones */
+.historiaContenido {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.historiaFoto {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.historiaTexto {
+  min-width: 0;
+}
+
+.historiaTexto h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+.historiaTexto p {
+  line-height: 1.6;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 650px) {
+  .historiaContenido {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .historiaFoto {
+    height: auto;
+    max-height: 300px;
+    object-fit: contain;
+  }
+}
+
+/* Administración de mi institución */
+
+#seccionMiInstitucion {
+  margin-top: 30px;
+}
+
+#seccionMiInstitucion[hidden] {
+  display: none !important;
+}
+
+#formularioMiInstitucion label {
+  display: block;
+  margin-top: 18px;
+  margin-bottom: 7px;
+  font-weight: bold;
+  color: #333;
+}
+
+#formularioMiInstitucion input:not([type="file"]),
+#formularioMiInstitucion textarea {
+  display: block;
+  width: 100%;
+  max-width: 650px;
+  padding: 12px;
+  border: 1px solid #d8cde5;
+  border-radius: 9px;
+  font: inherit;
+  box-sizing: border-box;
+}
+
+#formularioMiInstitucion textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+#formularioMiInstitucion input[readonly] {
+  background: #f3f0f7;
+  color: #666;
+}
+
+#institucionLogoActual {
+  display: block;
+  max-width: 120px;
+  height: auto;
+  margin: 12px 0;
+  border-radius: 10px;
+}
+
+#institucionLogoActual[hidden] {
+  display: none !important;
+}
+
+#institucionLogo {
+  display: block;
+  margin: 12px 0;
+}
+
+#guardarMiInstitucion {
+  margin-top: 25px;
+}
+
+#mensajeMiInstitucion {
+  margin-top: 15px;
+  line-height: 1.5;
+}
+/* Formulario de revistas digitales */
+#formularioRevistas {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+#formularioRevistas label {
+  font-weight: 600;
+  color: #38204f;
+}
+
+#formularioRevistas input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  border: 1px solid #ddd3e8;
+  border-radius: 10px;
+  font: inherit;
+}
+
+#formularioRevistas input[type="file"] {
+  background: white;
+}
+
+#guardarRevista {
+  align-self: flex-start;
+  margin-top: 10px;
+}
+
+#listaRevistasInstitucion {
+  margin-top: 20px;
+}
+#cancelarEdicionRevista[hidden] {
+  display: none !important;
+}
+
+/* Galería de revistas del panel */
+#listaRevistasInstitucion {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  margin-top: 24px;
+}
+
+.revistaTarjetaPanel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 20px;
+  background: #ffffff;
+  border: 1px solid #e9dff2;
+  border-radius: 18px;
+  box-shadow: 0 4px 18px rgba(55, 20, 90, 0.06);
+  text-align: center;
+  min-width: 0;
+}
+
+.revistaTarjetaPanel img {
+  width: 100% !important;
+  max-width: 165px !important;
+  height: 220px;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+.revistaTarjetaPanel h4 {
+  margin: 0;
+  font-size: 16px;
+  color: #30134e;
+  overflow-wrap: anywhere;
+}
+
+.revistaTarjetaPanel a {
+  color: #713ba5;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.revistaTarjetaPanel a:hover {
+  text-decoration: underline;
+}
+
+.revistaTarjetaPanel button {
+  width: 100%;
+  max-width: 190px;
+  margin: 0 !important;
+  padding: 11px;
+  border-radius: 10px;
+  font-size: 13px;
+}
+
+@media (max-width: 600px) {
+  #listaRevistasInstitucion {
+    grid-template-columns: 1fr;
+  }
+}
+/* Personalización de la página institucional */
+
+#seccionPersonalizacion {
+  margin-top: 30px;
+}
+
+#seccionPersonalizacion[hidden] {
+  display: none !important;
+}
+
+#formularioPersonalizacion {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+#formularioPersonalizacion label {
+  display: block;
+  font-weight: 600;
+  color: #30134e;
+  margin-top: 12px;
+}
+
+#formularioPersonalizacion input[type="file"],
+#formularioPersonalizacion select {
+  width: 100%;
+  max-width: 450px;
+  padding: 12px;
+  border: 1px solid #ddd3e8;
+  border-radius: 10px;
+  box-sizing: border-box;
+  background: #fff;
+}
+
+#formularioPersonalizacion input[type="color"] {
+  width: 100px;
+  height: 50px;
+  padding: 5px;
+  border: 1px solid #ddd3e8;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+#vistaPreviaPortada {
+  width: 100%;
+  max-width: 700px;
+  max-height: 250px;
+  object-fit: cover;
+  border-radius: 14px;
+}
+
+#vistaPreviaPortada[hidden] {
+  display: none !important;
+}
+
+#guardarPersonalizacion {
+  margin-top: 15px;
+  padding: 14px 25px;
+}
+/* Color personalizado de cada institución */
+.organizacionEncabezado h1 {
+  color: var(--color-institucion, #713ba5);
+}
+
+#organizacionHistorias h2,
+#organizacionRevista h2,
+#organizacionRifas h2 {
+  color: var(--color-institucion, #713ba5);
+}
+
+
+
+  </style>
+</head>
+
+<body>
+
+  <main class="panelInstitucion">
+
+    <h1>💜 Belgrano Solidario</h1>
+
+    <p class="panelBienvenida">
+      Panel de administración de instituciones
+    </p>
+
+    <div class="panelOpciones">
+
+      <section class="panelOpcion">
+        <h2>🏠 Mi institución</h2>
+        <p>Actualizá la información, imágenes y datos de contacto.</p>
+       <button type="button" id="abrirMiInstitucion">
+  Administrar institución
+</button>
+      </section>
+      <section class="panelOpcion">
+  <h2>🎨 Personalizar mi página</h2>
+
+  <p>
+    Elegí una imagen de portada, destacá tu logo
+    y personalizá los colores de tu institución.
+  </p>
+
+  <button type="button" id="abrirPersonalizacion">
+    Personalizar diseño
+  </button>
+</section>
+
+      <section class="panelOpcion">
+        <h2>🎟️ Mis rifas</h2>
+        <p>Creá rifas y administrá los números y participantes.</p>
+      <button type="button" id="abrirRifas" disabled>
+  Administrar rifas
+</button>
+      </section>
+
+      <section class="panelOpcion">
+        <h2>💳 Datos de cobro</h2>
+        <p>Configurá el alias, CVU y titular de tu cuenta.</p>
+        <button type="button" id="abrirCobros" disabled>
+  Configurar cobros
+</button>
+      </section>
+      <section class="panelOpcion">
+  <h2>📖 Mis historias</h2>
+
+  <p>
+    Compartí las actividades, proyectos,
+    necesidades y logros de tu institución.
+  </p>
+
+  <button type="button" id="abrirHistorias" >
+    Administrar historias
+  </button>
+</section>
+
+<section class="panelOpcion">
+  <h2>📚 Mis revistas digitales</h2>
+  <p>
+    Publicá las revistas de tu institución
+    con su portada y enlace de lectura.
+  </p>
+
+  <button type="button" id="abrirRevistas">
+    Administrar revistas
+  </button>
+</section>
+
+
+      <section class="panelOpcion">
+        <h2>✅ Confirmar pagos</h2>
+        <p>Revisá las transferencias y confirmá los números vendidos.</p>
+      <button type="button" id="abrirPagos">Ver pagos</button>
+      </section>
+
+    </div>
+   <section id="seccionPersonalizacion" class="panelOpcion" hidden>
+
+  <h2>🎨 Personalizar mi página</h2>
+
+  <p>
+    Dale una identidad propia a tu institución.
+    Los cambios se mostrarán en tu página pública.
+  </p>
+
+  <form id="formularioPersonalizacion">
+
+    <label for="portadaInstitucion">
+      🖼️ Imagen de portada
+    </label>
+
+    <p>
+      Elegí una imagen horizontal para el encabezado
+      de tu página. Recomendamos 1920 × 600 píxeles.
+    </p>
+
+    <input
+      type="file"
+      id="portadaInstitucion"
+      accept="image/jpeg,image/png,image/webp"
+    >
+
+    <img
+      id="vistaPreviaPortada"
+      alt="Vista previa de la portada"
+      hidden
+      style="width:100%;max-height:250px;object-fit:cover;border-radius:14px;margin-top:15px;"
+    >
+
+    <label for="colorInstitucion">
+      🎨 Color principal
+    </label>
+
+    <input
+      type="color"
+      id="colorInstitucion"
+      value="#713ba5"
+    >
+
+    <label for="estiloLogo">
+      🏷️ Presentación del logo
+    </label>
+
+    <select id="estiloLogo">
+      <option value="grande">Logo grande y centrado</option>
+      <option value="portada">Logo sobre la portada</option>
+    </select>
+
+    <button type="submit" id="guardarPersonalizacion">
+      Guardar diseño
+    </button>
+
+    <p id="mensajePersonalizacion" role="status"></p>
+
+  </form>
+
+</section> 
+<section id="seccionMiInstitucion" class="panelOpcion" hidden>
+  <h2>🏠 Datos de mi institución</h2>
+  <p>
+    Mantené actualizada la información que los visitantes
+    encontrarán en Belgrano Solidario.
+  </p>
+
+  <form id="formularioMiInstitucion">
+
+    <label for="institucionNombre">Nombre de la institución</label>
+    <input type="text" id="institucionNombre" readonly>
+
+    <label for="institucionDescripcion">Descripción</label>
+    <textarea
+      id="institucionDescripcion"
+      rows="5"
+      maxlength="2000"
+      placeholder="Contá qué hace tu institución..."
+    ></textarea>
+
+    <label for="institucionLogo">Logo de la institución</label>
+    <img
+      id="institucionLogoActual"
+      alt="Logo actual"
+      width="120"
+      hidden
+    >
+    <input
+      type="file"
+      id="institucionLogo"
+      accept="image/jpeg,image/png,image/webp"
+    >
+
+    <label for="institucionTelefono">Teléfono</label>
+    <input type="tel" id="institucionTelefono">
+
+    <label for="institucionWhatsapp">WhatsApp</label>
+    <input type="tel" id="institucionWhatsapp">
+
+    <label for="institucionEmail">Correo electrónico de contacto</label>
+    <input type="email" id="institucionEmail">
+
+    <label for="institucionDireccion">Dirección</label>
+    <input type="text" id="institucionDireccion">
+
+    <label for="institucionSitioWeb">Sitio web o red social</label>
+    <input type="url" id="institucionSitioWeb">
+    
+<label for="institucionDonacionTitular">
+  ❤️ Titular de la cuenta para donaciones
+</label>
+<input
+  type="text"
+  id="institucionDonacionTitular"
+  maxlength="120"
+  placeholder="Nombre del titular de la cuenta"
+>
+
+<label for="institucionDonacionAlias">
+  ❤️ Alias para recibir donaciones
+</label>
+<input
+  type="text"
+  id="institucionDonacionAlias"
+  maxlength="100"
+  placeholder="Ejemplo: institucion.solidaria"
+>
+
+<p>
+  Los visitantes podrán copiar este alias y transferir
+  el importe que deseen directamente a tu institución.
+</p>
+
+
+    <label for="institucionDonacion">Enlace para colaborar o donar</label>
+    <input type="url" id="institucionDonacion">
+
+    <button type="submit" id="guardarMiInstitucion" disabled>
+      Guardar cambios
+    </button>
+
+    <p id="mensajeMiInstitucion" role="status"></p>
+
+  </form>
+</section>
+
+<section id="seccionRevistas" class="panelOpcion" hidden>
+  <h2>📚 Revistas digitales de mi institución</h2>
+
+  <p>
+    Agregá las publicaciones de tu institución.
+    Cada revista aparecerá con su portada en la ficha pública.
+  </p>
+
+  <form id="formularioRevistas">
+    <input type="hidden" id="revistaIdEditar">
+
+    <label for="revistaTitulo">Título de la revista</label>
+    <input
+      type="text"
+      id="revistaTitulo"
+      maxlength="150"
+      placeholder="Ejemplo: PROAMA Digital — Edición 2"
+      required
+    >
+
+    <label for="revistaUrl">Enlace de la revista</label>
+    <input
+      type="url"
+      id="revistaUrl"
+      placeholder="https://heyzine.com/..."
+      required
+    >
+
+    <label for="revistaPortada">Imagen de portada</label>
+    <input
+      type="file"
+      id="revistaPortada"
+      accept="image/jpeg,image/png,image/webp"
+      required
+    >
+
+    <button type="submit" id="guardarRevista" disabled>
+      Publicar revista
+    </button>
+    <button type="button" id="cancelarEdicionRevista" hidden>
+  Cancelar edición
+</button>
+
+    <p id="mensajeRevistas" role="status"></p>
+  </form>
+
+  <h3>Mis revistas publicadas</h3>
+
+  <div id="listaRevistasInstitucion">
+    <p>Todavía no hay revistas publicadas.</p>
+  </div>
+</section>
+
+    <section id="seccionHistorias" class="panelOpcion" hidden>
+  <h2>📖 Historias de mi institución</h2>
+
+  <p>
+    Contale a la comunidad qué hace tu institución,
+    cuáles son sus proyectos y cómo pueden colaborar.
+  </p>
+
+  <form id="formularioHistorias">
+
+    <label for="historiaTitulo">Título de la historia</label>
+    <input
+      type="text"
+      id="historiaTitulo"
+      maxlength="120"
+      required
+      placeholder="Ejemplo: Un nuevo proyecto para nuestra comunidad"
+    >
+
+    <label for="historiaDescripcion">Contá tu historia</label>
+    <textarea
+      id="historiaDescripcion"
+      rows="8"
+      maxlength="5000"
+      required
+      placeholder="Contá qué hicieron, por qué es importante y cómo puede ayudar la comunidad..."
+    ></textarea>
+
+    <label for="historiaImagen">Fotografía</label>
+    <input
+      type="file"
+      id="historiaImagen"
+      accept="image/jpeg,image/png,image/webp"
+    >
+
+    <button type="submit" id="guardarHistoria" disabled>
+      Publicar historia
+    </button>
+
+    <p id="mensajeHistorias"></p>
+
+  </form>
+
+  <h3>Mis historias publicadas</h3>
+
+  <div id="listaHistoriasInstitucion">
+    <p>Todavía no hay historias publicadas.</p>
+  </div>
+</section>
+    <section id="seccionPagos" class="panelOpcion" hidden>
+  <h2>💳 Pagos de mis rifas</h2>
+  <p>
+    Consultá las reservas, los datos de los compradores
+    y los pagos pendientes de verificación.
+  </p>
+
+  <div id="listaPagosInstitucion">
+    Cargando pagos...
+  </div>
+</section>
+    <section id="seccionRifas" class="panelOpcion" hidden>
+  <h2>🎟️ Crear una rifa solidaria</h2>
+  <p>Completá los datos de la rifa de tu institución.</p>
+
+  <form id="formularioRifas">
+
+    <label for="rifaTitulo">Nombre de la rifa</label>
+    <input type="text" id="rifaTitulo"
+           placeholder="Ejemplo: Rifa solidaria de primavera"
+           required maxlength="120">
+
+    <label for="rifaPremio">Premio</label>
+    <input type="text" id="rifaPremio"
+           placeholder="Ejemplo: Una canasta de productos"
+           required>
+           <label for="rifaImagen">📸 Fotografía del premio</label>
+
+<input
+  type="file"
+  id="rifaImagen"
+  accept="image/jpeg,image/png,image/webp"
+>
+
+<img
+  id="rifaImagenVistaPrevia"
+  alt="Vista previa del premio"
+  hidden
+>
+
+    <label for="rifaPrecio">Precio por número ($)</label>
+    <input type="number" id="rifaPrecio"
+           min="1" step="0.01" required>
+
+    <label for="rifaCantidad">Cantidad de números</label>
+    <input type="number" id="rifaCantidad"
+           min="1" max="1000" required>
+
+    <label for="rifaFecha">Fecha del sorteo</label>
+    <input type="date" id="rifaFecha" required>
+
+    <button type="submit" id="guardarRifa" disabled>
+      Crear rifa
+    </button>
+
+    <p id="mensajeRifas"></p>
+    <h3 style="margin-top:30px;">🎟️ Mis rifas creadas</h3>
+
+<div id="listaRifasInstitucion">
+  <p>Cargando rifas...</p>
+</div>
+  </form>
+</section>
+    
+<section id="seccionCobros" class="panelOpcion" hidden>
+  <h2>💳 Mis datos de cobro</h2>
+
+  <p>
+    Estos datos se utilizarán para recibir directamente
+    las transferencias de las rifas solidarias.
+  </p>
+  <p class="avisoTransparencia">
+  🔒 <strong>Transparencia en tus cobros</strong>
+</p>
+
+<p>
+  Mirá Belgrano no recibe el dinero de tus rifas.
+  Las transferencias se realizan directamente a la cuenta
+  que figura en este panel y que fue autorizada por tu institución.
+</p>
+
+<p>
+  Tus datos de cobro permanecerán visibles para vos,
+  incluso después de confirmarlos. Cualquier modificación
+  posterior requerirá autorización y quedará registrada.
+</p>
+
+  <form id="formularioCobros">
+
+    <label for="cobroTitular">Titular de la cuenta</label>
+    <input
+      id="cobroTitular"
+      type="text"
+      maxlength="120"
+      autocomplete="name"
+      required
+    >
+
+    <label for="cobroAlias">Alias bancario</label>
+    <input
+      id="cobroAlias"
+      type="text"
+      maxlength="100"
+      placeholder="Ejemplo: proama.solidaria"
+    >
+
+    <label for="cobroCvu">CBU o CVU</label>
+    <input
+      id="cobroCvu"
+      type="text"
+      inputmode="numeric"
+      maxlength="22"
+      placeholder="22 dígitos"
+    >
+
+<button type="submit" id="guardarCobros" disabled>
+  Guardar datos
+</button>
+
+<button
+  type="button"
+  id="confirmarCobros"
+  disabled
+  style="margin-top:12px;background:#267447;"
+>
+  🔒 Confirmar datos de cobro
+</button>
+
+<p id="estadoCobros"></p>
+<p id="mensajeCobros"></p>
+<div id="seccionSolicitudCobros" hidden>
+
+  <button type="button" id="abrirSolicitudCobros">
+    ✏️ Solicitar corrección de datos
+  </button>
+
+  <div id="formularioSolicitudCobros" hidden>
+
+    <h3>Solicitar modificación de cuenta</h3>
+
+    <p>
+      Los datos actuales permanecerán sin cambios
+      hasta que Mirá Belgrano revise tu solicitud.
+    </p>
+
+    <label for="solicitudMotivo">Motivo de la corrección</label>
+    <textarea
+      id="solicitudMotivo"
+      rows="3"
+      maxlength="500"
+      placeholder="Explicá por qué necesitás modificar los datos"
+    ></textarea>
+
+    <label for="solicitudTitular">Nuevo titular</label>
+    <input type="text" id="solicitudTitular" maxlength="120">
+
+    <label for="solicitudAlias">Nuevo alias</label>
+    <input type="text" id="solicitudAlias" maxlength="100">
+
+    <label for="solicitudCvu">Nuevo CBU o CVU</label>
+    <input type="text" id="solicitudCvu" maxlength="22" inputmode="numeric">
+
+    <button type="button" id="enviarSolicitudCobros" disabled>
+      Enviar solicitud
+    </button>
+
+    <p id="mensajeSolicitudCobros"></p>
+
+  </div>
+</div>
+
+  </form>
+  <div id="historialCobros" style="margin-top:30px;">
+  <h3>📋 Historial de datos de cobro</h3>
+
+  <p style="color:#666;">
+    Aquí podrás consultar las modificaciones realizadas
+    en los datos bancarios de tu institución.
+  </p>
+
+  <div id="listaHistorialCobros">
+    <p>Cargando historial...</p>
+  </div>
+</div>
+</section>
+
+
+    <p style="text-align:center; margin-top:35px;">
+      <a href="solidario.html">← Volver a Belgrano Solidario</a>
+    </p>
+
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="panel-institucion.js"></script>
+
+</body>
+</html>
