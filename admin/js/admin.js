@@ -51,8 +51,8 @@ async function cargarInstituciones() {
     const btnEditar = document.createElement("button");
     btnEditar.textContent = "Editar institución";
     btnEditar.addEventListener("click", () => {
-      window.location.href = `editar-institucion.html?id=${encodeURIComponent(institucion.id)}`;
-    });
+    window.location.href =
+  `../panel-institucion.html?id=${institucion.id}`;
     fila.appendChild(btnEditar);
 
     if (!institucion.usuario_id) {

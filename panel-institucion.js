@@ -25,7 +25,14 @@ async function iniciarPanelInstitucion() {
     return;
   }
 
-  const { data: institucion, error } = await db
+  const params = new URLSearchParams(location.search);
+  const idAdmin = params.get("id");
+  const esAdmin = user.id === "7de52da5-e675-4709-8e43-23c7e0a0587b";
+  if (idAdmin && (!esAdmin || !/^\d+$/.test(idAdmin))) {
+    bienvenida.textContent = "Acceso no autorizado.";
+    return;
+  }
+  let consultaInstitucion = db
     .from("organizaciones")
 .select(`
   id,
@@ -45,8 +52,11 @@ async function iniciarPanelInstitucion() {
   color_principal,
   estilo_logo
 `)
-    .eq("usuario_id", user.id)
-    .maybeSingle();
+    ;
+  consultaInstitucion = idAdmin && esAdmin
+    ? consultaInstitucion.eq("id", idAdmin)
+    : consultaInstitucion.eq("usuario_id", user.id);
+  const { data: institucion, error } = await consultaInstitucion.maybeSingle();
 
   if (error) {
     console.error("Error al consultar la institución:", error);
@@ -58,6 +68,11 @@ async function iniciarPanelInstitucion() {
   if (!institucion) {
     bienvenida.textContent =
       "Tu cuenta todavía no tiene una institución asignada.";
+    return;
+  }
+
+  if (esAdmin && idAdmin) {
+    configurarEdicionAdministrativa(institucion, user, bienvenida, opciones);
     return;
   }
 
@@ -1408,6 +1423,88 @@ async function cargarHistorialCobros(institucionId) {
     contenedor.appendChild(tarjeta);
   });
 }
+async function configurarEdicionAdministrativa(inst, user, bienvenida, opciones) {
+  bienvenida.textContent = `Administrando: ${inst.nombre}`;
+  opciones.hidden = true;
+  const seccion = document.getElementById("seccionMiInstitucion");
+  seccion.hidden = false;
+  document.getElementById("institucionNombre").value = inst.nombre || "";
+  document.getElementById("institucionDescripcion").value = inst.descripcion || "";
+  for (const [id, campo] of [
+    ["institucionTelefono", "telefono"], ["institucionWhatsapp", "whatsapp"],
+    ["institucionEmail", "email"], ["institucionDireccion", "direccion"],
+    ["institucionSitioWeb", "sitio_web"], ["institucionDonacion", "enlace_donacion"],
+    ["institucionDonacionAlias", "donacion_alias"],
+    ["institucionDonacionTitular", "donacion_titular"]
+  ]) document.getElementById(id).value = inst[campo] || "";
+  const logo = document.getElementById("institucionLogoActual");
+  if (inst.logo_url) { logo.src = inst.logo_url; logo.hidden = false; }
+  const form = document.getElementById("formularioMiInstitucion");
+  const boton = document.getElementById("guardarMiInstitucion");
+  const mensaje = document.getElementById("mensajeMiInstitucion");
+  boton.disabled = false;
+  const contenedorPortada = document.createElement("div");
+  const etiqueta = document.createElement("label");
+  etiqueta.htmlFor = "portadaAdmin";
+  etiqueta.textContent = "Imagen de portada";
+  const input = document.createElement("input");
+  input.id = "portadaAdmin";
+  input.type = "file";
+  input.accept = "image/jpeg,image/png,image/webp";
+  const previa = document.createElement("img");
+  previa.alt = "Portada actual";
+  previa.style.cssText = "display:block;max-width:100%;max-height:230px;margin:12px 0;border-radius:10px";
+  if (inst.portada_url) previa.src = inst.portada_url;
+  else previa.hidden = true;
+  contenedorPortada.append(etiqueta, input, previa);
+  form.insertBefore(contenedorPortada, boton);
+  form.addEventListener("submit", async e => {
+    e.preventDefault();
+    boton.disabled = true;
+    mensaje.textContent = "Guardando...";
+    try {
+      const campos = {
+        descripcion: document.getElementById("institucionDescripcion").value.trim(),
+        telefono: document.getElementById("institucionTelefono").value.trim() || null,
+        whatsapp: document.getElementById("institucionWhatsapp").value.trim() || null,
+        email: document.getElementById("institucionEmail").value.trim() || null,
+        direccion: document.getElementById("institucionDireccion").value.trim() || null,
+        sitio_web: document.getElementById("institucionSitioWeb").value.trim() || null,
+        enlace_donacion: document.getElementById("institucionDonacion").value.trim() || null,
+        donacion_alias: document.getElementById("institucionDonacionAlias").value.trim() || null,
+        donacion_titular: document.getElementById("institucionDonacionTitular").value.trim() || null
+      };
+      const archivoLogo = document.getElementById("institucionLogo").files[0];
+      if (archivoLogo) {
+        const webp = await prepararLogoWebP(archivoLogo);
+        const ruta = `${user.id}/logo-${crypto.randomUUID()}.webp`;
+        const { error } = await db.storage.from("organizaciones").upload(ruta, webp, {contentType:"image/webp"});
+        if (error) throw error;
+        campos.logo_url = db.storage.from("organizaciones").getPublicUrl(ruta).data.publicUrl;
+      }
+      if (input.files[0]) {
+        const webp = await optimizarPortada(input.files[0]);
+        const ruta = `${inst.id}/portada-${crypto.randomUUID()}.webp`;
+        const { error } = await db.storage.from("portadas-instituciones").upload(ruta, webp, {contentType:"image/webp"});
+        if (error) throw error;
+        campos.portada_url = db.storage.from("portadas-instituciones").getPublicUrl(ruta).data.publicUrl;
+      }
+      const { data, error } = await db.from("organizaciones")
+        .update(campos).eq("id", inst.id).select("id").single();
+      if (error) throw error;
+      if (!data) throw new Error("No se guardaron los cambios.");
+      if (campos.logo_url) {logo.src = campos.logo_url; logo.hidden = false;}
+      if (campos.portada_url) {previa.src = campos.portada_url; previa.hidden = false;}
+      document.getElementById("institucionLogo").value = "";
+      input.value = "";
+      mensaje.textContent = "✅ Cambios guardados correctamente.";
+    } catch (err) {
+      console.error(err);
+      mensaje.textContent = "❌ " + err.message;
+    } finally { boton.disabled = false; }
+  });
+}
+
 iniciarPanelInstitucion();
 // Abrir y cerrar el formulario de historias
 const abrirHistorias = document.getElementById("abrirHistorias");
