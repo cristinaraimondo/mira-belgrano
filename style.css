@@ -2863,6 +2863,18 @@ a[href="editar-comercio.html"]:hover {
   font-size: 16px;
   cursor: pointer;
 }
+.solidarioLeerMas {
+  display: block;
+  margin: 12px auto 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #713ba5;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: underline;
+}
 
 
 
