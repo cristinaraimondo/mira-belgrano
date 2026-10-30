@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Editar institución | Mirá Belgrano</title>
+  <style>
+    *{box-sizing:border-box}body{margin:0;background:#f7f4fa;color:#30263b;font:16px Arial,sans-serif}main{max-width:920px;margin:32px auto;padding:0 18px}header{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}h1{font-size:27px}form{background:white;border-radius:18px;padding:25px;box-shadow:0 6px 24px #30134e12}fieldset{border:1px solid #e9e1ef;border-radius:12px;margin:0 0 20px;padding:18px}legend{font-weight:bold;color:#6425a8;padding:0 8px}.campos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.campo{display:flex;flex-direction:column;gap:7px}.ancho{grid-column:1/-1}label{font-weight:600}input,textarea,select{font:inherit;width:100%;border:1px solid #cfc6d9;border-radius:9px;padding:11px;background:white}textarea{min-height:130px;resize:vertical}input[type=color]{height:45px;padding:4px}input[type=checkbox]{width:auto}button,.boton{border:0;border-radius:10px;padding:12px 20px;background:#6425a8;color:white;font:inherit;font-weight:bold;cursor:pointer;text-decoration:none}button:disabled{opacity:.6;cursor:wait}.boton{background:#e9e1ef;color:#30134e}.acciones{display:flex;align-items:center;gap:16px;flex-wrap:wrap}#mensaje{min-height:22px}#estado{font-weight:bold;color:#76598e}.ayuda{font-size:13px;color:#6b6075;margin:4px 0 0}img.vista{max-width:220px;max-height:130px;object-fit:contain;border:1px solid #e9e1ef;border-radius:8px;padding:6px;background:white}img[hidden]{display:none}@media(max-width:640px){.campos{grid-template-columns:1fr}form{padding:14px}}
+  </style>
+</head>
+<body>
+<main>
+  <header><h1>Editar institución</h1><a class="boton" href="index.html">← Volver al administrador</a></header>
+  <p id="estado">Verificando acceso...</p>
+  <form id="formulario" hidden>
+    <fieldset><legend>Información principal</legend><div class="campos">
+      <div class="campo"><label for="nombre">Nombre *</label><input id="nombre" required maxlength="200"></div>
+      <div class="campo"><label for="slug">Identificador web (slug)</label><input id="slug" maxlength="200"><p class="ayuda">No lo cambies si ya tiene una página publicada.</p></div>
+      <div class="campo ancho"><label for="descripcion">Descripción</label><textarea id="descripcion"></textarea></div>
+    </div></fieldset>
+    <fieldset><legend>Contacto</legend><div class="campos">
+      <div class="campo"><label for="telefono">Teléfono</label><input id="telefono"></div>
+      <div class="campo"><label for="whatsapp">WhatsApp</label><input id="whatsapp"></div>
+      <div class="campo"><label for="email">Correo electrónico</label><input id="email" type="email"></div>
+      <div class="campo"><label for="direccion">Dirección</label><input id="direccion"></div>
+      <div class="campo ancho"><label for="sitio_web">Sitio web (URL)</label><input id="sitio_web" type="url" placeholder="https://..."></div>
+    </div></fieldset>
+    <fieldset><legend>Imágenes y apariencia</legend><div class="campos">
+      <div class="campo"><label for="logo_url">URL del logo</label><input id="logo_url" type="url" placeholder="https://..."><img id="previewLogo" class="vista" alt="Vista previa del logo" hidden></div>
+      <div class="campo"><label for="portada_url">URL de portada</label><input id="portada_url" type="url" placeholder="https://..."><img id="previewPortada" class="vista" alt="Vista previa de portada" hidden></div>
+      <div class="campo"><label for="imagen_url">URL de imagen principal</label><input id="imagen_url" type="url" placeholder="https://..."></div>
+      <div class="campo"><label for="color_principal">Color principal</label><input id="color_principal" type="color" value="#713ba5"></div>
+      <div class="campo"><label for="estilo_logo">Estilo del logo</label><input id="estilo_logo" placeholder="Conservar valor existente"></div>
+    </div><p class="ayuda">Esta primera versión permite pegar URLs de imágenes ya alojadas. No sube archivos todavía.</p></fieldset>
+    <fieldset><legend>Donaciones y revista</legend><div class="campos">
+      <div class="campo"><label for="donacion_titular">Titular</label><input id="donacion_titular"></div>
+      <div class="campo"><label for="donacion_alias">Alias</label><input id="donacion_alias"></div>
+      <div class="campo ancho"><label for="enlace_donacion">Enlace de donación</label><input id="enlace_donacion" type="url" placeholder="https://..."></div>
+      <div class="campo ancho"><label for="revista_url">URL de revista</label><input id="revista_url" type="url" placeholder="https://..."></div>
+    </div></fieldset>
+    <fieldset><legend>Visibilidad</legend><div class="campos">
+      <label><input id="publicada" type="checkbox"> Publicada</label>
+      <label><input id="verificada" type="checkbox"> Verificada</label>
+      <label><input id="vista_previa" type="checkbox"> Vista previa</label>
+    </div><p class="ayuda">No cambies estos estados si no estás seguro de su efecto en la página pública.</p></fieldset>
+    <div class="acciones"><button id="guardar" type="submit">Guardar cambios</button><span id="mensaje" role="status" aria-live="polite"></span></div>
+  </form>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="editar-institucion.js"></script>
+</body>
+</html>
