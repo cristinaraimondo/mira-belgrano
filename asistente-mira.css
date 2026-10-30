@@ -45,3 +45,17 @@
 #asistente-mira .mira-burbuja-mira{align-self:flex-start;background:#fff3e9;color:#38154d;border-bottom-left-radius:4px}
 #asistente-mira .mira-burbuja a{color:#69218d;font-weight:700}
 @media(max-width:480px){#asistente-mira .mira-launch{max-width:220px}}
+
+/* Parpadeo sobre los ojos de la mascota 3D original */
+#asistente-mira .mira-figura{position:relative}
+#asistente-mira .mira-parpado{position:absolute;display:block;pointer-events:none;background:linear-gradient(180deg,#ffad1c,#f58a0d);border-bottom:1px solid #a8460a;border-radius:50% 50% 45% 45%;height:14px;transform:scaleY(0);transform-origin:top;opacity:0}
+#asistente-mira .mira-parpado-izq{left:30px;top:31px;width:13px;transform:rotate(-8deg) scaleY(0)}
+#asistente-mira .mira-parpado-der{left:47px;top:34px;width:12px;transform:rotate(10deg) scaleY(0)}
+@media(prefers-reduced-motion:no-preference){
+ #asistente-mira .mira-parpado-izq{animation:mira-parpadeo-izq 7s infinite}
+ #asistente-mira .mira-parpado-der{animation:mira-parpadeo-der 7s infinite}
+ #asistente-mira.mira-saludo .mira-avatar{animation:mira-saludar .7s ease-in-out 1,mira-flotar 3.2s ease-in-out .7s infinite}
+ @keyframes mira-parpadeo-izq{0%,43%,46%,100%{transform:rotate(-8deg) scaleY(0);opacity:0}44%,45%{transform:rotate(-8deg) scaleY(1);opacity:1}}
+ @keyframes mira-parpadeo-der{0%,43%,46%,100%{transform:rotate(10deg) scaleY(0);opacity:0}44%,45%{transform:rotate(10deg) scaleY(1);opacity:1}}
+ @keyframes mira-saludar{0%,100%{transform:rotate(0)}30%{transform:rotate(-9deg)}65%{transform:rotate(7deg)}}
+}
