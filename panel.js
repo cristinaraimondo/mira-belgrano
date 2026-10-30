@@ -458,14 +458,17 @@ window.location.reload();
   // Si tenía imagen, eliminarla de Storage
   if (promocion.imagen_url) {
 
-    const marcador = "/promociones/";
+  const marcador = "/storage/v1/object/public/promociones/";
 
     const posicion = promocion.imagen_url.indexOf(marcador);
 
     if (posicion !== -1) {
 
-      const rutaImagen = promocion.imagen_url
-        .substring(posicion + marcador.length);
+   const rutaImagen = decodeURIComponent(
+  promocion.imagen_url
+    .substring(posicion + marcador.length)
+    .split("?")[0]
+);
 
       const { error: errorImagen } = await db.storage
         .from("promociones")
