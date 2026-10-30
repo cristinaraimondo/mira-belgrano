@@ -292,7 +292,7 @@ data.forEach(promocion => {
         controls
         muted
         playsinline
-        preload="metadata"
+       preload="none"
       ></video>
     `
     : `
