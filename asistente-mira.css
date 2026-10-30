@@ -76,3 +76,15 @@
  @keyframes mira-mirar-3d{0%,13%,37%,61%,100%{translate:0 0}18%,30%{translate:-2px 0}43%,55%{translate:1.5px 0}68%,78%{translate:0 -1px}}
  @keyframes mira-cerrar-3d{0%,84%,87%,100%{clip-path:inset(0 0 0 0)}85%,86%{clip-path:inset(47% 0 47% 0)}}
 }
+
+/* Evitar mirada bizca: pupilas centradas y desplazamiento sincronizado */
+#asistente-mira .mira-pupila{left:19%;top:19%;width:62%;height:66%}
+@media(prefers-reduced-motion:no-preference){
+ #asistente-mira .mira-ojo .mira-pupila{animation:mira-mirada-sincronizada 8s ease-in-out infinite}
+ @keyframes mira-mirada-sincronizada{
+  0%,15%,35%,55%,75%,100%{translate:0 0}
+  20%,30%{translate:-1.5px 0}
+  40%,50%{translate:1.5px 0}
+  60%,70%{translate:0 -1px}
+ }
+}
