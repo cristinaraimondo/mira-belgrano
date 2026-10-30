@@ -39,8 +39,36 @@ async function cargarOrganizaciones() {
     titulo.textContent = org.nombre;
 
     const descripcion = document.createElement("p");
-    descripcion.textContent = org.descripcion || "";
+const textoCompleto = org.descripcion || "";
+const limite = 160;
 
+if (textoCompleto.length > limite) {
+  const textoCorto =
+    textoCompleto.slice(0, limite).trimEnd() + "...";
+
+  descripcion.textContent = textoCorto;
+
+  const leerMas = document.createElement("button");
+  leerMas.type = "button";
+  leerMas.textContent = "Leer más";
+  leerMas.className = "solidarioLeerMas";
+
+  leerMas.addEventListener("click", () => {
+    const expandido = leerMas.textContent === "Leer menos";
+
+    descripcion.textContent = expandido
+      ? textoCorto
+      : textoCompleto;
+
+    leerMas.textContent = expandido
+      ? "Leer más"
+      : "Leer menos";
+  });
+
+  descripcion.appendChild(leerMas);
+} else {
+  descripcion.textContent = textoCompleto;
+}
     tarjeta.append(titulo, descripcion);
     // Botón para conocer la institución
 if (org.slug) {
