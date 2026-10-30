@@ -19,3 +19,12 @@
 #asistente-mira .mira-volver{border:0;background:transparent;color:#642188;font-weight:700;cursor:pointer;margin-top:12px}
 @media(max-width:480px){#asistente-mira{bottom:12px;right:12px}#asistente-mira .mira-panel{max-height:calc(100dvh - 90px)}}
 @media(prefers-reduced-motion:no-preference){#asistente-mira .mira-avatar{animation:mira-flotar 3.2s ease-in-out infinite}@keyframes mira-flotar{50%{transform:translateY(-3px)}}}
+
+/* Los ojos miran alrededor y vuelven al centro, sin consumir datos */
+#asistente-mira .mira-figura{display:inline-flex;align-items:center;justify-content:center;width:65px;height:70px}
+#asistente-mira .mira-figura svg{width:65px;height:70px;overflow:visible;filter:drop-shadow(0 2px 3px #6d2b3c25)}
+#asistente-mira .mira-pupilas{transform-box:fill-box;transform-origin:center}
+@media(prefers-reduced-motion:no-preference){
+ #asistente-mira .mira-pupilas{animation:mira-mirar 6s ease-in-out infinite}
+ @keyframes mira-mirar{0%,14%,38%,64%,100%{transform:translate(0,0)}20%,30%{transform:translate(-3px,0)}46%,57%{transform:translate(3px,0)}72%,79%{transform:translate(0,-2px)}}
+}
