@@ -27,12 +27,37 @@
  ];
  const options=root.querySelector('.mira-opciones'),answer=root.querySelector('.mira-respuesta'),back=root.querySelector('.mira-volver'),launch=root.querySelector('.mira-launch'),conversation=root.querySelector('.mira-conversacion');
  const addBubble=(content,who)=>{const bubble=document.createElement('div');bubble.className='mira-burbuja mira-burbuja-'+who;if(who==='mira')bubble.innerHTML=content;else bubble.textContent=content;conversation.appendChild(bubble);bubble.scrollIntoView({block:'nearest',behavior:'smooth'});};
- choices.forEach(([label,html])=>{
-  const b=document.createElement('button');b.type='button';b.textContent=label;
-  b.addEventListener('click',()=>{addBubble(label,'usuario');addBubble(html,'mira');options.hidden=true;answer.hidden=true;back.hidden=false;});
-  options.appendChild(b);
+ const categories=[
+  {label:'🏪 Comercios',items:[3,4,5,6,7]},
+  {label:'💜 Instituciones',items:[8,9,10]},
+  {label:'🔐 Mi cuenta',items:[0,1,2]}
+ ];
+ let activeCategory=null;
+ function makeOption(label,action){
+  const b=document.createElement('button');
+  b.type='button';b.textContent=label;b.addEventListener('click',action);options.appendChild(b);
+ }
+ function showCategories(){
+  activeCategory=null;options.replaceChildren();options.hidden=false;
+  conversation.replaceChildren();back.hidden=true;answer.hidden=true;
+  categories.forEach(category=>makeOption(category.label,()=>showQuestions(category)));
+ }
+ function showQuestions(category){
+  activeCategory=category;options.replaceChildren();options.hidden=false;
+  conversation.replaceChildren();answer.hidden=true;back.hidden=false;
+  category.items.forEach(i=>{
+   const [label,html]=choices[i];
+   makeOption(label,()=>{
+    addBubble(label,'usuario');addBubble(html,'mira');
+    options.hidden=true;back.hidden=false;
+   });
+  });
+ }
+ back.addEventListener('click',()=>{
+  if(activeCategory && options.hidden){showQuestions(activeCategory);}
+  else{showCategories();}
  });
- back.addEventListener('click',()=>{options.hidden=false;answer.hidden=true;back.hidden=true;conversation.innerHTML='';});
+ showCategories();
  const toggle=()=>{const active=root.classList.toggle('mira-abierto');launch.setAttribute('aria-expanded',String(active));if(active){root.classList.remove('mira-saludo');void root.offsetWidth;root.classList.add('mira-saludo');root.querySelector('.mira-cerrar').focus();}else launch.focus();};
  launch.addEventListener('click',toggle);root.querySelector('.mira-cerrar').addEventListener('click',toggle);
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&root.classList.contains('mira-abierto'))toggle();});
