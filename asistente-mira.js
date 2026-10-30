@@ -10,7 +10,7 @@
  <div class="mira-conversacion" aria-live="polite"></div><div class="mira-opciones"></div><div class="mira-respuesta" hidden aria-live="polite"></div>
  <button class="mira-volver" type="button" hidden>← Ver otras opciones</button></div></section>
  <button class="mira-launch" type="button" aria-expanded="false" aria-controls="mira-panel">
- <span class="mira-figura" aria-hidden="true"><img class="mira-avatar" src="/mira-mascota-3d.png" alt="" width="84" height="84"><span class="mira-parpado mira-parpado-izq"></span><span class="mira-parpado mira-parpado-der"></span></span><span>¿Necesitás ayuda?</span></button>`;
+ <span class="mira-figura" aria-hidden="true"><img class="mira-avatar" src="/mira-mascota-3d.png" alt="" width="84" height="84"><span class="mira-ojo mira-ojo-izq"><span class="mira-pupila"></span></span><span class="mira-ojo mira-ojo-der"><span class="mira-pupila"></span></span></span><span>¿Necesitás ayuda?</span></button>`;
  document.body.appendChild(root);
  const choices=[
  ['Quiero registrarme','Entrá a <a href="/registro.html">Crear cuenta</a>, ingresá tu correo y elegí una contraseña. Nunca me compartas tu contraseña.'],
