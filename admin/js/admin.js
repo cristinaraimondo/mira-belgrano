@@ -49,11 +49,14 @@ async function cargarInstituciones() {
     fila.appendChild(informacion);
 
     const btnEditar = document.createElement("button");
-    btnEditar.textContent = "Editar institución";
-    btnEditar.addEventListener("click", () => {
-    window.location.href =
-  `../panel-institucion.html?id=${institucion.id}`;
-    fila.appendChild(btnEditar);
+btnEditar.textContent = "Editar institución";
+
+btnEditar.addEventListener("click", () => {
+  window.location.href =
+    `../panel-institucion.html?id=${institucion.id}`;
+});
+
+fila.appendChild(btnEditar);
 
     if (!institucion.usuario_id) {
       const boton = document.createElement("button");
