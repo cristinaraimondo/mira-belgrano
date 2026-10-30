@@ -88,3 +88,16 @@
   60%,70%{translate:0 -1px}
  }
 }
+
+/* Flotación visible de Mirá: se mueve la figura completa, no el botón ni el chat */
+#asistente-mira .mira-ojo{display:none!important}
+#asistente-mira .mira-figura{position:relative;overflow:visible;transform-origin:center 80%;will-change:transform}
+#asistente-mira .mira-figura::after{content:"";position:absolute;left:22%;right:22%;bottom:-5px;height:9px;border-radius:50%;background:rgba(91,45,61,.22);filter:blur(4px);z-index:-1;pointer-events:none}
+#asistente-mira .mira-avatar{animation:none!important;transform:none!important}
+@media(prefers-reduced-motion:no-preference){
+ #asistente-mira .mira-figura{animation:mira-flotacion-visible 2.8s ease-in-out infinite}
+ #asistente-mira .mira-figura::after{animation:mira-sombra-flotante 2.8s ease-in-out infinite}
+ @keyframes mira-flotacion-visible{0%,100%{transform:translateY(1px) rotate(-2deg)}50%{transform:translateY(-11px) rotate(2deg)}}
+ @keyframes mira-sombra-flotante{0%,100%{transform:scaleX(1);opacity:.55}50%{transform:scaleX(.7);opacity:.22}}
+}
+@media(prefers-reduced-motion:reduce){#asistente-mira .mira-figura{animation:none}}
