@@ -10,7 +10,7 @@
  <div class="mira-conversacion" aria-live="polite"></div><div class="mira-opciones"></div><div class="mira-respuesta" hidden aria-live="polite"></div>
  <button class="mira-volver" type="button" hidden>← Ver otras opciones</button></div></section>
  <button class="mira-launch" type="button" aria-expanded="false" aria-controls="mira-panel">
- <span class="mira-figura" aria-hidden="true"><img class="mira-avatar" src="/mira-mascota-3d.png" alt="" width="68" height="68"></span><span>¿Necesitás ayuda?</span></button>`;
+ <span class="mira-figura" aria-hidden="true"><img class="mira-avatar" src="/mira-mascota-3d.png" alt="" width="84" height="84"><span class="mira-parpado mira-parpado-izq"></span><span class="mira-parpado mira-parpado-der"></span></span><span>¿Necesitás ayuda?</span></button>`;
  document.body.appendChild(root);
  const choices=[
  ['Quiero registrarme','Entrá a <a href="/registro.html">Crear cuenta</a>, ingresá tu correo y elegí una contraseña. Nunca me compartas tu contraseña.'],
@@ -27,7 +27,7 @@
   options.appendChild(b);
  });
  back.addEventListener('click',()=>{options.hidden=false;answer.hidden=true;back.hidden=true;conversation.innerHTML='';});
- const toggle=()=>{const active=root.classList.toggle('mira-abierto');launch.setAttribute('aria-expanded',String(active));if(active)root.querySelector('.mira-cerrar').focus();else launch.focus();};
+ const toggle=()=>{const active=root.classList.toggle('mira-abierto');launch.setAttribute('aria-expanded',String(active));if(active){root.classList.remove('mira-saludo');void root.offsetWidth;root.classList.add('mira-saludo');root.querySelector('.mira-cerrar').focus();}else launch.focus();};
  launch.addEventListener('click',toggle);root.querySelector('.mira-cerrar').addEventListener('click',toggle);
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&root.classList.contains('mira-abierto'))toggle();});
 })();
