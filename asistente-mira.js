@@ -5,12 +5,12 @@
  root.id='asistente-mira';
  root.setAttribute('aria-label','Asistente de ayuda Mirá Belgrano');
  root.innerHTML=`<section class="mira-panel" id="mira-panel" aria-label="Ayuda para usar el sitio">
- <header class="mira-cabecera"><strong>📍 Mirá te ayuda</strong><button class="mira-cerrar" type="button" aria-label="Cerrar asistente">×</button></header>
- <div class="mira-contenido"><p class="mira-intro">¡Hola! 👋 Soy Mirá, tu guía de Mirá Belgrano. ¿En qué te puedo ayudar?</p>
+ <header class="mira-cabecera"><strong>🐾 Tiko te ayuda</strong><button class="mira-cerrar" type="button" aria-label="Cerrar asistente">×</button></header>
+ <div class="mira-contenido"><p class="mira-intro">¡Hola! 👋 Soy Tiko, tu guía de Mirá Belgrano. ¿En qué te puedo ayudar?</p>
  <div class="mira-conversacion" aria-live="polite"></div><div class="mira-opciones"></div><div class="mira-respuesta" hidden aria-live="polite"></div>
  <button class="mira-volver" type="button" hidden>← Ver otras opciones</button></div></section>
  <button class="mira-launch" type="button" aria-expanded="false" aria-controls="mira-panel">
- <span class="mira-figura" aria-hidden="true"><img class="mira-avatar" src="/mira-mascota-3d.png" alt="" width="84" height="84"><span class="mira-ojo mira-ojo-izq"><span class="mira-pupila"></span></span><span class="mira-ojo mira-ojo-der"><span class="mira-pupila"></span></span></span><span>¿Necesitás ayuda?</span></button>`;
+ <span class="mira-figura" aria-hidden="true"><img class="mira-avatar" src="/tiko-chat.png" alt="" width="84" height="84"></span><span>¿Necesitás ayuda?</span></button>`;
  document.body.appendChild(root);
  const choices=[
  ['Quiero registrarme','Entrá a <a href="/registro.html">Crear cuenta</a>, ingresá tu correo y elegí una contraseña. Nunca me compartas tu contraseña.'],
