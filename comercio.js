@@ -248,6 +248,7 @@ async function cargarPromocionesComercio(comercioId) {
               <video
                 src="${promocion.imagen_url}"
              class="promoImagen promoAmpliable"
+        loading="lazy" decoding="async"
                 controls
                 muted
                 playsinline
