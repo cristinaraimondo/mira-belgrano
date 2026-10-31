@@ -13,6 +13,14 @@
  <span class="mira-figura" aria-hidden="true"><video class="mira-avatar mira-avatar-video" autoplay muted loop playsinline preload="metadata" poster="/tiko-chat.png" width="84" height="84" aria-hidden="true"><source src="/tiko-chat.webm" type="video/webm"><img src="/tiko-chat.png" alt="" width="84" height="84"></video></span><span>¿Necesitás ayuda?</span></button>`;
  document.body.appendChild(root);
  const tikoVideo=root.querySelector('.mira-avatar-video');
+ const tryPlayTiko=()=>{if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;const promise=tikoVideo.play();if(promise&&typeof promise.catch==='function')promise.catch(()=>{});};
+ tikoVideo.muted=true;
+ tikoVideo.defaultMuted=true;
+ tikoVideo.playsInline=true;
+ tikoVideo.addEventListener('loadeddata',tryPlayTiko);
+ window.addEventListener('pageshow',tryPlayTiko);
+ document.addEventListener('visibilitychange',()=>{if(!document.hidden)tryPlayTiko();});
+ tryPlayTiko();
  tikoVideo.addEventListener('error',()=>{tikoVideo.replaceWith(Object.assign(document.createElement('img'),{className:'mira-avatar',src:'/tiko-chat.png',alt:'',width:84,height:84}));});
  tikoVideo.querySelector('source').addEventListener('error',()=>{tikoVideo.replaceWith(Object.assign(document.createElement('img'),{className:'mira-avatar',src:'/tiko-chat.png',alt:'',width:84,height:84}));});
  const choices=[
