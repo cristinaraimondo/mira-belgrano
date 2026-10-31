@@ -10,8 +10,11 @@
  <div class="mira-conversacion" aria-live="polite"></div><div class="mira-opciones"></div><div class="mira-respuesta" hidden aria-live="polite"></div>
  <button class="mira-volver" type="button" hidden>← Ver otras opciones</button></div></section>
  <button class="mira-launch" type="button" aria-expanded="false" aria-controls="mira-panel">
- <span class="mira-figura" aria-hidden="true"><img class="mira-avatar" src="/tiko-chat.png" alt="" width="84" height="84"></span><span>¿Necesitás ayuda?</span></button>`;
+ <span class="mira-figura" aria-hidden="true"><video class="mira-avatar mira-avatar-video" autoplay muted loop playsinline preload="metadata" poster="/tiko-chat.png" width="84" height="84" aria-hidden="true"><source src="/tiko-chat.webm" type="video/webm"><img src="/tiko-chat.png" alt="" width="84" height="84"></video></span><span>¿Necesitás ayuda?</span></button>`;
  document.body.appendChild(root);
+ const tikoVideo=root.querySelector('.mira-avatar-video');
+ tikoVideo.addEventListener('error',()=>{tikoVideo.replaceWith(Object.assign(document.createElement('img'),{className:'mira-avatar',src:'/tiko-chat.png',alt:'',width:84,height:84}));});
+ tikoVideo.querySelector('source').addEventListener('error',()=>{tikoVideo.replaceWith(Object.assign(document.createElement('img'),{className:'mira-avatar',src:'/tiko-chat.png',alt:'',width:84,height:84}));});
  const choices=[
  ['Quiero registrarme','Entrá a <a href="/registro.html">Crear cuenta</a>, ingresá tu correo y elegí una contraseña. Nunca me compartas tu contraseña.'],
  ['No puedo iniciar sesión','Entrá a <a href="/login.html">Ingresar</a> y verificá que uses el mismo correo con el que te registraste. Revisá si aparece algún mensaje de error.'],
