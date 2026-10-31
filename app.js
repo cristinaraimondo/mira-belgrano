@@ -40,16 +40,11 @@ if (comercio.estado !== "activo" && comercio.vista_previa !== true) {
   style="${oculto}"
 >
 
-      <div
-        class="comercioImagen"
-      style="
-  background-image: url('${comercio.foto_url || "logo.png"}');
- background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-"
-      >
-     
+      <div class="comercioImagen">
+        <img src="${comercio.foto_url || "logo.png"}"
+             alt="Foto de ${comercio.nombre || 'comercio'}"
+             loading="lazy" decoding="async"
+             style="width:100%;height:100%;object-fit:contain">
       </div>
 <div class="comercioInfo">
 
@@ -299,6 +294,7 @@ data.forEach(promocion => {
       <img
         src="${promocion.imagen_url}"
        class="promoImagen promoAmpliable"
+        loading="lazy" decoding="async"
         alt="${promocion.titulo || "Promoción"}"
       >
     `
