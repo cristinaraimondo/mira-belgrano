@@ -8,6 +8,28 @@ const db = window.supabase.createClient(
 let comercioActual = null;
 let promocionEditando = null;
 let imagenActualEditando = null;
+
+// Reducir imágenes antes de subirlas: menos transferencia y misma experiencia visual.
+// Conserva PNG/SVG/GIF cuando no sea seguro convertir; los videos no se modifican.
+async function optimizarImagenPromocion(archivo) {
+  if (!archivo || !["image/jpeg", "image/png", "image/webp"].includes(archivo.type)) return archivo;
+  try {
+    const imagen = await createImageBitmap(archivo);
+    const escala = Math.min(1, 1280 / Math.max(imagen.width, imagen.height));
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.max(1, Math.round(imagen.width * escala));
+    canvas.height = Math.max(1, Math.round(imagen.height * escala));
+    canvas.getContext("2d").drawImage(imagen, 0, 0, canvas.width, canvas.height);
+    imagen.close();
+    const blob = await new Promise(resolve => canvas.toBlob(resolve, "image/webp", 0.78));
+    if (!blob || blob.size >= archivo.size) return archivo;
+    return new File([blob], archivo.name.replace(/\.[^.]+$/, "") + ".webp", { type: "image/webp" });
+  } catch (error) {
+    console.warn("No se pudo optimizar la imagen; se usa el original.", error);
+    return archivo;
+  }
+}
+
 async function cargarPanel() {
 
   // Obtener usuario conectado
@@ -308,14 +330,14 @@ if (imagen && imagen.type.startsWith("video/")) {
 // Si eligió una imagen nueva, la subimos
 if (imagen) {
 
-  const extension = imagen.name.split(".").pop();
-
+  const archivoSubida = await optimizarImagenPromocion(imagen);
+  const extension = archivoSubida.name.split(".").pop();
   const nombreArchivo =
     `promociones/${comercioActual.id}-${Date.now()}.${extension}`;
 
   const { error: errorImagen } = await db.storage
     .from("promociones")
-    .upload(nombreArchivo, imagen);
+    .upload(nombreArchivo, archivoSubida, { contentType: archivoSubida.type, cacheControl: "86400" });
 
   if (errorImagen) {
     console.error("Error al subir imagen:", errorImagen);
