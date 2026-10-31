@@ -101,3 +101,8 @@
  @keyframes mira-sombra-flotante{0%,100%{transform:scaleX(1);opacity:.55}50%{transform:scaleX(.7);opacity:.22}}
 }
 @media(prefers-reduced-motion:reduce){#asistente-mira .mira-figura{animation:none}}
+
+/* Tiko animado: el movimiento viene del video, no del contenedor */
+#asistente-mira .mira-avatar-video{display:block;width:84px;height:84px;object-fit:contain;background:transparent;border:0}
+#asistente-mira .mira-figura:has(.mira-avatar-video){animation:none!important;transform:none!important}
+#asistente-mira .mira-figura:has(.mira-avatar-video)::after{display:none}
