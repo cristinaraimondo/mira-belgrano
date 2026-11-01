@@ -97,6 +97,7 @@ async function eliminarImagen(path) {
 function detectarMedioReserva(valor) {
   if (!valor) return "ninguno";
   if (valor === "presencial") return "presencial";
+  if (!/^[a-z]+:\/\//i.test(valor) && valor.replace(/\D/g,"").length>=10 && valor.replace(/\D/g,"").length<=15) return "whatsapp";
   if (/^tel:/i.test(valor)) return "telefono";
   if (/^(?:https?:\/\/)?(?:www\.)?(?:wa\.me|api\.whatsapp\.com|web\.whatsapp\.com)\//i.test(valor)) return "whatsapp";
   return "web";
@@ -134,7 +135,8 @@ function prepararEnlaceReserva() {
     if (numero.replace(/\D/g,"").length<6) throw new Error("Ingresá un teléfono válido.");
     return "tel:"+numero;
   }
-  const url=new URL(valor);
+  let url;
+  try { url=new URL(valor); } catch { throw new Error("Ingresá una dirección web válida que comience con https://"); }
   if (!["https:","http:"].includes(url.protocol)) throw new Error("El enlace debe comenzar con https://");
   return url.href;
 }
