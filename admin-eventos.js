@@ -93,8 +93,60 @@ async function eliminarImagen(path) {
   if (error) throw error;
 }
 
+
+function detectarMedioReserva(valor) {
+  if (!valor) return "ninguno";
+  if (valor === "presencial") return "presencial";
+  if (/^tel:/i.test(valor)) return "telefono";
+  if (/^(?:https?:\/\/)?(?:www\.)?(?:wa\.me|api\.whatsapp\.com|web\.whatsapp\.com)\//i.test(valor)) return "whatsapp";
+  return "web";
+}
+function actualizarCampoReserva() {
+  const tipo = $("medioReserva").value;
+  const visible = ["whatsapp","web","telefono"].includes(tipo);
+  $("campoEnlace").hidden = !visible;
+  $("enlace").required = visible;
+  const etiquetas = {whatsapp:"Número de WhatsApp",web:"Enlace de información o reservas",telefono:"Número de teléfono"};
+  const ayudas = {whatsapp:"Ej.: 54 9 2243 40-2856 (con código de país)",web:"Ej.: https://sitio.com/entradas",telefono:"Ej.: 02243 40-2856"};
+  $("etiquetaEnlace").textContent = etiquetas[tipo] || "Número o enlace";
+  $("enlace").placeholder = ayudas[tipo] || "";
+  $("ayudaEnlace").textContent = tipo==="presencial"?"Indicá dónde se venden las entradas en la descripción.":"";
+}
+function prepararEnlaceReserva() {
+  const tipo=$("medioReserva").value;
+  const valor=$("enlace").value.trim();
+  if (tipo==="ninguno") return null;
+  if (tipo==="presencial") return "presencial";
+  if (!valor) throw new Error("Ingresá un número o enlace de reservas.");
+  if (tipo==="whatsapp") {
+    let numero=valor;
+    if (/^https?:\/\//i.test(valor)) {
+      const url=new URL(valor);
+      if (!["wa.me","api.whatsapp.com","web.whatsapp.com"].includes(url.hostname.toLowerCase())) throw new Error("Ingresá un enlace válido de WhatsApp.");
+      numero=url.hostname.toLowerCase()==="wa.me"?url.pathname.slice(1):url.searchParams.get("phone")||"";
+    }
+    numero=numero.replace(/\D/g,"");
+    if (numero.length<10 || numero.length>15) throw new Error("Revisá el número de WhatsApp e incluí el código de país (54).");
+    return "https://wa.me/"+numero;
+  }
+  if (tipo==="telefono") {
+    const numero=valor.replace(/^tel:/i,"").replace(/[^\d+]/g,"");
+    if (numero.replace(/\D/g,"").length<6) throw new Error("Ingresá un teléfono válido.");
+    return "tel:"+numero;
+  }
+  const url=new URL(valor);
+  if (!["https:","http:"].includes(url.protocol)) throw new Error("El enlace debe comenzar con https://");
+  return url.href;
+}
+$("medioReserva").addEventListener("change",()=>{
+  $("enlace").value="";
+  actualizarCampoReserva();
+});
+actualizarCampoReserva();
+
 function limpiarFormulario() {
   $("formEvento").reset();
+  actualizarCampoReserva();
   $("eventoId").value = "";
   $("tituloFormulario").textContent = "Publicar evento";
   $("guardar").textContent = "Publicar evento";
@@ -174,7 +226,9 @@ function editarEvento(evento) {
   $("horario").value = evento.horario || "";
   $("lugar").value = evento.lugar || "";
   $("descripcion").value = evento.descripcion || "";
-  $("enlace").value = evento.enlace || "";
+  $("medioReserva").value = detectarMedioReserva(evento.enlace);
+  actualizarCampoReserva();
+  $("enlace").value = $("medioReserva").value === "whatsapp" && evento.enlace ? evento.enlace.replace(/^https:\/\/wa\.me\//i,"") : $("medioReserva").value === "telefono" ? (evento.enlace || "").replace(/^tel:/i,"") : ($("medioReserva").value === "web" ? evento.enlace || "" : "");
   $("imagen").value = "";
 
   imagenActual = evento.imagen_path;
@@ -239,7 +293,7 @@ $("formEvento").addEventListener("submit", async e => {
       horario: $("horario").value.trim(),
       lugar: $("lugar").value.trim(),
       descripcion: $("descripcion").value.trim(),
-      enlace: $("enlace").value.trim() || null
+      enlace: prepararEnlaceReserva()
     };
 
     if (nuevaImagen) {
