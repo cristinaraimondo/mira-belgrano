@@ -151,9 +151,19 @@
           </div>
 
           <div class="campo">
-            <label for="enlace">Enlace de información o reservas</label>
-            <input type="url" id="enlace"
-                   placeholder="https://...">
+            <label for="medioReserva">Información y reservas (opcional)</label>
+            <select id="medioReserva" style="width:100%;padding:11px;border:1px solid #d9cde5;border-radius:9px;font:inherit">
+              <option value="ninguno">Sin contacto de reservas</option>
+              <option value="whatsapp">WhatsApp</option>
+              <option value="web">Enlace web</option>
+              <option value="telefono">Teléfono</option>
+              <option value="presencial">Venta presencial / boletería</option>
+            </select>
+          </div>
+          <div class="campo" id="campoEnlace" hidden>
+            <label for="enlace" id="etiquetaEnlace">Número o enlace</label>
+            <input type="text" id="enlace" placeholder="">
+            <small id="ayudaEnlace" style="color:#625a6c"></small>
           </div>
 
           <div class="campo">
@@ -195,6 +205,6 @@
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="admin-eventos.js"></script>
+  <script src="admin-eventos.js?v=reservas2"></script>
 </body>
 </html>
