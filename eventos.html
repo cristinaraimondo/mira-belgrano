@@ -158,21 +158,42 @@ function crearTarjetaEvento(evento) {
   }
 
   if (evento.enlace) {
-    try {
-      const url = new URL(evento.enlace);
-
-      if (["https:", "http:"].includes(url.protocol)) {
+    const valor = evento.enlace.trim();
+    if (valor === "presencial") {
+      contenido.appendChild(crearDato("fa-ticket", "Entradas en boletería / venta presencial"));
+    } else {
+      let destino = null;
+      let texto = "Más información →";
+      try {
+        if (/^tel:/i.test(valor)) {
+          destino = valor;
+          texto = "Llamar para consultar →";
+        } else if (/^https?:\/\//i.test(valor)) {
+          const url = new URL(valor);
+          if (["https:", "http:"].includes(url.protocol)) {
+            destino = url.href;
+            if (["wa.me","api.whatsapp.com","web.whatsapp.com"].includes(url.hostname.toLowerCase())) {
+              texto = "Reservar por WhatsApp →";
+            }
+          }
+        } else {
+          const numero = valor.replace(/\D/g, "");
+          if (numero.length >= 10 && numero.length <= 15) {
+            destino = "https://wa.me/" + numero;
+            texto = "Reservar por WhatsApp →";
+          }
+        }
+      } catch (error) {
+        console.warn("Contacto de evento inválido:", valor);
+      }
+      if (destino) {
         const enlace = document.createElement("a");
-        enlace.href = url.href;
+        enlace.href = destino;
         enlace.target = "_blank";
         enlace.rel = "noopener noreferrer";
-        enlace.appendChild(
-          document.createTextNode("Más información →")
-        );
+        enlace.textContent = texto;
         contenido.appendChild(enlace);
       }
-    } catch (error) {
-      console.warn("Enlace inválido:", evento.enlace);
     }
   }
 
