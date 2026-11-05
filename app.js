@@ -41,7 +41,7 @@ if (comercio.estado !== "activo" && comercio.vista_previa !== true) {
 >
 
       <div class="comercioImagen">
-        <img src="${comercio.foto_url || "logo.png"}"
+        <img ${comercio.destacado ? `src="${comercio.foto_url || "logo.png"}"` : `data-src="${comercio.foto_url || "logo.png"}"`}
              alt="Foto de ${comercio.nombre || 'comercio'}"
              loading="lazy" decoding="async"
              style="width:100%;height:100%;object-fit:contain">
@@ -84,6 +84,18 @@ ${(comercio.descripcion || "").length > 100 ? `
 });
 }
 
+// Las fotos de comercios ocultos no se descargan hasta que el visitante los muestra.
+function activarImagenesVisibles() {
+  document.querySelectorAll(".comercioCard").forEach(tarjeta => {
+    if (tarjeta.style.display === "none") return;
+    const img = tarjeta.querySelector("img[data-src]");
+    if (img) {
+      img.src = img.dataset.src;
+      img.removeAttribute("data-src");
+    }
+  });
+}
+
 cargarComercios();
 function filtrarCategoria(categoria) {
 
@@ -118,6 +130,8 @@ function filtrarCategoria(categoria) {
 
   document.getElementById("buscador").value = "";
 
+  activarImagenesVisibles();
+
   let mensaje = document.getElementById("sinResultados");
 
   if (!mensaje) {
@@ -130,6 +144,8 @@ function filtrarCategoria(categoria) {
     encontrados === 0
       ? "Todavía no hay comercios en esta categoría."
       : "";
+
+  activarImagenesVisibles();
 
   // Bajar a los comercios de la categoría seleccionada
   document.getElementById("tituloComercios").scrollIntoView({
@@ -231,6 +247,8 @@ function mostrarTodos() {
 
     tarjeta.style.display = esDestacado ? "" : "none";
   });
+
+  activarImagenesVisibles();
 
   const mensaje = document.getElementById("sinResultados");
 
